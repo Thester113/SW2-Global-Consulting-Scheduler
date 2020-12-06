@@ -22,7 +22,7 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Views/Login.fxml"));
         primaryStage.setTitle("Global Scheduler Application");
         primaryStage.setScene(new Scene(root, 600, 600));
         primaryStage.show();

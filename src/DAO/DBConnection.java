@@ -12,17 +12,17 @@ public class DBConnection
   //JDBC URL
   private static final String protocol = "jdbc";
   private static final String vendorName = ":MySQL:";
-  private static final String ipAddress = "//wgudb.ucertify.com/<DB Name>";
+  private static final String ipAddress = "//wgudb.ucertify.com/WJ06JAg";
 
   //JDBC URL
   private static final String jdbcURL = protocol + vendorName + ipAddress;
 
   //Driver Interface Reference
-  private static final String MYSQLJDBCDriver = "com.mysql.jdbc.Driver";
+  private static final String MYSQLJDBCDriver = "com.mysql.cj.jdbc.Driver";
   static Connection conn = null;
 
-  private static final String username = ""; //Username
-  private static final String password = ""; //Password
+  private static final String username = "U06JAg"; //Username
+  private static final String password = "53688779415"; //Password
 
   //Methods
   public static Connection startConnection()
