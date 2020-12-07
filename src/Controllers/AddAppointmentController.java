@@ -41,51 +41,57 @@ import static java.lang.Integer.valueOf;
 public class AddAppointmentController implements Initializable {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
     Long offsetToUTC = (long) (ZonedDateTime.now().getOffset()).getTotalSeconds();
 
     @FXML
-    private TextField aptIDtxt;
+    private TextField aptIDtext;
+
 
     @FXML
-    private TextField aptTitleTxt;
+    private TextField aptTitleText;
+
 
     @FXML
-    private TextField aptDescrTxt;
+    private TextField aptDescrText;
+
 
     @FXML
-    private TextField aptLocTxt;
+    private TextField aptLocText;
+
 
     @FXML
-    private TextField aptTypeTxt;
+    private TextField aptTypeText;
+
 
     @FXML
-    private TextField aptCreateByTxt;
+    private TextField aptCreateByText;
 
     @FXML
-    private TextField aptLstUpdByTxt;
+    private TextField aptLstUpdByText;
 
     @FXML
-    private TextField aptCustIDTxt;
+    private TextField aptCustIDText;
 
     @FXML
-    private TextField aptUIDTxt;
+    private TextField aptUIDText;
 
     @FXML
-    private TextField aptContIDTxt;
+    private TextField aptContIDText;
+
 
     @FXML
-    private TextField aptStartTxt;
+    private TextField aptStartText;
 
     @FXML
-    private TextField aptEndTxt;
+    private TextField aptEndText;
 
     @FXML
-    private TextField aptCreateDateTxt;
+    private TextField aptCreateDateText;
 
     @FXML
-    private TextField aptLastUpdateTxt;
+    private TextField aptLastUpdateText;
 
     @FXML
     private ComboBox<Contacts> contactName;
@@ -102,7 +108,7 @@ public class AddAppointmentController implements Initializable {
             return;
         } else {
             Contacts c = contactName.getSelectionModel().getSelectedItem();
-            aptContIDTxt.setText(String.valueOf(c.getContactID()));
+            aptContIDText.setText(String.valueOf(c.getContactID()));
         }
     }
 
@@ -123,27 +129,27 @@ public class AddAppointmentController implements Initializable {
 
             TimeZone est = TimeZone.getTimeZone("America/New_York");
             long offsetToEST = (long) (est.getOffset(new Date().getTime()) / 1000 / 60);
-            Integer appointmentID = valueOf(aptIDtxt.getText());
-            String title = aptTitleTxt.getText();
-            String description = aptDescrTxt.getText();
-            String location = aptLocTxt.getText();
-            String type = aptTypeTxt.getText();
+            Integer appointmentID = valueOf(aptIDtext.getText());
+            String title = aptTitleText.getText();
+            String description = aptDescrText.getText();
+            String location = aptLocText.getText();
+            String type = aptTypeText.getText();
 
-            LocalDateTime start = LocalDateTime.parse(aptStartTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
-            LocalDateTime end = LocalDateTime.parse(aptEndTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
-            LocalDateTime createDate = LocalDateTime.parse(aptCreateDateTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
-            String createdBy = aptCreateByTxt.getText();
-            LocalDateTime lastUpdate = LocalDateTime.parse(aptLastUpdateTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
-            String lastUpdatedBy = aptLstUpdByTxt.getText();
-            Integer customerID = valueOf(aptCustIDTxt.getText());
-            Integer userID = valueOf(aptUIDTxt.getText());
-            Integer contactID = valueOf(aptContIDTxt.getText());
+            LocalDateTime start = LocalDateTime.parse(aptStartText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
+            LocalDateTime end = LocalDateTime.parse(aptEndText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
+            LocalDateTime createDate = LocalDateTime.parse(aptCreateDateText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
+            String createdBy = aptCreateByText.getText();
+            LocalDateTime lastUpdate = LocalDateTime.parse(aptLastUpdateText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
+            String lastUpdatedBy = aptLstUpdByText.getText();
+            Integer customerID = valueOf(aptCustIDText.getText());
+            Integer userID = valueOf(aptUIDText.getText());
+            Integer contactID = valueOf(aptContIDText.getText());
 
-            LocalDateTime startTime = LocalDateTime.parse(aptStartTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
+            LocalDateTime startTime = LocalDateTime.parse(aptStartText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
 
             startTime = startTime.plus(Duration.ofMinutes(offsetToEST));
 
-            LocalDateTime endTime = LocalDateTime.parse(aptEndTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
+            LocalDateTime endTime = LocalDateTime.parse(aptEndText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
 
             endTime = endTime.plus(Duration.ofMinutes(offsetToEST));
 
@@ -153,8 +159,8 @@ public class AddAppointmentController implements Initializable {
             LocalTime businessHoursEnd = LocalTime.of(23, 00);
 
 
-            LocalDateTime startDateTime = LocalDateTime.parse(aptStartTxt.getText(), formatter);
-            LocalDateTime endDateTime = LocalDateTime.parse(aptEndTxt.getText(), formatter);
+            LocalDateTime startDateTime = LocalDateTime.parse(aptStartText.getText(), formatter);
+            LocalDateTime endDateTime = LocalDateTime.parse(aptEndText.getText(), formatter);
 
 
 
@@ -172,7 +178,7 @@ public class AddAppointmentController implements Initializable {
             if (startTime.toLocalTime().isBefore(businessHoursStart) || endTime.toLocalTime().isAfter(businessHoursEnd)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("TOO EARLY!");
-                alert.setContentText("Please enter a time after business opening hour of 0800 EST and before business closing hours of 1000 EST");
+                alert.setContentText("Please enter a time after business opening hour of 0900 MDT and before business closing hours of 1000 MDT");
                 alert.showAndWait();
 
             } else if (!title.equals("") && !type.equals("") && !description.equals("") && !location.equals("")) {
@@ -191,7 +197,7 @@ public class AddAppointmentController implements Initializable {
         catch (DateTimeParseException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Missing selection");
-            alert.setContentText("Please ensure all date and time fields are formatted YYYY-MM-DD HH:MM prior to adding an appointment");
+            alert.setContentText("Please check that all date and time fields are formatted YYYY-MM-DD HH:MM prior to adding an appointment");
             alert.showAndWait();
         }
         return false;
@@ -217,8 +223,8 @@ public class AddAppointmentController implements Initializable {
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        aptCreateByTxt.setText(String.valueOf(User.getUsername()));
-        aptLstUpdByTxt.setText(String.valueOf(User.getUsername()));
+        aptCreateByText.setText(String.valueOf(User.getUsername()));
+        aptLstUpdByText.setText(String.valueOf(User.getUsername()));
         try {
 
             Connection conn = DBConnection.startConnection();
@@ -228,7 +234,7 @@ public class AddAppointmentController implements Initializable {
 
                 int tempID = rs.getInt("highestID");
 
-                aptIDtxt.setText(String.valueOf(tempID + 1));
+                aptIDtext.setText(String.valueOf(tempID + 1));
                 System.out.println(rs.getInt(tempID));
             }
         } catch (Exception exc) {
