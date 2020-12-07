@@ -15,14 +15,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Main extends Application {
-    /**
-     * Launch to main menu where you can select customers, appointments, and the reports for viewing
-     * @param primaryStage
-     * @throws IOException
-     */
+
     @Override
     public void start(Stage primaryStage) throws IOException{
-        Parent root = FXMLLoader.load(getClass().getResource("/View/Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Views/Login.fxml"));
         primaryStage.setTitle("Global Scheduler Application");
         primaryStage.setScene(new Scene(root, 600, 600));
         primaryStage.show();
