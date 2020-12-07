@@ -49,16 +49,7 @@ public class Appointment {
         this.contactID=contactID;
     }
 
-    /**
-     * Constructor for the Contact schedule and Customer Schedule Reports
-     * @param appointmentID
-     * @param title
-     * @param description
-     * @param type
-     * @param start
-     * @param end
-     * @param customerID
-     */
+
     public Appointment(int appointmentID, String title, String description, String type, LocalDateTime start, LocalDateTime end, int customerID) {
         this.appointmentID=appointmentID;
         this.title=title;

@@ -10,8 +10,8 @@ import java.sql.Statement;
 public class DBQuery {
     public static Statement statement;
     //Create Statement Object
-    public static void setStatement(Connection conn) throws SQLException {
-        statement = conn.createStatement();
+    public static void setStatement(Connection connect) throws SQLException {
+        statement = connect.createStatement();
     }
 
     //Return Statement Object

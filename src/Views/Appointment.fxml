@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controllers.AppointmentController"
+            prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <Label alignment="CENTER" layoutX="244.0" prefHeight="57.0" prefWidth="316.0" text="APPOINTMENTS" textAlignment="CENTER">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <TableView fx:id="aptTable" layoutX="25.0" layoutY="78.0" prefHeight="400.0" prefWidth="850.0">
+            <columns>
+                <TableColumn fx:id="aptAppointmentID" prefWidth="46.0" text="ID" />
+                <TableColumn fx:id="aptTitle" prefWidth="94.0" text="Title" />
+                <TableColumn fx:id="aptDescription" prefWidth="115.0" text="Description" />
+                <TableColumn fx:id="aptLocation" prefWidth="114.0" text="Location" />
+                <TableColumn fx:id="aptType" prefWidth="134.0" text="Type" />
+                <TableColumn fx:id="aptStart" prefWidth="128.0" text="Start Time" />
+                <TableColumn fx:id="aptEnd" prefWidth="92.0" text="End Time" />
+                <TableColumn fx:id="aptCreateDate" prefWidth="120.0" text="Created Date" />
+                <TableColumn fx:id="aptCreatedBy" prefWidth="114.0" text="Created By" />
+                <TableColumn fx:id="aptLastUpdate" prefWidth="99.0" text="Last Update" />
+                <TableColumn fx:id="aptLastUpdatedBy" prefWidth="90.0" text="Updated By" />
+                <TableColumn fx:id="aptCID" prefWidth="76.0" text="Customer ID" />
+                <TableColumn fx:id="aptUID" prefWidth="51.0" text="User ID" />
+                <TableColumn fx:id="aptContID" prefWidth="84.0" text="Contact ID" />
+            </columns>
+        </TableView>
+        <Button fx:id="addAppointment" layoutX="473.0" layoutY="478.0" mnemonicParsing="false" onAction="#sceneAddAppointment" prefHeight="27.0" prefWidth="73.0" text="Add" />
+        <Button fx:id="editAppointment" layoutX="558.0" layoutY="478.0" mnemonicParsing="false" onAction="#sceneEditAppointment" prefHeight="27.0" prefWidth="73.0" text="Edit" />
+        <Button fx:id="deleteAppointment" layoutX="645.0" layoutY="478.0" mnemonicParsing="false" onAction="#sceneDeleteAppointment" prefHeight="27.0" prefWidth="73.0" text="Delete" />
+        <Button fx:id="menuButton" layoutX="473.0" layoutY="524.0" mnemonicParsing="false" onAction="#sceneMainMenu" prefHeight="27.0" prefWidth="73.0" text="Main" />
+        <Button fx:id="exitButton" layoutX="645.0" layoutY="524.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="27.0" prefWidth="73.0" text="Exit" />
+        <RadioButton fx:id="allAptsRB" layoutX="233.0" layoutY="48.0" mnemonicParsing="false" onAction="#RBallAppointmentsOA" text="All Appointments">
+            <toggleGroup>
+                <ToggleGroup fx:id="aptTableTGLGRP" />
+            </toggleGroup>
+        </RadioButton>
+        <RadioButton fx:id="weeklyRB" layoutX="356.0" layoutY="48.0" mnemonicParsing="false" onAction="#RBweeklyAppointmentsOA" text="Weekly" toggleGroup="$aptTableTGLGRP" />
+        <RadioButton fx:id="monthlyRB" layoutX="455.0" layoutY="48.0" mnemonicParsing="false" onAction="#RBmonthlyAppointmentsOA" text="Monthly" toggleGroup="$aptTableTGLGRP" />
+    </children>
+</AnchorPane>
