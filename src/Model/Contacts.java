@@ -1,8 +1,6 @@
 package Model;
 
-/**
- * Contact Class mostly used for filling associated attributes and allowing the UI to show a name vice a number through combo box selections
- */
+
 public class Contacts {
     private  int contactID;
     private String contactName;

@@ -11,9 +11,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.logging.Logger;
 
-/**
- * User class is used for log in purposes and log activity
- */
+
 public class User {
     Integer userID;
     static String username;

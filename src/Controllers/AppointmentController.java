@@ -30,9 +30,6 @@ import static DAO.AppointmentDB.deleteAppointment;
 
 public class AppointmentController implements Initializable {
 
-    /**
-     * @param allAptsRb shows all appointments
-     */
     @FXML
     private RadioButton allAptsRB;
 
@@ -282,7 +279,7 @@ public class AppointmentController implements Initializable {
         aptContID.setCellValueFactory(new PropertyValueFactory<>("contactID"));
         try {
             aptTable.setItems(AppointmentDB.getAllAppointments());
-            /**For each lambda to get all appointments, less code then normal for i method*/
+            /**lambda to get all appointments*/
             for (Appointment appointment : AppointmentDB.allAppointments) {
                 System.out.println(appointment.getStart());
             }

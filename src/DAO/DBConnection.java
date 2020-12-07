@@ -4,9 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * Used for the Utility classes to connect to the Database
- */
 public class DBConnection
 {
   //JDBC URL

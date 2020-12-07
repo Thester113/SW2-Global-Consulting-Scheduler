@@ -6,9 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.ZonedDateTime;
 
-/**
- * Class is used to send the information to a txt file for logging login attempts
- */
+
 public class Logger {
     private static final String FILENAME = "login_activity.txt";
 
