@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.logging.Logger;
 
 
-public class User {
+public class Users {
     Integer userID;
     static String username;
     String password;
@@ -21,7 +21,7 @@ public class User {
     Timestamp lastUpdate;
     String lastUpdatedBy;
 
-    public User() {
+    public Users() {
 
     }
 
@@ -82,7 +82,7 @@ public class User {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
-    public User(Integer userID, String username, String password, Date createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy) {
+    public Users(Integer userID, String username, String password, Date createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy) {
         this.userID = userID;
         this.username = username;
         this.password = password;

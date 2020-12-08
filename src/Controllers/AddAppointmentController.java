@@ -4,7 +4,7 @@ import DAO.AppointmentDB;
 import DAO.DBConnection;
 import Model.Appointment;
 import Model.Contacts;
-import Model.User;
+import Model.Users;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -223,8 +223,8 @@ public class AddAppointmentController implements Initializable {
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        aptCreateByText.setText(String.valueOf(User.getUsername()));
-        aptLstUpdByText.setText(String.valueOf(User.getUsername()));
+        aptCreateByText.setText(String.valueOf(Users.getUsername()));
+        aptLstUpdByText.setText(String.valueOf(Users.getUsername()));
         try {
 
             Connection conn = DBConnection.startConnection();

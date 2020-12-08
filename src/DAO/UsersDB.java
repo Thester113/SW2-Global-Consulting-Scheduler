@@ -1,18 +1,18 @@
 package DAO;
 
-import Model.User;
+import Model.Users;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class UserDB {
+public class UsersDB {
 
 
-    private static User currentUser;
+    private static Users currentUsers;
 
-    public static User getCurrentUser() {
-        return currentUser;
+    public static Users getCurrentUser() {
+        return currentUsers;
     }
 
     public static Boolean login(String username, String password) {
@@ -23,9 +23,9 @@ public class UserDB {
             ResultSet rs = DBQuery.statement.executeQuery(query);
 
             if (rs.next()) {
-                currentUser = new User();
-                currentUser.setUserName(rs.getString("User_Name"));
-                currentUser.setPassword(rs.getString("Password"));
+                currentUsers = new Users();
+                currentUsers.setUserName(rs.getString("User_Name"));
+                currentUsers.setPassword(rs.getString("Password"));
                 Logger.log(username, true);
                 return true;
             } else{
@@ -35,7 +35,7 @@ public class UserDB {
 
         }
         catch (SQLException e) {
-            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("Exception: " + e.getMessage());
             return false;
         }
     }

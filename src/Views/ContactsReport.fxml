@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="Controllers.ContactsReport"
+            prefHeight="400.0" prefWidth="600.0">
+    <ComboBox fx:id="contactCB" layoutX="28.0" layoutY="67.0" onAction="#displayContactSchedule" prefWidth="150.0"/>
+    <Label layoutX="207.0" layoutY="14.0" text="CONTACT SCHEDULES">
+        <font>
+            <Font size="18.0"/>
+        </font>
+    </Label>
+    <Label layoutX="40.0" layoutY="50.0" text="Select Contact"/>
+    <TableView fx:id="contactAppointmentTbl" layoutX="14.0" layoutY="108.0" prefHeight="230.0" prefWidth="575.0">
+        <columns>
+            <TableColumn fx:id="appointmentID" prefWidth="47.0" text="ID"/>
+            <TableColumn fx:id="aptTitle" prefWidth="103.0" text="Title"/>
+            <TableColumn fx:id="aptType" prefWidth="75.0" text="Type"/>
+            <TableColumn fx:id="aptDescription" prefWidth="75.0" text="Description"/>
+            <TableColumn fx:id="aptStart" prefWidth="75.0" text="Start"/>
+            <TableColumn fx:id="aptEnd" prefWidth="120.0" text="End"/>
+            <TableColumn fx:id="aptCustID" prefWidth="79.0" text="Customer ID"/>
+        </columns>
+    </TableView>
+    <Label layoutX="270.0" layoutY="84.0" text="Schedule">
+        <font>
+            <Font size="16.0"/>
+        </font>
+    </Label>
+    <Button fx:id="exitBtn" layoutX="534.0" layoutY="359.0" mnemonicParsing="false" onAction="#exitApp" text="EXIT"/>
+    <Button fx:id="mainBtn" layoutX="473.0" layoutY="359.0" mnemonicParsing="false" onAction="#backToMain" text="MAIN"/>
+</AnchorPane>

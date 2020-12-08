@@ -3,7 +3,7 @@ package Controllers;
 import Model.Appointment;
 import DAO.AppointmentDB;
 import DAO.DBConnection;
-import DAO.UserDB;
+import DAO.UsersDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -58,7 +58,7 @@ public class LoginController implements Initializable {
         String password = passwordField.getText();
 
 
-        boolean verifiedUser = UserDB.login(username, password);
+        boolean verifiedUser = UsersDB.login(username, password);
         if (verifiedUser) {
             boolean isFound = true;
             AppointmentDB.getAllAppointments();
