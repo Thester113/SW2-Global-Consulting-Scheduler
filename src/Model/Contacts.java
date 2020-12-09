@@ -12,15 +12,12 @@ public class Contacts {
         this.contactEmail = contactEmail;
     }
 
-    public Contacts() {
-
-    }
-
     public Contacts(int contactID) {
         this.contactID = contactID;
     }
 
-    public  int getContactID() {
+
+    public int getContactID() {
         return contactID;
     }
 
@@ -43,7 +40,6 @@ public class Contacts {
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
     }
-
 
 
     @Override

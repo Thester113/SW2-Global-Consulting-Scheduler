@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
+    private Alert alert;
     private String loginError;
     private String enterCorrectUorP;
     private String errorHeader;
@@ -50,22 +51,23 @@ public class LoginController implements Initializable {
     @FXML
     private PasswordField passwordField;
 
-
+    //Cases for login are either a successful login or incorrect username or password, username and password are from DB
     @FXML
     void handleLogin(ActionEvent event) throws IOException, SQLException {
-
+        //Get username and password entered
         String username = userIDField.getText();
         String password = passwordField.getText();
 
-
+        //verify user against database users, see DBQuery login for logic
         boolean verifiedUser = UsersDB.login(username, password);
         if (verifiedUser) {
             boolean isFound = true;
             AppointmentDB.getAllAppointments();
-            // foreach lambda loop
+            //Run a foreach lamda loop through the observable list of all the appointments and return an alert
             for (Appointment appointment : AppointmentDB.allAppointments) {
                 LocalDateTime within15Minutes = LocalDateTime.now();
-
+                isFound = true;
+                //Compare the system time to the appointment start times and see if start is within 15-1 minute(s) of all start times
                 if (within15Minutes.isAfter(appointment.getStart().minusMinutes(15)) && within15Minutes.isBefore(appointment.getStart())){
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("UPCOMING APPOINTMENT");
@@ -78,7 +80,7 @@ public class LoginController implements Initializable {
                     isFound = false;
                 }
             }
-            if (!isFound) {
+            if (isFound != true) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("No upcoming appointments!");
                 alert.setContentText("You have no upcoming appointments in the next 15 minutes");
@@ -90,8 +92,8 @@ public class LoginController implements Initializable {
             stage.setScene(new Scene((Parent) scene));
             stage.show();
         }
-        else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+        else if (!verifiedUser || userIDField.getText().isEmpty() || passwordField.getText().isEmpty()) {
+            alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(loginError);
             alert.setHeaderText(errorHeader);
             alert.setContentText(enterCorrectUorP);
@@ -125,7 +127,7 @@ public class LoginController implements Initializable {
                 errorHeader = rb.getString(errorHeader);
 
             }
-        } catch (Exception ignored) {
+        } catch (Exception e) {
         }
     }
 }

@@ -34,17 +34,11 @@ import java.time.format.DateTimeParseException;
 import java.util.ResourceBundle;
 
 public class AddCustomerController implements Initializable {
-  /**
-   * format the LocalDateTime fields
-   */
+
   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-  /**
-   * Gets the offset of the users system date time from UTC used in converting the time from the DB
-   */
+
   Long offsetToUTC = Long.valueOf((ZonedDateTime.now().getOffset()).getTotalSeconds());
-  /**
-   * Division ID List for Combo Box
-   */
+
 
   ObservableList<FirstLevelDivision> fldList = FirstLevelDivisionDB.getAllFirstLevelDivisions();
   @FXML
@@ -77,14 +71,7 @@ public class AddCustomerController implements Initializable {
   public AddCustomerController() throws SQLException {
   }
 
-  /**
-   * Gets the fields and sends to the db
-   *
-   * @param event
-   * @return
-   * @throws IOException
-   * @see CustomerDB#addCustomer(Integer, String, String, String, String, LocalDateTime, String, LocalDateTime, String, Integer)
-   */
+
   @FXML
   boolean addCustomer(ActionEvent event) throws IOException {
     try {
@@ -99,10 +86,7 @@ public class AddCustomerController implements Initializable {
       String lastUpdatedBy = lastUpdatedByTxt.getText();
       int divisionID = Integer.valueOf(String.valueOf(cbDiv.getSelectionModel().getSelectedItem().getDivisionID()));
 
-      /**
-       * Ensures fields are not blank and throws an alert if they are, if entered utilizes
-       * @see CustomerDB#addCustomer(Integer, String, String, String, String, LocalDateTime, String, LocalDateTime, String, Integer)
-       */
+
       if (!customerName.equals("") && !address.equals("") && !postal.equals("") && !phone.equals("")) {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
         Object scene = FXMLLoader.load(getClass().getResource("/View/CustomerMain.fxml"));
@@ -117,10 +101,7 @@ public class AddCustomerController implements Initializable {
         alert.showAndWait();
       }
       return false;
-      /**
-       * Checks for formatting on the date time fields and catches a date time parse exception
-       * Gives an alert if format is incorrect detailing proper formatting
-       */
+
     } catch (DateTimeParseException e) {
       Alert alert = new Alert(Alert.AlertType.ERROR);
       alert.setTitle("Missing selection");
@@ -138,10 +119,6 @@ public class AddCustomerController implements Initializable {
     stage.show();
   }
 
-  /**
-   * Filtered list of division IDs that correspond to a country selection from combobox
-   */
-
 
   @FXML
   void SetDivisionID(MouseEvent event) throws IOException, SQLException {
@@ -151,11 +128,10 @@ public class AddCustomerController implements Initializable {
       return;
     }
 
-    //US Filter
+
     else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("U.S")) {
       try {
         cbDiv.setItems(FirstLevelDivisionDB.getusFilteredFirstLevelDivisions());
-        /**For each lambda to get all appointments, less code then normal for i method*/
 
         for (FirstLevelDivision usFLD : FirstLevelDivisionDB.usFilteredFirstLevelDivisions) {
           System.out.println(usFLD.getDivision());
@@ -165,11 +141,10 @@ public class AddCustomerController implements Initializable {
       }
     }
 
-    //Canada Filter
+
     else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("Canada")) {
       try {
         cbDiv.setItems(FirstLevelDivisionDB.getcanadaFilteredFirstLevelDivisions());
-        /**For each lambda to get all appointments, less code then normal for i method*/
         for (FirstLevelDivision canadaFLD : FirstLevelDivisionDB.canadaFilteredFirstLevelDivisions) {
           System.out.println(canadaFLD.getDivision());
         }
@@ -177,11 +152,11 @@ public class AddCustomerController implements Initializable {
         e.printStackTrace();
       }
     }
-    //UK Filter
+
     else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("UK")) {
       try {
         cbDiv.setItems(FirstLevelDivisionDB.getukFilteredFirstLevelDivisions());
-        /**For each lambda to get all appointments, less code then normal for i method*/
+
         for (FirstLevelDivision ukFLD : FirstLevelDivisionDB.ukFilteredFirstLevelDivisions) {
           System.out.println(ukFLD.getDivision());
         }
@@ -192,12 +167,7 @@ public class AddCustomerController implements Initializable {
 
   }
 
-  /**
-   * Setting the combo boxes, customer ID
-   *
-   * @param url
-   * @param resourceBundle
-   */
+
   @FXML
   public void initialize(URL url, ResourceBundle resourceBundle) {
     try {
@@ -218,26 +188,20 @@ public class AddCustomerController implements Initializable {
       e.printStackTrace();
     }
 
-    /**
-     * Auto-populate Created By field with the value of a valid user log in that is stored in the User object
-     */
+
 
     createdByTxt.setText(String.valueOf(Users.getUsername()));
     lastUpdatedByTxt.setText(String.valueOf(Users.getUsername()));
     try {
-      // Connection to the database
-      Connection conn = DBConnection.startConnection();
-      //Select the last row from Customer ID
-      ResultSet rs = conn.createStatement().executeQuery("SELECT Customer_ID FROM customers ORDER BY Customer_ID DESC LIMIT 1 ");
-      // SQL query
 
-      /**
-       * @param custIDTxt is auto generated
-       */
+      Connection conn = DBConnection.startConnection();
+
+      ResultSet rs = conn.createStatement().executeQuery("SELECT Customer_ID FROM customers ORDER BY Customer_ID DESC LIMIT 1 ");
+      //
       while (rs.next()) {
-        //Create a temporary var for customer ID
+
         int tempID = rs.getInt("Customer_ID");
-        //Set the customer ID to auto increment by 1
+
         custIDTxt.setText(String.valueOf(tempID + 1));
         System.out.println(rs.getInt(tempID));
 
