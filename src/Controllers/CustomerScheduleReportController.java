@@ -64,7 +64,7 @@ public class CustomerScheduleReportController implements Initializable {
   @FXML
   void backToMain(ActionEvent event) throws IOException {
     FXMLLoader loader = new FXMLLoader();
-    loader.setLocation(getClass().getResource("/View/MainMenu.fxml"));
+    loader.setLocation(getClass().getResource("/Views/MainScreen.fxml"));
     loader.load();
 
     Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -76,10 +76,10 @@ public class CustomerScheduleReportController implements Initializable {
   @FXML
   void displayCustomerSchedule(ActionEvent event) {
     try {
-      /**selecting the customer object to send to query the DB*/
+
       Customers customerSchedule = customerCB.getSelectionModel().getSelectedItem();
       ReportDB.sendCustomerSelection(customerSchedule);
-      /**Getting the appointments from the DB and populating the tableview*/
+
       customerAppointmentTbl.setItems(ReportDB.getCustomerSchedule());
       for (Appointment appointment : ReportDB.customerSchedule) {
         System.out.println(appointment.getStart());
@@ -111,7 +111,9 @@ public class CustomerScheduleReportController implements Initializable {
   public void initialize(URL url, ResourceBundle resourceBundle) {
     try {
       customerCB.setItems(CustomerDB.getAllCustomers());
-      for (Customers customer : CustomerDB.allCustomers) {
+      ObservableList<Customers> allCustomers = CustomerDB.allCustomers;
+      for (int i = 0, allCustomersSize = allCustomers.size(); i < allCustomersSize; i++) {
+        Customers customer = allCustomers.get(i);
         System.out.println(customer.getCustomerID());
       }
     } catch (SQLException e) {

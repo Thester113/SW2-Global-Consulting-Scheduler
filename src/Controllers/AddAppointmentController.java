@@ -117,7 +117,7 @@ public class AddAppointmentController implements Initializable {
     @FXML
     void ExitToMain(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        Object scene = FXMLLoader.load(getClass().getResource("/View/Appointment.fxml"));
+        Object scene = FXMLLoader.load(getClass().getResource("/Views/Appointment.fxml"));
         stage.setScene(new Scene((Parent) scene));
         stage.show();
     }
@@ -165,9 +165,10 @@ public class AddAppointmentController implements Initializable {
             LocalDateTime endDateTime = LocalDateTime.parse(aptEndText.getText(), formatter);
 
 
-
-            for (Appointment appointment : AppointmentDB.allAppointments) {
-                if((startDateTime.isEqual(appointment.getStart()) || startDateTime.isAfter(appointment.getStart()) && startDateTime.isBefore(appointment.getEnd()))) {
+            ObservableList<Appointment> allAppointments = AppointmentDB.allAppointments;
+            for (int i = 0, allAppointmentsSize = allAppointments.size(); i < allAppointmentsSize; i++) {
+                Appointment appointment = allAppointments.get(i);
+                if ((startDateTime.isEqual(appointment.getStart()) || startDateTime.isAfter(appointment.getStart()) && startDateTime.isBefore(appointment.getEnd()))) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("CONFLICT");
                     alert.setContentText("Please enter a time for the start and end time of the appointment that is not already taken");
@@ -232,12 +233,14 @@ public class AddAppointmentController implements Initializable {
             Connection conn = DBConnection.startConnection();
 
             ResultSet rs = conn.createStatement().executeQuery("SELECT MAX(Appointment_ID) AS highestID FROM appointments");
-            while (rs.next()) {
+            if (rs.next()) {
+                do {
 
-                int tempID = rs.getInt("highestID");
+                    int tempID = rs.getInt("highestID");
 
-                aptIDtext.setText(String.valueOf(tempID + 1));
-                System.out.println(rs.getInt(tempID));
+                    aptIDtext.setText(String.valueOf(tempID + 1));
+                    System.out.println(rs.getInt(tempID));
+                } while (rs.next());
             }
         } catch (Exception exc) {
             exc.printStackTrace();

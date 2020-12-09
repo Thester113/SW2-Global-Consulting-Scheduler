@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 public class ModifyCustomerController implements Initializable {
   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
   DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-  Long offsetToUTC = Long.valueOf((ZonedDateTime.now().getOffset()).getTotalSeconds());
+  Long offsetToUTC = (long) (ZonedDateTime.now().getOffset()).getTotalSeconds();
 
   private Customers newModifyCustomer;
 
@@ -135,22 +135,22 @@ public class ModifyCustomerController implements Initializable {
     custPostalTxt.setText(newModifyCustomer.getPostal());
     custPhoneTxt.setText(String.valueOf(newModifyCustomer.getPhone()));
     lastUpdatedByTF.setText(newModifyCustomer.getLastUpdatedBy());
-    lastUpdateTF.setText(String.valueOf(newModifyCustomer.getLastUpdate().format(formatter)));
+    lastUpdateTF.setText(newModifyCustomer.getLastUpdate().format(formatter));
     createdByTF.setText(newModifyCustomer.getCreatedBy());
-    createDateTF.setText(String.valueOf(newModifyCustomer.getCreateDate().format(formatter)));
+    createDateTF.setText(newModifyCustomer.getCreateDate().format(formatter));
     int comboBoxPreset = newModifyCustomer.getDivisionID();
     FirstLevelDivision fld = new FirstLevelDivision(comboBoxPreset);
     cbDivID.setValue(fld);
 
     if (fld.getDivisionID() <= 54)
     {
-      String countryName = "U.S";
+      String countryName = "United States";
       Countries c = new Countries(countryName);
       cbCountry.setValue(c);
     }
     else if (fld.getDivisionID() >54 && fld.getDivisionID() <= 72)
     {
-      String countryName = "UK";
+      String countryName = "United Kingdom";
       Countries c = new Countries(countryName);
       cbCountry.setValue(c);
     }
@@ -163,7 +163,9 @@ public class ModifyCustomerController implements Initializable {
 
     try {
       cbCountry.setItems(CountriesDB.getAllCountries());
-      for (Countries countries : CountriesDB.allCountries) {
+      ObservableList<Countries> allCountries = CountriesDB.allCountries;
+      for (int i = 0, allCountriesSize = allCountries.size(); i < allCountriesSize; i++) {
+        Countries countries = allCountries.get(i);
         System.out.println(countries.getCountry());
       }
     } catch (SQLException e) {
@@ -172,7 +174,9 @@ public class ModifyCustomerController implements Initializable {
 
     try {
       cbDivID.setItems(FirstLevelDivisionDB.getAllFirstLevelDivisions());
-      for (FirstLevelDivision firstLevelDivision : FirstLevelDivisionDB.allFirstLevelDivisions) {
+      ObservableList<FirstLevelDivision> allFirstLevelDivisions = FirstLevelDivisionDB.allFirstLevelDivisions;
+      for (int i = 0, allFirstLevelDivisionsSize = allFirstLevelDivisions.size(); i < allFirstLevelDivisionsSize; i++) {
+        FirstLevelDivision firstLevelDivision = allFirstLevelDivisions.get(i);
         System.out.println(firstLevelDivision.getDivision());
       }
       cbDivID.setValue(fld);

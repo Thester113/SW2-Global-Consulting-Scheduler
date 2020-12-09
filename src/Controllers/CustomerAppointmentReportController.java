@@ -3,6 +3,7 @@ package Controllers;
 import DAO.AppointmentDB;
 import DAO.DBConnection;
 import Model.Appointment;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -106,21 +107,25 @@ public class CustomerAppointmentReportController implements Initializable {
       int octCount = 1;
       int novCount = 1;
       int decCount = 1;
-      for (Appointment appointment : AppointmentDB.allAppointments) {
+      ObservableList<Appointment> allAppointments = AppointmentDB.allAppointments;
+      for (int i = 0, allAppointmentsSize = allAppointments.size(); i < allAppointmentsSize; i++) {
+        Appointment appointment = allAppointments.get(i);
         String aptType = appointment.getType();
         {
-          if (aptType.contains("Planning Session") ) {
-            planningSessionCount = planningSessionCount +1;
+          if (aptType.contains("Planning Session")) {
+            planningSessionCount = planningSessionCount + 1;
             planningTF.setText(String.valueOf(planningSessionCount));
           } else if (aptType.contains("De-Briefing")) {
-            deBrief = deBrief +1;
+            deBrief = deBrief + 1;
             deBriefingTF.setText(String.valueOf(deBrief));
           }
         }
 
 
       }
-      for (Appointment appointment : AppointmentDB.allAppointments) {
+      ObservableList<Appointment> appointments = AppointmentDB.allAppointments;
+      for (int i = 0, appointmentsSize = appointments.size(); i < appointmentsSize; i++) {
+        Appointment appointment = appointments.get(i);
         Month aptStart = appointment.getStart().getMonth();
         if (aptStart == Month.JANUARY) {
           janCount = janCount + 1;
@@ -154,7 +159,7 @@ public class CustomerAppointmentReportController implements Initializable {
           numSep.setText(String.valueOf(sepCount));
 
         } else if (aptStart == Month.OCTOBER) {
-          octCount = octCount++;
+          octCount++;
           numOct.setText(String.valueOf(octCount));
 
         } else if (aptStart == Month.NOVEMBER) {

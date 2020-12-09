@@ -4,6 +4,7 @@ import Model.Appointment;
 import DAO.AppointmentDB;
 import DAO.DBConnection;
 import DAO.UsersDB;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -64,19 +65,20 @@ public class LoginController implements Initializable {
             boolean isFound = true;
             AppointmentDB.getAllAppointments();
             //Run a foreach lamda loop through the observable list of all the appointments and return an alert
-            for (Appointment appointment : AppointmentDB.allAppointments) {
+            ObservableList<Appointment> allAppointments = AppointmentDB.allAppointments;
+            for (int i = 0, allAppointmentsSize = allAppointments.size(); i < allAppointmentsSize; i++) {
+                Appointment appointment = allAppointments.get(i);
                 LocalDateTime within15Minutes = LocalDateTime.now();
                 isFound = true;
                 //Compare the system time to the appointment start times and see if start is within 15-1 minute(s) of all start times
-                if (within15Minutes.isAfter(appointment.getStart().minusMinutes(15)) && within15Minutes.isBefore(appointment.getStart())){
+                if (within15Minutes.isAfter(appointment.getStart().minusMinutes(15)) && within15Minutes.isBefore(appointment.getStart())) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("UPCOMING APPOINTMENT");
                     alert.setContentText("Appointment: " + appointment.getAppointmentID() + " starts at " + appointment.getStart());
                     alert.showAndWait();
                     isFound = true;
                     break;
-                }
-                else {
+                } else {
                     isFound = false;
                 }
             }

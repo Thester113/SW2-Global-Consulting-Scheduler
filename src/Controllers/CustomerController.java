@@ -3,6 +3,7 @@ package Controllers;
 import DAO.CustomerDB;
 import DAO.DBConnection;
 import Model.Customers;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -196,8 +197,9 @@ public class CustomerController implements Initializable {
 
     try {
       custTable.setItems(CustomerDB.getAllCustomers());
-      for (Customers customer : CustomerDB.allCustomers)
-      {
+      ObservableList<Customers> allCustomers = CustomerDB.allCustomers;
+      for (int i = 0, allCustomersSize = allCustomers.size(); i < allCustomersSize; i++) {
+        Customers customer = allCustomers.get(i);
         System.out.println(customer.getCustomerName());
       }
     }

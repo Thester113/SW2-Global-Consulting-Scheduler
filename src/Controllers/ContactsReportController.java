@@ -84,7 +84,9 @@ public class ContactsReportController implements Initializable {
       ReportDB.sendContactSelection(contactSchedule);
       //Getting the appointments from the DB and populating the tableview
       contactAppointmentTbl.setItems(ReportDB.getContactSchedule());
-      for (Appointment appointment : ReportDB.contactSchedule) {
+      ObservableList<Appointment> schedule = ReportDB.contactSchedule;
+      for (int i = 0, scheduleSize = schedule.size(); i < scheduleSize; i++) {
+        Appointment appointment = schedule.get(i);
         System.out.println(appointment.getStart());
       }
       appointmentID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));

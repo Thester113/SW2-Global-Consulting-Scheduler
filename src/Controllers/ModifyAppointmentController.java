@@ -190,8 +190,7 @@ public class ModifyAppointmentController implements Initializable {
 
 
             ObservableList<Appointment> allAppointments = AppointmentDB.allAppointments;
-            for (int i = 0, allAppointmentsSize = allAppointments.size(); i < allAppointmentsSize; i++) {
-                Appointment appointment = allAppointments.get(i);
+            for (Appointment appointment : allAppointments) {
                 if ((startDateTime.isEqual(appointment.getStart()) || startDateTime.isAfter(appointment.getStart()) && startDateTime.isBefore(appointment.getEnd()))) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("CONFLICT");

@@ -7,31 +7,41 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.control.Button?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainScreenController">
-    <children>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b8b9ba99" height="133.0" layoutX="201.0" layoutY="67.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b8b9ba99" height="200.0" layoutX="201.0" layoutY="291.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-        <Label alignment="CENTER" layoutX="142.0" layoutY="14.0" prefHeight="57.0" prefWidth="316.0" text="MAIN MENU" textAlignment="CENTER">
-            <font>
-                <Font size="30.0" />
-            </font>
-        </Label>
-        <Label alignment="CENTER" layoutX="242.0" layoutY="255.0" prefHeight="27.0" prefWidth="105.0" text="Reports">
-            <font>
-                <Font size="20.0" />
-            </font>
-        </Label>
-        <Button fx:id="customerAppointmentReport" layoutX="225.0" layoutY="330.0" mnemonicParsing="false" onAction="#sceneCustomerAppointmentReport" prefHeight="27.0" prefWidth="152.0" text="Customer Appointments" />
-        <Button fx:id="contactSchedulesReport" layoutX="225.0" layoutY="376.0" mnemonicParsing="false" onAction="#sceneContactSchedulesReport" prefHeight="27.0" prefWidth="152.0" text="Contact Schedules" />
-        <Button fx:id="customerSchedulesBtn" layoutX="225.0" layoutY="425.0" mnemonicParsing="false" onAction="#sceneCustomerSchedulesReport" prefHeight="27.0" prefWidth="152.0" text="Customer Schedules">
-            <font>
-                <Font size="12.0" />
-            </font>
-        </Button>
-        <Button fx:id="exitButton" layoutX="906.0" layoutY="640.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="27.0" prefWidth="73.0" text="Exit" />
-        <Button fx:id="customerBtn" layoutX="261.0" layoutY="96.0" mnemonicParsing="false" onAction="#sceneCustMain" text="Customers" />
-        <Button fx:id="aptBtn" layoutX="253.0" layoutY="144.0" mnemonicParsing="false" onAction="#sceneAptMain" text="Appointments" />
-        <Button fx:id="exitBtn" layoutX="536.0" layoutY="549.0" mnemonicParsing="false" onAction="#exitApp" text="Exit" />
-        <Button fx:id="logoutBtn" layoutX="475.0" layoutY="549.0" mnemonicParsing="false" onAction="#sceneLogin" text="Logout" />
-    </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+            prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainScreenController">
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b8b9ba99" height="133.0" layoutX="201.0" layoutY="67.0"
+               stroke="BLACK" strokeType="INSIDE" width="200.0"/>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#b8b9ba99" height="200.0" layoutX="201.0" layoutY="291.0"
+               stroke="BLACK" strokeType="INSIDE" width="200.0"/>
+    <Label alignment="CENTER" layoutX="142.0" layoutY="14.0" prefHeight="57.0" prefWidth="316.0" text="MAIN MENU"
+           textAlignment="CENTER">
+        <font>
+            <Font size="30.0"/>
+        </font>
+    </Label>
+    <Label alignment="CENTER" layoutX="242.0" layoutY="255.0" prefHeight="27.0" prefWidth="105.0" text="Reports">
+        <font>
+            <Font size="20.0"/>
+        </font>
+    </Label>
+    <Button fx:id="customerAppointmentReport" layoutX="225.0" layoutY="330.0" mnemonicParsing="false"
+            onAction="#sceneCustomerAppointmentReport" prefHeight="27.0" prefWidth="152.0"
+            text="Customer Appointments"/>
+    <Button fx:id="contactSchedulesReport" layoutX="225.0" layoutY="376.0" mnemonicParsing="false"
+            onAction="#sceneContactSchedulesReport" prefHeight="27.0" prefWidth="152.0" text="Contact Schedules"/>
+    <Button fx:id="customerSchedulesBtn" layoutX="225.0" layoutY="425.0" mnemonicParsing="false"
+            onAction="#sceneCustomerSchedulesReport" prefHeight="27.0" prefWidth="152.0" text="Customer Schedules">
+        <font>
+            <Font size="12.0"/>
+        </font>
+    </Button>
+    <Button fx:id="exitButton" layoutX="906.0" layoutY="640.0" mnemonicParsing="false" onAction="#exitApp"
+            prefHeight="27.0" prefWidth="73.0" text="Exit"/>
+    <Button fx:id="customerBtn" layoutX="261.0" layoutY="96.0" mnemonicParsing="false" onAction="#sceneCustMain"
+            text="Customers"/>
+    <Button fx:id="aptBtn" layoutX="253.0" layoutY="144.0" mnemonicParsing="false" onAction="#sceneAptMain"
+            text="Appointments"/>
+    <Button fx:id="exitBtn" layoutX="536.0" layoutY="549.0" mnemonicParsing="false" onAction="#exitApp" text="Exit"/>
+    <Button fx:id="logoutBtn" layoutX="475.0" layoutY="549.0" mnemonicParsing="false" onAction="#sceneLogin"
+            text="Logout"/>
 </AnchorPane>

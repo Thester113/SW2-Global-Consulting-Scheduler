@@ -37,7 +37,7 @@ public class AddCustomerController implements Initializable {
 
   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-  Long offsetToUTC = Long.valueOf((ZonedDateTime.now().getOffset()).getTotalSeconds());
+  Long offsetToUTC = (long) (ZonedDateTime.now().getOffset()).getTotalSeconds();
 
 
   ObservableList<FirstLevelDivision> fldList = FirstLevelDivisionDB.getAllFirstLevelDivisions();
@@ -84,12 +84,12 @@ public class AddCustomerController implements Initializable {
       String createdBy = createdByTxt.getText();
       LocalDateTime lastUpdate = LocalDateTime.parse(lastUpdateTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
       String lastUpdatedBy = lastUpdatedByTxt.getText();
-      int divisionID = Integer.valueOf(String.valueOf(cbDiv.getSelectionModel().getSelectedItem().getDivisionID()));
+      int divisionID = Integer.parseInt(String.valueOf(cbDiv.getSelectionModel().getSelectedItem().getDivisionID()));
 
 
       if (!customerName.equals("") && !address.equals("") && !postal.equals("") && !phone.equals("")) {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        Object scene = FXMLLoader.load(getClass().getResource("/View/CustomerMain.fxml"));
+        Object scene = FXMLLoader.load(getClass().getResource("/Views/Customer.fxml"));
         stage.setScene(new Scene((Parent) scene));
         stage.show();
 
@@ -114,7 +114,7 @@ public class AddCustomerController implements Initializable {
   @FXML
   void exitMainMenu(ActionEvent event) throws IOException {
     Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-    Object scene = FXMLLoader.load(getClass().getResource("/View/CustomerMain.fxml"));
+    Object scene = FXMLLoader.load(getClass().getResource("/Views/Customer.fxml"));
     stage.setScene(new Scene((Parent) scene));
     stage.show();
   }
@@ -129,11 +129,13 @@ public class AddCustomerController implements Initializable {
     }
 
 
-    else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("U.S")) {
+    else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("United States")) {
       try {
         cbDiv.setItems(FirstLevelDivisionDB.getusFilteredFirstLevelDivisions());
 
-        for (FirstLevelDivision usFLD : FirstLevelDivisionDB.usFilteredFirstLevelDivisions) {
+        ObservableList<FirstLevelDivision> usFilteredFirstLevelDivisions = FirstLevelDivisionDB.usFilteredFirstLevelDivisions;
+        for (int i = 0, usFilteredFirstLevelDivisionsSize = usFilteredFirstLevelDivisions.size(); i < usFilteredFirstLevelDivisionsSize; i++) {
+          FirstLevelDivision usFLD = usFilteredFirstLevelDivisions.get(i);
           System.out.println(usFLD.getDivision());
         }
       } catch (SQLException e) {
@@ -153,11 +155,13 @@ public class AddCustomerController implements Initializable {
       }
     }
 
-    else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("UK")) {
+    else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("United Kingdom")) {
       try {
         cbDiv.setItems(FirstLevelDivisionDB.getukFilteredFirstLevelDivisions());
 
-        for (FirstLevelDivision ukFLD : FirstLevelDivisionDB.ukFilteredFirstLevelDivisions) {
+        ObservableList<FirstLevelDivision> ukFilteredFirstLevelDivisions = FirstLevelDivisionDB.ukFilteredFirstLevelDivisions;
+        for (int i = 0, ukFilteredFirstLevelDivisionsSize = ukFilteredFirstLevelDivisions.size(); i < ukFilteredFirstLevelDivisionsSize; i++) {
+          FirstLevelDivision ukFLD = ukFilteredFirstLevelDivisions.get(i);
           System.out.println(ukFLD.getDivision());
         }
       } catch (SQLException e) {
@@ -198,13 +202,15 @@ public class AddCustomerController implements Initializable {
 
       ResultSet rs = conn.createStatement().executeQuery("SELECT Customer_ID FROM customers ORDER BY Customer_ID DESC LIMIT 1 ");
       //
-      while (rs.next()) {
+      if (rs.next()) {
+        do {
 
-        int tempID = rs.getInt("Customer_ID");
+          int tempID = rs.getInt("Customer_ID");
 
-        custIDTxt.setText(String.valueOf(tempID + 1));
-        System.out.println(rs.getInt(tempID));
+          custIDTxt.setText(String.valueOf(tempID + 1));
+          System.out.println(rs.getInt(tempID));
 
+        } while (rs.next());
       }
 
 
