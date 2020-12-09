@@ -80,7 +80,7 @@ public class LoginController implements Initializable {
                     isFound = false;
                 }
             }
-            if (isFound != true) {
+            if (!isFound) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("No upcoming appointments!");
                 alert.setContentText("You have no upcoming appointments in the next 15 minutes");
@@ -88,7 +88,7 @@ public class LoginController implements Initializable {
             }
 
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            Object scene = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));
+            Object scene = FXMLLoader.load(getClass().getResource("/Views/MainScreen.fxml"));
             stage.setScene(new Scene((Parent) scene));
             stage.show();
         }
@@ -114,7 +114,7 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         detectedLoc.setText(Locale.getDefault().getLanguage());
         try {
-            rb = ResourceBundle.getBundle("Resources/Nat", Locale.getDefault());
+            rb = ResourceBundle.getBundle("Utilities", Locale.getDefault());
 
             if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
                 GCO.setText(rb.getString("GCO"));

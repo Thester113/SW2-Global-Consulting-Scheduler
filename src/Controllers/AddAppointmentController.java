@@ -1,7 +1,10 @@
 package Controllers;
 
+
+
 import DAO.AppointmentDB;
 import DAO.DBConnection;
+import DAO.Logger;
 import Model.Appointment;
 import Model.Contacts;
 import Model.Users;
@@ -34,7 +37,6 @@ import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
-import java.util.logging.Logger;
 
 import static java.lang.Integer.valueOf;
 
@@ -127,8 +129,8 @@ public class AddAppointmentController implements Initializable {
         try {
 
 
-            TimeZone est = TimeZone.getTimeZone("America/New_York");
-            long offsetToEST = (long) (est.getOffset(new Date().getTime()) / 1000 / 60);
+            TimeZone mst = TimeZone.getTimeZone("America/Salt_Lake_City");
+            long offsetToMST = (long) (mst.getOffset(new Date().getTime()) / 1000 / 60);
             Integer appointmentID = valueOf(aptIDtext.getText());
             String title = aptTitleText.getText();
             String description = aptDescrText.getText();
@@ -147,11 +149,11 @@ public class AddAppointmentController implements Initializable {
 
             LocalDateTime startTime = LocalDateTime.parse(aptStartText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
 
-            startTime = startTime.plus(Duration.ofMinutes(offsetToEST));
+            startTime = startTime.plus(Duration.ofMinutes(offsetToMST));
 
             LocalDateTime endTime = LocalDateTime.parse(aptEndText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
 
-            endTime = endTime.plus(Duration.ofMinutes(offsetToEST));
+            endTime = endTime.plus(Duration.ofMinutes(offsetToMST));
 
 
 
