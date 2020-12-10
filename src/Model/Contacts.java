@@ -2,7 +2,7 @@ package Model;
 
 
 public class Contacts {
-    private  int contactID;
+    private int contactID;
     private String contactName;
     private String contactEmail;
 
@@ -10,6 +10,10 @@ public class Contacts {
         this.contactID = contactID;
         this.contactName = contactName;
         this.contactEmail = contactEmail;
+    }
+
+    public Contacts() {
+
     }
 
     public Contacts(int contactID) {
@@ -45,6 +49,6 @@ public class Contacts {
     @Override
     public String toString() {
 
-        return ("Contact Name: " +(contactName )+ " Contact ID: " + contactID);
+        return ("Contact Name: " + (contactName) + " Contact ID: " + contactID);
     }
 }

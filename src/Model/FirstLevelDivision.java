@@ -1,5 +1,6 @@
 package Model;
 
+
 import java.time.LocalDateTime;
 
 public class FirstLevelDivision {
@@ -82,6 +83,7 @@ public class FirstLevelDivision {
   public void setCountryID(int countryID) {
     this.countryID = countryID;
   }
+
   @Override
   public String toString() {
     return ("Division: "+division + " ID: " + divisionID);

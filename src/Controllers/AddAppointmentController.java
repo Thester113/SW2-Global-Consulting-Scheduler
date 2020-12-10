@@ -1,7 +1,6 @@
 package Controllers;
 
 
-
 import DAO.AppointmentDB;
 import DAO.DBConnection;
 import DAO.Logger;
@@ -17,10 +16,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -105,9 +104,42 @@ public class AddAppointmentController implements Initializable {
     private Button ExitBtn;
 
     @FXML
-    private void SetContactID (MouseEvent event) throws IOException {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        /**
+         *Auto-populate Created By field with the value of a valid user log in that is stored in the User object
+         */
+        aptCreateByText.setText(String.valueOf(Users.getUsername()));
+        aptLstUpdByText.setText(String.valueOf(Users.getUsername()));
+        try {
+            /**
+             * Connection to the database
+             */
+            Connection conn = DBConnection.startConnection();
+            /**
+             * Select the max Appointment ID from appointments table and set it as highestID
+             */
+            ResultSet rs = conn.createStatement().executeQuery("SELECT MAX(Appointment_ID) AS highestID FROM appointments");
+            while (rs.next()) {
+                /**
+                 * Create a temporary var for appointment ID
+                 */
+                int tempID = rs.getInt("highestID");
+                /**
+                 * Set the temp var appointment ID to  increment by 1
+                 */
+                aptIDtext.setText(String.valueOf(tempID + 1));
+                System.out.println(rs.getInt(tempID));
+            }
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        }
+        contactName.setItems(contactList);
+    }
+
+
+    @FXML
+    private void SetContactID(ActionEvent event) throws IOException {
         if (contactName.getSelectionModel().isEmpty()) {
-            return;
         } else {
             Contacts c = contactName.getSelectionModel().getSelectedItem();
             aptContIDText.setText(String.valueOf(c.getContactID()));
@@ -127,16 +159,16 @@ public class AddAppointmentController implements Initializable {
     @FXML
     boolean OnActionAddAppointment(ActionEvent event) throws IOException, SQLException {
         try {
+            //get the users TimeZone offsetToUTC to
 
-
-            TimeZone mst = TimeZone.getTimeZone("America/Salt_Lake_City");
-            long offsetToMST = (long) (mst.getOffset(new Date().getTime()) / 1000 / 60);
+            TimeZone est = TimeZone.getTimeZone("est");
+            Long offsetToEST = Long.valueOf(est.getOffset(new Date().getTime()) / 1000 / 60);
             Integer appointmentID = valueOf(aptIDtext.getText());
             String title = aptTitleText.getText();
             String description = aptDescrText.getText();
             String location = aptLocText.getText();
             String type = aptTypeText.getText();
-
+            //Works when going behind, used my current TZ EST and ahead, used India Standard Time which is 5:30 ahead of UTC
             LocalDateTime start = LocalDateTime.parse(aptStartText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
             LocalDateTime end = LocalDateTime.parse(aptEndText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
             LocalDateTime createDate = LocalDateTime.parse(aptCreateDateText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
@@ -146,28 +178,42 @@ public class AddAppointmentController implements Initializable {
             Integer customerID = valueOf(aptCustIDText.getText());
             Integer userID = valueOf(aptUIDText.getText());
             Integer contactID = valueOf(aptContIDText.getText());
-
+            /**
+             * Compare Local time to Business hours convert text field to z and set business hours to z time
+             *             Get the time entered (user local) and set it to utc
+             */
             LocalDateTime startTime = LocalDateTime.parse(aptStartText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
-
-            startTime = startTime.plus(Duration.ofMinutes(offsetToMST));
-
+            /**
+             * Set the start time to EST
+             */
+            startTime = startTime.plus(Duration.ofMinutes(offsetToEST));
+            /**
+             *Get the time entered (user local) and set it to utc
+             */
             LocalDateTime endTime = LocalDateTime.parse(aptEndText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
+            /**
+             *Set the end time to EST
+             */
+            endTime = endTime.plus(Duration.ofMinutes(offsetToEST));
 
-            endTime = endTime.plus(Duration.ofMinutes(offsetToMST));
+            /**
+             * Compare startTime and endTime between business hours of 8-22
+             */
 
+            LocalTime businessHoursStart = LocalTime.of(8, 00);
+            LocalTime businessHoursEnd = LocalTime.of(22, 00);
 
-
-            LocalTime businessHoursStart = LocalTime.of(9, 00);
-            LocalTime businessHoursEnd = LocalTime.of(23, 00);
-
-
+            /**
+             * Use to check if date time falls between other scheduled appointments
+             */
             LocalDateTime startDateTime = LocalDateTime.parse(aptStartText.getText(), formatter);
             LocalDateTime endDateTime = LocalDateTime.parse(aptEndText.getText(), formatter);
 
+            /**
+             * Check for overlapping appointment times
+             */
 
-            ObservableList<Appointment> allAppointments = AppointmentDB.allAppointments;
-            for (int i = 0, allAppointmentsSize = allAppointments.size(); i < allAppointmentsSize; i++) {
-                Appointment appointment = allAppointments.get(i);
+            for (Appointment appointment : AppointmentDB.allAppointments) {
                 if ((startDateTime.isEqual(appointment.getStart()) || startDateTime.isAfter(appointment.getStart()) && startDateTime.isBefore(appointment.getEnd()))) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("CONFLICT");
@@ -177,16 +223,19 @@ public class AddAppointmentController implements Initializable {
                 }
             }
 
+            /**
+             * Check if time of start and end are within the business hours
+             */
 
             if (startTime.toLocalTime().isBefore(businessHoursStart) || endTime.toLocalTime().isAfter(businessHoursEnd)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("TOO EARLY!");
-                alert.setContentText("Please enter a time after business opening hour of 0900 MDT and before business closing hours of 1000 MDT");
+                alert.setContentText("Please enter a time after business opening hour of 0800 EST and before business closing hours of 1000 EST");
                 alert.showAndWait();
 
             } else if (!title.equals("") && !type.equals("") && !description.equals("") && !location.equals("")) {
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/View/Appointment.fxml"));
+                loader.setLocation(getClass().getResource("/Views/Appointment.fxml"));
                 Parent parent = loader.load();
 
                 Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -194,13 +243,13 @@ public class AddAppointmentController implements Initializable {
                 stage.setScene(new Scene(scene));
                 stage.show();
 
-                return AppointmentDB.addAppointment(appointmentID, title, description, location, type, start, end, createDate, createdBy, lastUpdate, lastUpdatedBy, customerID, userID, contactID);}
+                return AppointmentDB.addAppointment(appointmentID, title, description, location, type, start, end, createDate, createdBy, lastUpdate, lastUpdatedBy, customerID, userID, contactID);
+            }
 
-        }
-        catch (DateTimeParseException e) {
+        } catch (DateTimeParseException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Missing selection");
-            alert.setContentText("Please check that all date and time fields are formatted YYYY-MM-DD HH:MM prior to adding an appointment");
+            alert.setContentText("Please ensure all date and time fields are formatted YYYY-MM-DD HH:MM prior to adding an appointment");
             alert.showAndWait();
         }
         return false;
@@ -214,37 +263,11 @@ public class AddAppointmentController implements Initializable {
             ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM contacts");
             while (rs.next()) {
 
-                contactList.add(new Contacts(rs.getInt("Contact_ID"),rs.getString("Contact_Name"),rs.getString("Email")));
+                contactList.add(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
             }
         } catch (SQLException ce) {
             Logger.getLogger(ce.toString());
         }
     }
 
-
-
-    @FXML
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        aptCreateByText.setText(String.valueOf(Users.getUsername()));
-        aptLstUpdByText.setText(String.valueOf(Users.getUsername()));
-        try {
-
-            Connection conn = DBConnection.startConnection();
-
-            ResultSet rs = conn.createStatement().executeQuery("SELECT MAX(Appointment_ID) AS highestID FROM appointments");
-            if (rs.next()) {
-                do {
-
-                    int tempID = rs.getInt("highestID");
-
-                    aptIDtext.setText(String.valueOf(tempID + 1));
-                    System.out.println(rs.getInt(tempID));
-                } while (rs.next());
-            }
-        } catch (Exception exc) {
-            exc.printStackTrace();
-        }
-        contactName.setItems(contactList);
-    }
 }

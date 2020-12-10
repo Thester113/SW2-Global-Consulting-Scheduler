@@ -37,7 +37,6 @@ import java.util.logging.Logger;
 
 
 public class ModifyAppointmentController implements Initializable {
-    private Appointment newModifyAppointment;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
     Long offsetToUTC = (long) (ZonedDateTime.now().getOffset()).getTotalSeconds();
@@ -119,22 +118,21 @@ public class ModifyAppointmentController implements Initializable {
     @FXML
     public void sendAppointment(Appointment modifyAppointment)
     {
-        newModifyAppointment = modifyAppointment;
-        aptIDtxt.setText(String.valueOf(newModifyAppointment.getAppointmentID()));
-        aptTitleTxt.setText(newModifyAppointment.getTitle());
-        aptDescrTxt.setText(newModifyAppointment.getDescription());
-        aptLocTxt.setText(newModifyAppointment.getLocation());
-        aptTypeTxt.setText(newModifyAppointment.getType());
-        aptStartTxt.setText(newModifyAppointment.getStart().format(formatter));
-        aptEndTxt.setText(newModifyAppointment.getEnd().format(formatter));
-        aptLstUpdByTxt.setText(newModifyAppointment.getLastUpdatedBy());
-        aptLastUpdateTxt.setText(newModifyAppointment.getLastUpdate().format(formatter));
-        aptCreateByTxt.setText(newModifyAppointment.getCreatedBy());
-        aptCreateDateTxt.setText(newModifyAppointment.getCreateDate().format(formatter));
-        aptCustIDTxt.setText(String.valueOf(newModifyAppointment.getCustomerID()));
-        aptUIDTxt.setText(String.valueOf(newModifyAppointment.getUserID()));
-        aptContIDTxt.setText(String.valueOf(newModifyAppointment.getContactID()));
-        int comboBoxPreset = newModifyAppointment.getContactID();
+        aptIDtxt.setText(String.valueOf(modifyAppointment.getAppointmentID()));
+        aptTitleTxt.setText(modifyAppointment.getTitle());
+        aptDescrTxt.setText(modifyAppointment.getDescription());
+        aptLocTxt.setText(modifyAppointment.getLocation());
+        aptTypeTxt.setText(modifyAppointment.getType());
+        aptStartTxt.setText(modifyAppointment.getStart().format(formatter));
+        aptEndTxt.setText(modifyAppointment.getEnd().format(formatter));
+        aptLstUpdByTxt.setText(modifyAppointment.getLastUpdatedBy());
+        aptLastUpdateTxt.setText(modifyAppointment.getLastUpdate().format(formatter));
+        aptCreateByTxt.setText(modifyAppointment.getCreatedBy());
+        aptCreateDateTxt.setText(modifyAppointment.getCreateDate().format(formatter));
+        aptCustIDTxt.setText(String.valueOf(modifyAppointment.getCustomerID()));
+        aptUIDTxt.setText(String.valueOf(modifyAppointment.getUserID()));
+        aptContIDTxt.setText(String.valueOf(modifyAppointment.getContactID()));
+        int comboBoxPreset = modifyAppointment.getContactID();
         Contacts c = new Contacts(comboBoxPreset);
         contactName.setValue(c);
     }

@@ -9,7 +9,6 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-
 public class CustomerDB {
   public static ObservableList<Customers> allCustomers = FXCollections.observableArrayList();
   static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");

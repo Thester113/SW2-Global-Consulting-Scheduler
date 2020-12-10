@@ -84,7 +84,7 @@ public class AddCustomerController implements Initializable {
       String createdBy = createdByTxt.getText();
       LocalDateTime lastUpdate = LocalDateTime.parse(lastUpdateTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
       String lastUpdatedBy = lastUpdatedByTxt.getText();
-      int divisionID = Integer.parseInt(String.valueOf(cbDiv.getSelectionModel().getSelectedItem().getDivisionID()));
+      int divisionID = Integer.valueOf(String.valueOf(cbDiv.getSelectionModel().getSelectedItem().getDivisionID()));
 
 
       if (!customerName.equals("") && !address.equals("") && !postal.equals("") && !phone.equals("")) {

@@ -78,6 +78,33 @@ public class CustomerController implements Initializable {
   private ComboBox<Customers> cbCustomerTable;
 
   @FXML
+  public void initialize(URL url, ResourceBundle resourceBundle) {
+    //Customer Table
+    custCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+    custName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+    custAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+    custPostal.setCellValueFactory(new PropertyValueFactory<>("postal"));
+    custPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+    custCreateDate.setCellValueFactory(new PropertyValueFactory<>("createDate"));
+    custCreatedBy.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
+    custLastUpdate.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
+    custLastUpdatedBy.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
+    custDivisionID.setCellValueFactory(new PropertyValueFactory<>("divisionID"));
+
+    try {
+      custTable.setItems(CustomerDB.getAllCustomers());
+      ObservableList<Customers> allCustomers = CustomerDB.allCustomers;
+      for (int i = 0, allCustomersSize = allCustomers.size(); i < allCustomersSize; i++) {
+        Customers customer = allCustomers.get(i);
+        System.out.println(customer.getCustomerName());
+      }
+    }
+    catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @FXML
   void exitApp(ActionEvent event) {
     Button sourceButton = (Button) event.getSource();
     exitButton.setText(sourceButton.getText());
@@ -177,34 +204,6 @@ public class CustomerController implements Initializable {
       statement.executeUpdate("ALTER TABLE customers AUTO_INCREMENT");
     } catch (SQLException ce) {
       Logger.getLogger(ce.toString());
-    }
-  }
-
-
-  @FXML
-  public void initialize(URL url, ResourceBundle resourceBundle) {
-    //Customer Table
-    custCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerID"));
-    custName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-    custAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
-    custPostal.setCellValueFactory(new PropertyValueFactory<>("postal"));
-    custPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
-    custCreateDate.setCellValueFactory(new PropertyValueFactory<>("createDate"));
-    custCreatedBy.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
-    custLastUpdate.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
-    custLastUpdatedBy.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
-    custDivisionID.setCellValueFactory(new PropertyValueFactory<>("divisionID"));
-
-    try {
-      custTable.setItems(CustomerDB.getAllCustomers());
-      ObservableList<Customers> allCustomers = CustomerDB.allCustomers;
-      for (int i = 0, allCustomersSize = allCustomers.size(); i < allCustomersSize; i++) {
-        Customers customer = allCustomers.get(i);
-        System.out.println(customer.getCustomerName());
-      }
-    }
-    catch (SQLException e) {
-      e.printStackTrace();
     }
   }
 }

@@ -1,10 +1,10 @@
 package DAO;
 
+
 import Model.Users;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 
 public class UsersDB {
 
