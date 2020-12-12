@@ -42,7 +42,7 @@ public class FirstLevelDivisionDB {
   public static ObservableList<FirstLevelDivision> usFilteredFirstLevelDivisions = FXCollections.observableArrayList();
 
   //Create a list of all appointments
-  public static ObservableList<FirstLevelDivision> getusFilteredFirstLevelDivisions() throws SQLException {
+  public static ObservableList<FirstLevelDivision> getUSFilteredFirstLevelDivisions() throws SQLException {
     usFilteredFirstLevelDivisions.clear();
     try {
       Connection conn = DBConnection.startConnection();
@@ -67,7 +67,7 @@ public class FirstLevelDivisionDB {
   public static ObservableList<FirstLevelDivision> ukFilteredFirstLevelDivisions = FXCollections.observableArrayList();
 
   //Create a list of all appointments
-  public static ObservableList<FirstLevelDivision> getukFilteredFirstLevelDivisions() throws SQLException {
+  public static ObservableList<FirstLevelDivision> getUKFilteredFirstLevelDivisions() throws SQLException {
     ukFilteredFirstLevelDivisions.clear();
     try {
       Connection conn = DBConnection.startConnection();
@@ -92,7 +92,7 @@ public class FirstLevelDivisionDB {
   public static ObservableList<FirstLevelDivision> canadaFilteredFirstLevelDivisions = FXCollections.observableArrayList();
 
   //Create a list of all appointments
-  public static ObservableList<FirstLevelDivision> getcanadaFilteredFirstLevelDivisions() throws SQLException {
+  public static ObservableList<FirstLevelDivision> getCanadaFilteredFirstLevelDivisions() throws SQLException {
     canadaFilteredFirstLevelDivisions.clear();
     try {
       Connection conn = DBConnection.startConnection();

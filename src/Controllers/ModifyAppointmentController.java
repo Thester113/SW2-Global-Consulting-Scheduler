@@ -104,7 +104,6 @@ public class ModifyAppointmentController implements Initializable {
                 contactList.add(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
 
             }
-            contactName.setItems(contactList);
         } catch (SQLException ce) {
             Logger.getLogger(ce.toString());
         }

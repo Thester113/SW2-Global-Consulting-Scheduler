@@ -131,7 +131,7 @@ public class AddCustomerController implements Initializable {
 
     else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("United States")) {
       try {
-        cbDiv.setItems(FirstLevelDivisionDB.getusFilteredFirstLevelDivisions());
+        cbDiv.setItems(FirstLevelDivisionDB.getUSFilteredFirstLevelDivisions());
 
         ObservableList<FirstLevelDivision> usFilteredFirstLevelDivisions = FirstLevelDivisionDB.usFilteredFirstLevelDivisions;
         for (int i = 0, usFilteredFirstLevelDivisionsSize = usFilteredFirstLevelDivisions.size(); i < usFilteredFirstLevelDivisionsSize; i++) {
@@ -146,7 +146,7 @@ public class AddCustomerController implements Initializable {
 
     else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("Canada")) {
       try {
-        cbDiv.setItems(FirstLevelDivisionDB.getcanadaFilteredFirstLevelDivisions());
+        cbDiv.setItems(FirstLevelDivisionDB.getCanadaFilteredFirstLevelDivisions());
         for (FirstLevelDivision canadaFLD : FirstLevelDivisionDB.canadaFilteredFirstLevelDivisions) {
           System.out.println(canadaFLD.getDivision());
         }
@@ -157,7 +157,7 @@ public class AddCustomerController implements Initializable {
 
     else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("United Kingdom")) {
       try {
-        cbDiv.setItems(FirstLevelDivisionDB.getukFilteredFirstLevelDivisions());
+        cbDiv.setItems(FirstLevelDivisionDB.getUKFilteredFirstLevelDivisions());
 
         ObservableList<FirstLevelDivision> ukFilteredFirstLevelDivisions = FirstLevelDivisionDB.ukFilteredFirstLevelDivisions;
         for (int i = 0, ukFilteredFirstLevelDivisionsSize = ukFilteredFirstLevelDivisions.size(); i < ukFilteredFirstLevelDivisionsSize; i++) {

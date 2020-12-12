@@ -93,8 +93,10 @@ public class LoginController implements Initializable {
             Object scene = FXMLLoader.load(getClass().getResource("/Views/MainScreen.fxml"));
             stage.setScene(new Scene((Parent) scene));
             stage.show();
-        }
-        else if (!verifiedUser || userIDField.getText().isEmpty() || passwordField.getText().isEmpty()) {
+        } else {
+            if (verifiedUser && !userIDField.getText().isEmpty()) {
+                passwordField.getText();
+            }
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(loginError);
             alert.setHeaderText(errorHeader);
@@ -116,7 +118,7 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         detectedLoc.setText(Locale.getDefault().getLanguage());
         try {
-            rb = ResourceBundle.getBundle("Utilities", Locale.getDefault());
+            rb = ResourceBundle.getBundle("Utilities/lang", Locale.getDefault());
 
             if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
                 GCO.setText(rb.getString("GCO"));
