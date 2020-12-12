@@ -3,7 +3,8 @@ package Controllers;
 import Model.Appointment;
 import DAO.AppointmentDB;
 import DAO.DBConnection;
-import DAO.UserDB;
+import DAO.UsersDB;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +23,7 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
+    private Alert alert;
     private String loginError;
     private String enterCorrectUorP;
     private String errorHeader;
@@ -58,23 +60,25 @@ public class LoginController implements Initializable {
         String password = passwordField.getText();
 
 
-        boolean verifiedUser = UserDB.login(username, password);
+        boolean verifiedUser = UsersDB.login(username, password);
         if (verifiedUser) {
             boolean isFound = true;
             AppointmentDB.getAllAppointments();
-            // foreach lambda loop
-            for (Appointment appointment : AppointmentDB.allAppointments) {
+            //foreach lamda loop
+            ObservableList<Appointment> allAppointments = AppointmentDB.allAppointments;
+            for (int i = 0, allAppointmentsSize = allAppointments.size(); i < allAppointmentsSize; i++) {
+                Appointment appointment = allAppointments.get(i);
                 LocalDateTime within15Minutes = LocalDateTime.now();
-
-                if (within15Minutes.isAfter(appointment.getStart().minusMinutes(15)) && within15Minutes.isBefore(appointment.getStart())){
+                isFound = true;
+                // 15-1 minute(s) of all start times
+                if (within15Minutes.isAfter(appointment.getStart().minusMinutes(15)) && within15Minutes.isBefore(appointment.getStart())) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("UPCOMING APPOINTMENT");
                     alert.setContentText("Appointment: " + appointment.getAppointmentID() + " starts at " + appointment.getStart());
                     alert.showAndWait();
                     isFound = true;
                     break;
-                }
-                else {
+                } else {
                     isFound = false;
                 }
             }
@@ -86,12 +90,12 @@ public class LoginController implements Initializable {
             }
 
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            Object scene = FXMLLoader.load(getClass().getResource("/View/MainMenu.fxml"));
+            Object scene = FXMLLoader.load(getClass().getResource("/Views/MainScreen.fxml"));
             stage.setScene(new Scene((Parent) scene));
             stage.show();
         }
-        else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
+        else if (!verifiedUser || userIDField.getText().isEmpty() || passwordField.getText().isEmpty()) {
+            alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(loginError);
             alert.setHeaderText(errorHeader);
             alert.setContentText(enterCorrectUorP);
@@ -112,7 +116,7 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         detectedLoc.setText(Locale.getDefault().getLanguage());
         try {
-            rb = ResourceBundle.getBundle("Resources/Nat", Locale.getDefault());
+            rb = ResourceBundle.getBundle("Utilities", Locale.getDefault());
 
             if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
                 GCO.setText(rb.getString("GCO"));
@@ -125,7 +129,7 @@ public class LoginController implements Initializable {
                 errorHeader = rb.getString(errorHeader);
 
             }
-        } catch (Exception ignored) {
+        } catch (Exception e) {
         }
     }
 }

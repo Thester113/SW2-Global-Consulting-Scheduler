@@ -1,10 +1,12 @@
 package Controllers;
 
+
 import DAO.AppointmentDB;
 import DAO.DBConnection;
+import DAO.Logger;
 import Model.Appointment;
 import Model.Contacts;
-import Model.User;
+import Model.Users;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,10 +16,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -34,58 +36,63 @@ import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
-import java.util.logging.Logger;
 
 import static java.lang.Integer.valueOf;
 
 public class AddAppointmentController implements Initializable {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
     Long offsetToUTC = (long) (ZonedDateTime.now().getOffset()).getTotalSeconds();
 
     @FXML
-    private TextField aptIDtxt;
+    private TextField aptIDtext;
+
 
     @FXML
-    private TextField aptTitleTxt;
+    private TextField aptTitleText;
+
 
     @FXML
-    private TextField aptDescrTxt;
+    private TextField aptDescrText;
+
 
     @FXML
-    private TextField aptLocTxt;
+    private TextField aptLocText;
+
 
     @FXML
-    private TextField aptTypeTxt;
+    private TextField aptTypeText;
+
 
     @FXML
-    private TextField aptCreateByTxt;
+    private TextField aptCreateByText;
 
     @FXML
-    private TextField aptLstUpdByTxt;
+    private TextField aptLstUpdByText;
 
     @FXML
-    private TextField aptCustIDTxt;
+    private TextField aptCustIDText;
 
     @FXML
-    private TextField aptUIDTxt;
+    private TextField aptUIDText;
 
     @FXML
-    private TextField aptContIDTxt;
+    private TextField aptContIDText;
+
 
     @FXML
-    private TextField aptStartTxt;
+    private TextField aptStartText;
 
     @FXML
-    private TextField aptEndTxt;
+    private TextField aptEndText;
 
     @FXML
-    private TextField aptCreateDateTxt;
+    private TextField aptCreateDateText;
 
     @FXML
-    private TextField aptLastUpdateTxt;
+    private TextField aptLastUpdateText;
 
     @FXML
     private ComboBox<Contacts> contactName;
@@ -97,19 +104,42 @@ public class AddAppointmentController implements Initializable {
     private Button ExitBtn;
 
     @FXML
-    private void SetContactID (MouseEvent event) throws IOException {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        aptCreateByText.setText(String.valueOf(Users.getUsername()));
+        aptLstUpdByText.setText(String.valueOf(Users.getUsername()));
+        try {
+
+            Connection conn = DBConnection.startConnection();
+
+            ResultSet rs = conn.createStatement().executeQuery("SELECT MAX(Appointment_ID) AS highestID FROM appointments");
+            while (rs.next()) {
+
+                int tempID = rs.getInt("highestID");
+
+                aptIDtext.setText(String.valueOf(tempID + 1));
+                System.out.println(rs.getInt(tempID));
+            }
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        }
+        contactName.setItems(contactList);
+    }
+
+
+    @FXML
+    void SetContactID(ActionEvent event) throws IOException {
         if (contactName.getSelectionModel().isEmpty()) {
-            return;
         } else {
             Contacts c = contactName.getSelectionModel().getSelectedItem();
-            aptContIDTxt.setText(String.valueOf(c.getContactID()));
+            aptContIDText.setText(String.valueOf(c.getContactID()));
         }
     }
 
     @FXML
     void ExitToMain(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        Object scene = FXMLLoader.load(getClass().getResource("/View/Appointment.fxml"));
+        Object scene = FXMLLoader.load(getClass().getResource("/Views/Appointment.fxml"));
         stage.setScene(new Scene((Parent) scene));
         stage.show();
     }
@@ -121,45 +151,43 @@ public class AddAppointmentController implements Initializable {
         try {
 
 
-            TimeZone est = TimeZone.getTimeZone("America/New_York");
-            long offsetToEST = (long) (est.getOffset(new Date().getTime()) / 1000 / 60);
-            Integer appointmentID = valueOf(aptIDtxt.getText());
-            String title = aptTitleTxt.getText();
-            String description = aptDescrTxt.getText();
-            String location = aptLocTxt.getText();
-            String type = aptTypeTxt.getText();
+            TimeZone est = TimeZone.getTimeZone("est");
+            long offsetToEST = est.getOffset(new Date().getTime()) / 1000 / 60;
+            Integer appointmentID = valueOf(aptIDtext.getText());
+            String title = aptTitleText.getText();
+            String description = aptDescrText.getText();
+            String location = aptLocText.getText();
+            String type = aptTypeText.getText();
 
-            LocalDateTime start = LocalDateTime.parse(aptStartTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
-            LocalDateTime end = LocalDateTime.parse(aptEndTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
-            LocalDateTime createDate = LocalDateTime.parse(aptCreateDateTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
-            String createdBy = aptCreateByTxt.getText();
-            LocalDateTime lastUpdate = LocalDateTime.parse(aptLastUpdateTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
-            String lastUpdatedBy = aptLstUpdByTxt.getText();
-            Integer customerID = valueOf(aptCustIDTxt.getText());
-            Integer userID = valueOf(aptUIDTxt.getText());
-            Integer contactID = valueOf(aptContIDTxt.getText());
+            LocalDateTime start = LocalDateTime.parse(aptStartText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
+            LocalDateTime end = LocalDateTime.parse(aptEndText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
+            LocalDateTime createDate = LocalDateTime.parse(aptCreateDateText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
+            String createdBy = aptCreateByText.getText();
+            LocalDateTime lastUpdate = LocalDateTime.parse(aptLastUpdateText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
+            String lastUpdatedBy = aptLstUpdByText.getText();
+            Integer customerID = valueOf(aptCustIDText.getText());
+            Integer userID = valueOf(aptUIDText.getText());
+            Integer contactID = valueOf(aptContIDText.getText());
 
-            LocalDateTime startTime = LocalDateTime.parse(aptStartTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
+            LocalDateTime startTime = LocalDateTime.parse(aptStartText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
 
             startTime = startTime.plus(Duration.ofMinutes(offsetToEST));
 
-            LocalDateTime endTime = LocalDateTime.parse(aptEndTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
+            LocalDateTime endTime = LocalDateTime.parse(aptEndText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
 
             endTime = endTime.plus(Duration.ofMinutes(offsetToEST));
 
 
+            LocalTime businessHoursStart = LocalTime.of(8, 00);
+            LocalTime businessHoursEnd = LocalTime.of(22, 00);
 
-            LocalTime businessHoursStart = LocalTime.of(9, 00);
-            LocalTime businessHoursEnd = LocalTime.of(23, 00);
 
-
-            LocalDateTime startDateTime = LocalDateTime.parse(aptStartTxt.getText(), formatter);
-            LocalDateTime endDateTime = LocalDateTime.parse(aptEndTxt.getText(), formatter);
-
+            LocalDateTime startDateTime = LocalDateTime.parse(aptStartText.getText(), formatter);
+            LocalDateTime endDateTime = LocalDateTime.parse(aptEndText.getText(), formatter);
 
 
             for (Appointment appointment : AppointmentDB.allAppointments) {
-                if((startDateTime.isEqual(appointment.getStart()) || startDateTime.isAfter(appointment.getStart()) && startDateTime.isBefore(appointment.getEnd()))) {
+                if ((startDateTime.isEqual(appointment.getStart()) || startDateTime.isAfter(appointment.getStart()) && startDateTime.isBefore(appointment.getEnd()))) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("CONFLICT");
                     alert.setContentText("Please enter a time for the start and end time of the appointment that is not already taken");
@@ -167,7 +195,6 @@ public class AddAppointmentController implements Initializable {
                     return false;
                 }
             }
-
 
             if (startTime.toLocalTime().isBefore(businessHoursStart) || endTime.toLocalTime().isAfter(businessHoursEnd)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -177,7 +204,7 @@ public class AddAppointmentController implements Initializable {
 
             } else if (!title.equals("") && !type.equals("") && !description.equals("") && !location.equals("")) {
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/View/Appointment.fxml"));
+                loader.setLocation(getClass().getResource("/Views/Appointment.fxml"));
                 Parent parent = loader.load();
 
                 Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -185,10 +212,10 @@ public class AddAppointmentController implements Initializable {
                 stage.setScene(new Scene(scene));
                 stage.show();
 
-                return AppointmentDB.addAppointment(appointmentID, title, description, location, type, start, end, createDate, createdBy, lastUpdate, lastUpdatedBy, customerID, userID, contactID);}
+                return AppointmentDB.addAppointment(appointmentID, title, description, location, type, start, end, createDate, createdBy, lastUpdate, lastUpdatedBy, customerID, userID, contactID);
+            }
 
-        }
-        catch (DateTimeParseException e) {
+        } catch (DateTimeParseException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Missing selection");
             alert.setContentText("Please ensure all date and time fields are formatted YYYY-MM-DD HH:MM prior to adding an appointment");
@@ -205,35 +232,11 @@ public class AddAppointmentController implements Initializable {
             ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM contacts");
             while (rs.next()) {
 
-                contactList.add(new Contacts(rs.getInt("Contact_ID"),rs.getString("Contact_Name"),rs.getString("Email")));
+                contactList.add(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
             }
         } catch (SQLException ce) {
             Logger.getLogger(ce.toString());
         }
     }
 
-
-
-    @FXML
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        aptCreateByTxt.setText(String.valueOf(User.getUsername()));
-        aptLstUpdByTxt.setText(String.valueOf(User.getUsername()));
-        try {
-
-            Connection conn = DBConnection.startConnection();
-
-            ResultSet rs = conn.createStatement().executeQuery("SELECT MAX(Appointment_ID) AS highestID FROM appointments");
-            while (rs.next()) {
-
-                int tempID = rs.getInt("highestID");
-
-                aptIDtxt.setText(String.valueOf(tempID + 1));
-                System.out.println(rs.getInt(tempID));
-            }
-        } catch (Exception exc) {
-            exc.printStackTrace();
-        }
-        contactName.setItems(contactList);
-    }
 }

@@ -15,43 +15,43 @@
             <Font size="18.0"/>
         </font>
     </Label>
-    <Label layoutX="46.0" layoutY="72.0" text="Appointment ID">
+    <Label layoutX="29.0" layoutY="72.0" text="Appointment ID">
         <font>
             <Font size="14.0"/>
         </font>
     </Label>
-    <Label layoutX="46.0" layoutY="104.0" text="Title">
+    <Label layoutX="29.0" layoutY="105.0" text="Appointment Title">
         <font>
             <Font size="14.0"/>
         </font>
     </Label>
-    <Label layoutX="46.0" layoutY="139.0" text="Description">
+    <Label layoutX="42.0" layoutY="140.0" text="Description">
         <font>
             <Font size="14.0"/>
         </font>
     </Label>
-    <Label layoutX="46.0" layoutY="173.0" text="Location">
+    <Label layoutX="50.0" layoutY="174.0" text="Location">
         <font>
             <Font size="14.0"/>
         </font>
     </Label>
-    <Label layoutX="46.0" layoutY="207.0" text="Type">
+    <Label layoutX="61.0" layoutY="208.0" text="Type">
         <font>
             <Font size="14.0"/>
         </font>
     </Label>
-    <Label layoutX="46.0" layoutY="242.0" text="Start">
+    <Label layoutX="46.0" layoutY="242.0" text="Start Time">
         <font>
             <Font size="14.0"/>
         </font>
     </Label>
-    <TextField fx:id="aptIDtxt" disable="true" editable="false" layoutX="151.0" layoutY="67.0"
+    <TextField fx:id="aptIDtext" disable="true" editable="false" layoutX="151.0" layoutY="67.0"
                promptText="Auto-Generated"/>
-    <TextField fx:id="aptTitleTxt" layoutX="151.0" layoutY="100.0"/>
-    <TextField fx:id="aptDescrTxt" layoutX="151.0" layoutY="135.0"/>
-    <TextField fx:id="aptLocTxt" layoutX="151.0" layoutY="169.0"/>
-    <TextField fx:id="aptTypeTxt" layoutX="151.0" layoutY="203.0"/>
-    <Label layoutX="48.0" layoutY="280.0" text="End">
+    <TextField fx:id="aptTitleText" layoutX="151.0" layoutY="100.0"/>
+    <TextField fx:id="aptDescrText" layoutX="151.0" layoutY="135.0"/>
+    <TextField fx:id="aptLocText" layoutX="151.0" layoutY="169.0"/>
+    <TextField fx:id="aptTypeText" layoutX="151.0" layoutY="203.0"/>
+    <Label layoutX="48.0" layoutY="280.0" text="End Time">
         <font>
             <Font size="14.0"/>
         </font>
@@ -81,30 +81,30 @@
             <Font size="14.0"/>
         </font>
     </Label>
-    <TextField fx:id="aptCreateByTxt" layoutX="151.0" layoutY="356.0" promptText="Enter Name"/>
-    <Label layoutX="324.0" layoutY="173.0" text="User ID">
+    <TextField fx:id="aptCreateByText" layoutX="151.0" layoutY="356.0" promptText="Enter Name"/>
+    <Label layoutX="334.0" layoutY="174.0" text="User ID">
         <font>
             <Font size="14.0"/>
         </font>
     </Label>
-    <Label layoutX="324.0" layoutY="208.0" text="Contact ID">
+    <Label layoutX="337.0" layoutY="208.0" text="Contact ID">
         <font>
             <Font size="14.0"/>
         </font>
     </Label>
-    <TextField fx:id="aptLstUpdByTxt" layoutX="431.0" layoutY="101.0"/>
-    <TextField fx:id="aptCustIDTxt" layoutX="431.0" layoutY="135.0"/>
-    <TextField fx:id="aptUIDTxt" layoutX="431.0" layoutY="169.0"/>
-    <TextField fx:id="aptContIDTxt" disable="true" layoutX="431.0" layoutY="204.0"/>
+    <TextField fx:id="aptLstUpdByText" layoutX="431.0" layoutY="101.0"/>
+    <TextField fx:id="aptCustIDText" layoutX="431.0" layoutY="135.0"/>
+    <TextField fx:id="aptUIDText" layoutX="431.0" layoutY="169.0"/>
+    <TextField fx:id="aptContIDText" disable="true" layoutX="431.0" layoutY="204.0"/>
     <Button fx:id="AddAppointmentBtn" layoutX="387.0" layoutY="312.0" mnemonicParsing="false"
             onAction="#OnActionAddAppointment" prefHeight="27.0" prefWidth="161.0" text="Add Appointment"/>
     <Button fx:id="ExitBtn" layoutX="554.0" layoutY="356.0" mnemonicParsing="false" onAction="#ExitToMain" text="Exit"/>
-    <TextField fx:id="aptStartTxt" layoutX="151.0" layoutY="238.0" promptText="YYYY-MM-DD HH:MM:SS"/>
-    <TextField fx:id="aptEndTxt" layoutX="151.0" layoutY="276.0" promptText="YYYY-MM-DD HH:MM:SS"/>
-    <TextField fx:id="aptCreateDateTxt" layoutX="151.0" layoutY="321.0" promptText="YYYY-MM-DD HH:MM:SS"/>
-    <TextField fx:id="aptLastUpdateTxt" layoutX="431.0" layoutY="67.0" promptText="YYYY-MM-DD HH:MM:SS"/>
-    <ComboBox fx:id="contactName" layoutX="431.0" layoutY="238.0" onAction="#SetContactID"
-              onMouseEntered="#SetContactID" prefHeight="27.0" prefWidth="161.0"/>
+    <TextField fx:id="aptStartText" layoutX="151.0" layoutY="238.0" promptText="YYYY-MM-DD HH:MM"/>
+    <TextField fx:id="aptEndText" layoutX="151.0" layoutY="276.0" promptText="YYYY-MM-DD HH:MM"/>
+    <TextField fx:id="aptCreateDateText" layoutX="151.0" layoutY="321.0" promptText="YYYY-MM-DD HH:MM"/>
+    <TextField fx:id="aptLastUpdateText" layoutX="431.0" layoutY="67.0" promptText="YYYY-MM-DD HH:MM"/>
+    <ComboBox fx:id="contactName" layoutX="431.0" layoutY="238.0" onAction="#SetContactID" prefHeight="27.0"
+              prefWidth="161.0"/>
     <Label layoutX="326.0" layoutY="242.0" text="Contact Name">
         <font>
             <Font size="14.0"/>

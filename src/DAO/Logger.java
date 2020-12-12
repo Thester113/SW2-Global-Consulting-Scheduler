@@ -21,5 +21,8 @@ public class Logger {
             System.out.println("Logger Error: " + e.getMessage());
         }
     }
+
+    public static void getLogger(String toString) {
+    }
 }
 

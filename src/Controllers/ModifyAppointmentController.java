@@ -6,6 +6,7 @@ import Model.Appointment;
 import Model.Contacts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,9 +16,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -30,13 +32,13 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 import java.util.logging.Logger;
 
 
 public class ModifyAppointmentController implements Initializable {
-    private Appointment newModifyAppointment;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
     Long offsetToUTC = (long) (ZonedDateTime.now().getOffset()).getTotalSeconds();
@@ -93,22 +95,28 @@ public class ModifyAppointmentController implements Initializable {
     private ComboBox<Contacts> contactName;
     ObservableList<Contacts> contactList = FXCollections.observableArrayList();
 
-    public void EditAppointment() throws SQLException {
+    public ModifyAppointmentController() throws SQLException {
         try {
             Connection conn = DBConnection.startConnection();
             ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM contacts");
             while (rs.next()) {
 
-                contactList.add(new Contacts(rs.getInt("Contact_ID"),rs.getString("Contact_Name"),rs.getString("Email")));
+                contactList.add(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
 
             }
+            contactName.setItems(contactList);
         } catch (SQLException ce) {
             Logger.getLogger(ce.toString());
         }
     }
 
     @FXML
-    private void SetContactID (ActionEvent event) throws IOException {
+    void SetContactID(MouseEvent event) throws IOException {
+        if (contactName.getSelectionModel().isEmpty()) {
+        } else {
+            Contacts c = contactName.getSelectionModel().getSelectedItem();
+            aptContIDTxt.setText(String.valueOf(c.getContactID()));
+        }
 
     }
 
@@ -116,30 +124,29 @@ public class ModifyAppointmentController implements Initializable {
     @FXML
     public void sendAppointment(Appointment modifyAppointment)
     {
-        newModifyAppointment = modifyAppointment;
-        aptIDtxt.setText(String.valueOf(newModifyAppointment.getAppointmentID()));
-        aptTitleTxt.setText(newModifyAppointment.getTitle());
-        aptDescrTxt.setText(newModifyAppointment.getDescription());
-        aptLocTxt.setText(newModifyAppointment.getLocation());
-        aptTypeTxt.setText(newModifyAppointment.getType());
-        aptStartTxt.setText(String.valueOf(newModifyAppointment.getStart().format(formatter)));
-        aptEndTxt.setText(String.valueOf(newModifyAppointment.getEnd().format(formatter)));
-        aptLstUpdByTxt.setText(newModifyAppointment.getLastUpdatedBy());
-        aptLastUpdateTxt.setText(String.valueOf(newModifyAppointment.getLastUpdate().format(formatter)));
-        aptCreateByTxt.setText(newModifyAppointment.getCreatedBy());
-        aptCreateDateTxt.setText(String.valueOf(newModifyAppointment.getCreateDate().format(formatter)));
-        aptCustIDTxt.setText(String.valueOf(newModifyAppointment.getCustomerID()));
-        aptUIDTxt.setText(String.valueOf(newModifyAppointment.getUserID()));
-        aptContIDTxt.setText(String.valueOf(newModifyAppointment.getContactID()));
-        int comboBoxPreset = newModifyAppointment.getContactID();
+        aptIDtxt.setText(String.valueOf(modifyAppointment.getAppointmentID()));
+        aptTitleTxt.setText(modifyAppointment.getTitle());
+        aptDescrTxt.setText(modifyAppointment.getDescription());
+        aptLocTxt.setText(modifyAppointment.getLocation());
+        aptTypeTxt.setText(modifyAppointment.getType());
+        aptStartTxt.setText(modifyAppointment.getStart().format(formatter));
+        aptEndTxt.setText(modifyAppointment.getEnd().format(formatter));
+        aptLstUpdByTxt.setText(modifyAppointment.getLastUpdatedBy());
+        aptLastUpdateTxt.setText(modifyAppointment.getLastUpdate().format(formatter));
+        aptCreateByTxt.setText(modifyAppointment.getCreatedBy());
+        aptCreateDateTxt.setText(modifyAppointment.getCreateDate().format(formatter));
+        aptCustIDTxt.setText(String.valueOf(modifyAppointment.getCustomerID()));
+        aptUIDTxt.setText(String.valueOf(modifyAppointment.getUserID()));
+        aptContIDTxt.setText(String.valueOf(modifyAppointment.getContactID()));
+        int comboBoxPreset = modifyAppointment.getContactID();
         Contacts c = new Contacts(comboBoxPreset);
         contactName.setValue(c);
     }
 
     @FXML
-    void ExitToMain(ActionEvent event) throws IOException {
+    public void ExitToMain(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        Object scene = FXMLLoader.load(getClass().getResource("/View/Appointment.fxml"));
+        Object scene = FXMLLoader.load(getClass().getResource("/Views/Appointment.fxml"));
         stage.setScene(new Scene((Parent) scene));
         stage.show();
     }
@@ -149,8 +156,7 @@ public class ModifyAppointmentController implements Initializable {
     void OAFillContID(ActionEvent event) {
         if (contactName.getSelectionModel().isEmpty()) {
             return;
-        }
-        else {
+        } else {
             Contacts c = contactName.getSelectionModel().getSelectedItem();
             aptContIDTxt.setText(String.valueOf(c.getContactID()));
         }
@@ -158,9 +164,9 @@ public class ModifyAppointmentController implements Initializable {
 
 
     @FXML
-    boolean OnActionEditAppointment(ActionEvent event) throws SQLException, IOException{
-        TimeZone est = TimeZone.getTimeZone("America/New_York");
-        long offsetToEST = (long) (est.getOffset(new Date().getTime()) / 1000 / 60);
+    boolean OnActionEditAppointment(ActionEvent event) throws SQLException, IOException {
+        TimeZone tz = TimeZone.getTimeZone("America/New_York");
+        long offsetToEST = tz.getOffset(new Date().getTime()) / 1000 / 60;
         LocalDateTime startTime = LocalDateTime.parse(aptStartTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
 
         startTime = startTime.plus(Duration.ofMinutes(offsetToEST));
@@ -170,9 +176,8 @@ public class ModifyAppointmentController implements Initializable {
         endTime = endTime.plus(Duration.ofMinutes(offsetToEST));
 
 
-
-        LocalTime businessHoursStart = LocalTime.of(9, 00);
-        LocalTime businessHoursEnd = LocalTime.of(23, 00);
+        LocalTime businessHoursStart = LocalTime.of(8, 00);
+        LocalTime businessHoursEnd = LocalTime.of(22, 00);
 
 
         LocalDateTime startDateTime = LocalDateTime.parse(aptStartTxt.getText(), formatter);
@@ -187,8 +192,10 @@ public class ModifyAppointmentController implements Initializable {
             }
 
 
-            for (Appointment appointment : AppointmentDB.allAppointments) {
-                if((startDateTime.isEqual(appointment.getStart()) || startDateTime.isAfter(appointment.getStart()) && startDateTime.isBefore(appointment.getEnd()))) {
+            ObservableList<Appointment> allAppointments = AppointmentDB.allAppointments;
+            for (Iterator<Appointment> iterator = allAppointments.iterator(); iterator.hasNext(); ) {
+                Appointment appointment = iterator.next();
+                if ((startDateTime.isEqual(appointment.getStart()) || startDateTime.isAfter(appointment.getStart()) && startDateTime.isBefore(appointment.getEnd()))) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("CONFLICT");
                     alert.setContentText("Please enter a time for the start and end time of the appointment that is not already taken");
@@ -207,7 +214,7 @@ public class ModifyAppointmentController implements Initializable {
             }
             if (!aptTitleTxt.equals("") && !aptTypeTxt.equals("") && !aptDescrTxt.equals("") && !aptLocTxt.equals("")){
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/View/Appointment.fxml"));
+                loader.setLocation(getClass().getResource("/Views/Appointment.fxml"));
                 Parent parent = loader.load();
 
                 Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();

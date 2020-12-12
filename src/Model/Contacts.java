@@ -2,7 +2,7 @@ package Model;
 
 
 public class Contacts {
-    private  int contactID;
+    private int contactID;
     private String contactName;
     private String contactEmail;
 
@@ -20,7 +20,8 @@ public class Contacts {
         this.contactID = contactID;
     }
 
-    public  int getContactID() {
+
+    public int getContactID() {
         return contactID;
     }
 
@@ -45,10 +46,10 @@ public class Contacts {
     }
 
 
-
     @Override
+    //(credit Mark Kinkead Webinar on Combo Boxes)
     public String toString() {
 
-        return ("Contact Name: " +(contactName )+ " Contact ID: " + contactID);
+        return ("Contact Name: " + (contactName) + " Contact ID: " + contactID);
     }
 }

@@ -1,5 +1,6 @@
 package Controllers;
 
+
 import DAO.AppointmentDB;
 import DAO.DBConnection;
 import Model.Appointment;
@@ -35,15 +36,11 @@ public class AppointmentController implements Initializable {
 
     @FXML
     private ToggleGroup aptTableTGLGRP;
-    /**
-     * @param weeklyRB shows weekly appointments
-     */
+
     @FXML
     private RadioButton weeklyRB;
 
-    /**
-     * @param monthlyRB shows monthly appointments
-     */
+
     @FXML
     private RadioButton monthlyRB;
 
@@ -115,6 +112,17 @@ public class AppointmentController implements Initializable {
     public AppointmentController() throws SQLException {
     }
 
+    @FXML
+    void sceneMainMenu(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/Views/MainScreen.fxml"));
+        loader.load();
+
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        Parent scene = loader.getRoot();
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
 
     @FXML
     void RBallAppointmentsOA(ActionEvent event) throws SQLException {
@@ -184,7 +192,7 @@ public class AppointmentController implements Initializable {
     void sceneAddAppointment(ActionEvent event) throws IOException {
 
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/View/AddAppointment.fxml"));
+        loader.setLocation(getClass().getResource("/Views/AddAppointment.fxml"));
         loader.load();
 
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -208,7 +216,7 @@ public class AppointmentController implements Initializable {
                 deleteAppointment(selectedItem.getAppointmentID());
                 System.out.println("Appointment: " + selectedItem.getAppointmentID() + " Successful!");
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/View/Appointment.fxml"));
+                loader.setLocation(getClass().getResource("/Views/Appointment.fxml"));
                 Parent parent = loader.load();
 
                 Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -228,10 +236,10 @@ public class AppointmentController implements Initializable {
 
             Appointment modifyAppointment = aptTable.getSelectionModel().getSelectedItem();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/View/ModifyAppointment.fxml"));
+            loader.setLocation(getClass().getResource("/Views/ModifyAppointment.fxml"));
             Parent parent = loader.load();
             Scene modifyCustomerScene = new Scene(parent);
-            /**Sending the selected object from the table to a method on the Edit Appointment Scene*/
+
             ModifyAppointmentController controller = loader.getController();
             controller.sendAppointment(modifyAppointment);
 
@@ -246,18 +254,6 @@ public class AppointmentController implements Initializable {
             alert.setContentText("Please select an appointment you would like to edit.");
             alert.showAndWait();
         }
-    }
-
-    @FXML
-    void sceneMainMenu(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/View/MainMenu.fxml"));
-        loader.load();
-
-        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        Parent scene = loader.getRoot();
-        stage.setScene(new Scene(scene));
-        stage.show();
     }
 
     @FXML
@@ -279,8 +275,10 @@ public class AppointmentController implements Initializable {
         aptContID.setCellValueFactory(new PropertyValueFactory<>("contactID"));
         try {
             aptTable.setItems(AppointmentDB.getAllAppointments());
-            /**lambda to get all appointments*/
-            for (Appointment appointment : AppointmentDB.allAppointments) {
+
+            ObservableList<Appointment> allAppointments = AppointmentDB.allAppointments;
+            for (int i = 0, allAppointmentsSize = allAppointments.size(); i < allAppointmentsSize; i++) {
+                Appointment appointment = allAppointments.get(i);
                 System.out.println(appointment.getStart());
             }
         } catch (SQLException e) {

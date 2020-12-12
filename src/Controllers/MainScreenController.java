@@ -1,4 +1,5 @@
 package Controllers;
+
 import DAO.DBConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
@@ -39,12 +41,10 @@ public class MainScreenController implements Initializable {
     @FXML
     private Button exitButton;
 
-    /**
-     * Exit the application
-     * @param event
-     */
+
     @FXML
     void exitApp(ActionEvent event) {
+
         Button sourceButton = (Button) event.getSource();
         exitButton.setText(sourceButton.getText());
         DBConnection.closeConnection();
@@ -55,7 +55,7 @@ public class MainScreenController implements Initializable {
     @FXML
     void sceneAptMain(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        Object scene = FXMLLoader.load(getClass().getResource("/Views/AppointmentMain.fxml"));
+        Object scene = FXMLLoader.load(getClass().getResource("/Views/Appointment.fxml"));
         stage.setScene(new Scene((Parent) scene));
         stage.show();
     }
@@ -63,7 +63,7 @@ public class MainScreenController implements Initializable {
     @FXML
     void sceneCustMain(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        Object scene = FXMLLoader.load(getClass().getResource("/Views/CustomerMain.fxml"));
+        Object scene = FXMLLoader.load(getClass().getResource("/Views/Customer.fxml"));
         stage.setScene(new Scene((Parent) scene));
         stage.show();
     }
@@ -72,7 +72,7 @@ public class MainScreenController implements Initializable {
     @FXML
     void sceneCustomerSchedulesReport(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        Object scene = FXMLLoader.load(getClass().getResource("/Views/CustomerSchedulesReport.fxml"));
+        Object scene = FXMLLoader.load(getClass().getResource("/Views/CustomerScheduleReport.fxml"));
         stage.setScene(new Scene((Parent) scene));
         stage.show();
     }
@@ -80,7 +80,7 @@ public class MainScreenController implements Initializable {
     @FXML
     void sceneContactSchedulesReport(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        Object scene = FXMLLoader.load(getClass().getResource("/Views/ContactSchedulesReport.fxml"));
+        Object scene = FXMLLoader.load(getClass().getResource("/Views/ContactsReport.fxml"));
         stage.setScene(new Scene((Parent) scene));
         stage.show();
     }
@@ -89,7 +89,7 @@ public class MainScreenController implements Initializable {
     @FXML
     void sceneCustomerAppointmentReport(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        Object scene = FXMLLoader.load(getClass().getResource("/Views/CustomerAppointmentsReportView.fxml"));
+        Object scene = FXMLLoader.load(getClass().getResource("/Views/CustomerAppointmentReport.fxml"));
         stage.setScene(new Scene((Parent) scene));
         stage.show();
     }
@@ -109,7 +109,6 @@ public class MainScreenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
 
     }
 }
