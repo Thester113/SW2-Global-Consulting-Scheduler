@@ -47,6 +47,7 @@ public class Contacts {
 
 
     @Override
+    //(credit Mark Kinkead Webinar on Combo Boxes)
     public String toString() {
 
         return ("Contact Name: " + (contactName) + " Contact ID: " + contactID);

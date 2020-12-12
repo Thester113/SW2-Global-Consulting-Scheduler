@@ -52,25 +52,25 @@ public class LoginController implements Initializable {
     @FXML
     private PasswordField passwordField;
 
-    //Cases for login are either a successful login or incorrect username or password, username and password are from DB
+
     @FXML
     void handleLogin(ActionEvent event) throws IOException, SQLException {
-        //Get username and password entered
+
         String username = userIDField.getText();
         String password = passwordField.getText();
 
-        //verify user against database users, see DBQuery login for logic
+
         boolean verifiedUser = UsersDB.login(username, password);
         if (verifiedUser) {
             boolean isFound = true;
             AppointmentDB.getAllAppointments();
-            //Run a foreach lamda loop through the observable list of all the appointments and return an alert
+            //foreach lamda loop
             ObservableList<Appointment> allAppointments = AppointmentDB.allAppointments;
             for (int i = 0, allAppointmentsSize = allAppointments.size(); i < allAppointmentsSize; i++) {
                 Appointment appointment = allAppointments.get(i);
                 LocalDateTime within15Minutes = LocalDateTime.now();
                 isFound = true;
-                //Compare the system time to the appointment start times and see if start is within 15-1 minute(s) of all start times
+                // 15-1 minute(s) of all start times
                 if (within15Minutes.isAfter(appointment.getStart().minusMinutes(15)) && within15Minutes.isBefore(appointment.getStart())) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("UPCOMING APPOINTMENT");

@@ -105,28 +105,18 @@ public class AddAppointmentController implements Initializable {
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        /**
-         *Auto-populate Created By field with the value of a valid user log in that is stored in the User object
-         */
+
         aptCreateByText.setText(String.valueOf(Users.getUsername()));
         aptLstUpdByText.setText(String.valueOf(Users.getUsername()));
         try {
-            /**
-             * Connection to the database
-             */
+
             Connection conn = DBConnection.startConnection();
-            /**
-             * Select the max Appointment ID from appointments table and set it as highestID
-             */
+
             ResultSet rs = conn.createStatement().executeQuery("SELECT MAX(Appointment_ID) AS highestID FROM appointments");
             while (rs.next()) {
-                /**
-                 * Create a temporary var for appointment ID
-                 */
+
                 int tempID = rs.getInt("highestID");
-                /**
-                 * Set the temp var appointment ID to  increment by 1
-                 */
+
                 aptIDtext.setText(String.valueOf(tempID + 1));
                 System.out.println(rs.getInt(tempID));
             }
@@ -138,7 +128,7 @@ public class AddAppointmentController implements Initializable {
 
 
     @FXML
-    private void SetContactID(ActionEvent event) throws IOException {
+    void SetContactID(ActionEvent event) throws IOException {
         if (contactName.getSelectionModel().isEmpty()) {
         } else {
             Contacts c = contactName.getSelectionModel().getSelectedItem();
@@ -159,16 +149,16 @@ public class AddAppointmentController implements Initializable {
     @FXML
     boolean OnActionAddAppointment(ActionEvent event) throws IOException, SQLException {
         try {
-            //get the users TimeZone offsetToUTC to
+
 
             TimeZone est = TimeZone.getTimeZone("est");
-            Long offsetToEST = Long.valueOf(est.getOffset(new Date().getTime()) / 1000 / 60);
+            long offsetToEST = est.getOffset(new Date().getTime()) / 1000 / 60;
             Integer appointmentID = valueOf(aptIDtext.getText());
             String title = aptTitleText.getText();
             String description = aptDescrText.getText();
             String location = aptLocText.getText();
             String type = aptTypeText.getText();
-            //Works when going behind, used my current TZ EST and ahead, used India Standard Time which is 5:30 ahead of UTC
+
             LocalDateTime start = LocalDateTime.parse(aptStartText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
             LocalDateTime end = LocalDateTime.parse(aptEndText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
             LocalDateTime createDate = LocalDateTime.parse(aptCreateDateText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
@@ -178,40 +168,23 @@ public class AddAppointmentController implements Initializable {
             Integer customerID = valueOf(aptCustIDText.getText());
             Integer userID = valueOf(aptUIDText.getText());
             Integer contactID = valueOf(aptContIDText.getText());
-            /**
-             * Compare Local time to Business hours convert text field to z and set business hours to z time
-             *             Get the time entered (user local) and set it to utc
-             */
+
             LocalDateTime startTime = LocalDateTime.parse(aptStartText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
-            /**
-             * Set the start time to EST
-             */
+
             startTime = startTime.plus(Duration.ofMinutes(offsetToEST));
-            /**
-             *Get the time entered (user local) and set it to utc
-             */
+
             LocalDateTime endTime = LocalDateTime.parse(aptEndText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
-            /**
-             *Set the end time to EST
-             */
+
             endTime = endTime.plus(Duration.ofMinutes(offsetToEST));
 
-            /**
-             * Compare startTime and endTime between business hours of 8-22
-             */
 
             LocalTime businessHoursStart = LocalTime.of(8, 00);
             LocalTime businessHoursEnd = LocalTime.of(22, 00);
 
-            /**
-             * Use to check if date time falls between other scheduled appointments
-             */
+
             LocalDateTime startDateTime = LocalDateTime.parse(aptStartText.getText(), formatter);
             LocalDateTime endDateTime = LocalDateTime.parse(aptEndText.getText(), formatter);
 
-            /**
-             * Check for overlapping appointment times
-             */
 
             for (Appointment appointment : AppointmentDB.allAppointments) {
                 if ((startDateTime.isEqual(appointment.getStart()) || startDateTime.isAfter(appointment.getStart()) && startDateTime.isBefore(appointment.getEnd()))) {
@@ -222,10 +195,6 @@ public class AddAppointmentController implements Initializable {
                     return false;
                 }
             }
-
-            /**
-             * Check if time of start and end are within the business hours
-             */
 
             if (startTime.toLocalTime().isBefore(businessHoursStart) || endTime.toLocalTime().isAfter(businessHoursEnd)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);

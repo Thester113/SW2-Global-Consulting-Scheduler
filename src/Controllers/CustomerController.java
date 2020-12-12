@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
@@ -94,8 +95,8 @@ public class CustomerController implements Initializable {
     try {
       custTable.setItems(CustomerDB.getAllCustomers());
       ObservableList<Customers> allCustomers = CustomerDB.allCustomers;
-      for (int i = 0, allCustomersSize = allCustomers.size(); i < allCustomersSize; i++) {
-        Customers customer = allCustomers.get(i);
+      for (Iterator<Customers> iterator = allCustomers.iterator(); iterator.hasNext(); ) {
+        Customers customer = iterator.next();
         System.out.println(customer.getCustomerName());
       }
     }

@@ -7,7 +7,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
-
 <AnchorPane prefHeight="400.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ModifyAppointmentController">
     <Label alignment="CENTER" contentDisplay="CENTER" layoutX="207.0" layoutY="7.0" prefHeight="52.0" prefWidth="204.0" text="Modify Appointment">
         <font>

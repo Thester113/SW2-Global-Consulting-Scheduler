@@ -16,6 +16,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 
@@ -31,6 +32,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 import java.util.logging.Logger;
@@ -93,24 +95,28 @@ public class ModifyAppointmentController implements Initializable {
     private ComboBox<Contacts> contactName;
     ObservableList<Contacts> contactList = FXCollections.observableArrayList();
 
-    public void EditAppointment() throws SQLException {
+    public ModifyAppointmentController() throws SQLException {
         try {
             Connection conn = DBConnection.startConnection();
             ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM contacts");
-            if (rs.next()) {
-                do {
+            while (rs.next()) {
 
-                    contactList.add(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
+                contactList.add(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
 
-                } while (rs.next());
             }
+            contactName.setItems(contactList);
         } catch (SQLException ce) {
             Logger.getLogger(ce.toString());
         }
     }
 
     @FXML
-    private void SetContactID (ActionEvent event) throws IOException {
+    void SetContactID(MouseEvent event) throws IOException {
+        if (contactName.getSelectionModel().isEmpty()) {
+        } else {
+            Contacts c = contactName.getSelectionModel().getSelectedItem();
+            aptContIDTxt.setText(String.valueOf(c.getContactID()));
+        }
 
     }
 
@@ -149,8 +155,8 @@ public class ModifyAppointmentController implements Initializable {
     @FXML
     void OAFillContID(ActionEvent event) {
         if (contactName.getSelectionModel().isEmpty()) {
-        }
-        else {
+            return;
+        } else {
             Contacts c = contactName.getSelectionModel().getSelectedItem();
             aptContIDTxt.setText(String.valueOf(c.getContactID()));
         }
@@ -158,9 +164,9 @@ public class ModifyAppointmentController implements Initializable {
 
 
     @FXML
-    boolean OnActionEditAppointment(ActionEvent event) throws SQLException, IOException{
-        TimeZone est = TimeZone.getTimeZone("America/New_York");
-        long offsetToEST = est.getOffset(new Date().getTime()) / 1000 / 60;
+    boolean OnActionEditAppointment(ActionEvent event) throws SQLException, IOException {
+        TimeZone tz = TimeZone.getTimeZone("America/New_York");
+        long offsetToEST = tz.getOffset(new Date().getTime()) / 1000 / 60;
         LocalDateTime startTime = LocalDateTime.parse(aptStartTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
 
         startTime = startTime.plus(Duration.ofMinutes(offsetToEST));
@@ -170,9 +176,8 @@ public class ModifyAppointmentController implements Initializable {
         endTime = endTime.plus(Duration.ofMinutes(offsetToEST));
 
 
-
-        LocalTime businessHoursStart = LocalTime.of(9, 00);
-        LocalTime businessHoursEnd = LocalTime.of(23, 00);
+        LocalTime businessHoursStart = LocalTime.of(8, 00);
+        LocalTime businessHoursEnd = LocalTime.of(22, 00);
 
 
         LocalDateTime startDateTime = LocalDateTime.parse(aptStartTxt.getText(), formatter);
@@ -188,7 +193,8 @@ public class ModifyAppointmentController implements Initializable {
 
 
             ObservableList<Appointment> allAppointments = AppointmentDB.allAppointments;
-            for (Appointment appointment : allAppointments) {
+            for (Iterator<Appointment> iterator = allAppointments.iterator(); iterator.hasNext(); ) {
+                Appointment appointment = iterator.next();
                 if ((startDateTime.isEqual(appointment.getStart()) || startDateTime.isAfter(appointment.getStart()) && startDateTime.isBefore(appointment.getEnd()))) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("CONFLICT");

@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 public class CustomerScheduleReportController implements Initializable {
@@ -112,8 +113,8 @@ public class CustomerScheduleReportController implements Initializable {
     try {
       customerCB.setItems(CustomerDB.getAllCustomers());
       ObservableList<Customers> allCustomers = CustomerDB.allCustomers;
-      for (int i = 0, allCustomersSize = allCustomers.size(); i < allCustomersSize; i++) {
-        Customers customer = allCustomers.get(i);
+      for (Iterator<Customers> iterator = allCustomers.iterator(); iterator.hasNext(); ) {
+        Customers customer = iterator.next();
         System.out.println(customer.getCustomerID());
       }
     } catch (SQLException e) {

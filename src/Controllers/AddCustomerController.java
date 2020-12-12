@@ -201,7 +201,7 @@ public class AddCustomerController implements Initializable {
       Connection conn = DBConnection.startConnection();
 
       ResultSet rs = conn.createStatement().executeQuery("SELECT Customer_ID FROM customers ORDER BY Customer_ID DESC LIMIT 1 ");
-      //
+
       if (rs.next()) {
         do {
 

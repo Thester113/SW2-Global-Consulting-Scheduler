@@ -85,9 +85,11 @@ public class ContactsReportController implements Initializable {
       //Getting the appointments from the DB and populating the tableview
       contactAppointmentTbl.setItems(ReportDB.getContactSchedule());
       ObservableList<Appointment> schedule = ReportDB.contactSchedule;
-      for (int i = 0, scheduleSize = schedule.size(); i < scheduleSize; i++) {
+      int i = 0, scheduleSize = schedule.size();
+      while (i < scheduleSize) {
         Appointment appointment = schedule.get(i);
         System.out.println(appointment.getStart());
+        i++;
       }
       appointmentID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
       aptTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -119,8 +121,7 @@ public class ContactsReportController implements Initializable {
       Connection conn = DBConnection.startConnection();
       ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM contacts");
       while (rs.next()) {
-        //Create Country Objects vice Strings for Country selection
-        //columnLabel corresponds to Column! not the attribute of the object
+
         contactList.add(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
       }
       contactCB.setItems(contactList);

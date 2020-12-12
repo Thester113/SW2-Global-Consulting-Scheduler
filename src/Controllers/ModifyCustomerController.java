@@ -29,6 +29,7 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -37,7 +38,7 @@ public class ModifyCustomerController implements Initializable {
   DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
   Long offsetToUTC = (long) (ZonedDateTime.now().getOffset()).getTotalSeconds();
 
-  private Customers newModifyCustomer;
+  private Customers modifyCustomerNew;
 
   @FXML
   private Button exit;
@@ -79,9 +80,6 @@ public class ModifyCustomerController implements Initializable {
   private ComboBox<FirstLevelDivision> cbDivID;
 
   public ModifyCustomerController() throws SQLException {
-  }
-
-  public void EditCustomer() throws SQLException {
   }
 
 
@@ -126,36 +124,30 @@ public class ModifyCustomerController implements Initializable {
   }
 
   @FXML
-  public void sendCustomer(Customers modifyCustomer)
-  {
-    newModifyCustomer = modifyCustomer;
-    custIDTxt.setText(String.valueOf(newModifyCustomer.getCustomerID()));
-    custNameTxt.setText(newModifyCustomer.getCustomerName());
-    custAddressTxt.setText(newModifyCustomer.getAddress());
-    custPostalTxt.setText(newModifyCustomer.getPostal());
-    custPhoneTxt.setText(String.valueOf(newModifyCustomer.getPhone()));
-    lastUpdatedByTF.setText(newModifyCustomer.getLastUpdatedBy());
-    lastUpdateTF.setText(newModifyCustomer.getLastUpdate().format(formatter));
-    createdByTF.setText(newModifyCustomer.getCreatedBy());
-    createDateTF.setText(newModifyCustomer.getCreateDate().format(formatter));
-    int comboBoxPreset = newModifyCustomer.getDivisionID();
+  public void sendCustomer(Customers modifyCustomer) {
+    modifyCustomerNew = modifyCustomer;
+    custIDTxt.setText(String.valueOf(modifyCustomerNew.getCustomerID()));
+    custNameTxt.setText(modifyCustomerNew.getCustomerName());
+    custAddressTxt.setText(modifyCustomerNew.getAddress());
+    custPostalTxt.setText(modifyCustomerNew.getPostal());
+    custPhoneTxt.setText(String.valueOf(modifyCustomerNew.getPhone()));
+    lastUpdatedByTF.setText(modifyCustomerNew.getLastUpdatedBy());
+    lastUpdateTF.setText(modifyCustomerNew.getLastUpdate().format(formatter));
+    createdByTF.setText(modifyCustomerNew.getCreatedBy());
+    createDateTF.setText(modifyCustomerNew.getCreateDate().format(formatter));
+    int comboBoxPreset = modifyCustomerNew.getDivisionID();
     FirstLevelDivision fld = new FirstLevelDivision(comboBoxPreset);
     cbDivID.setValue(fld);
 
-    if (fld.getDivisionID() <= 54)
-    {
+    if (fld.getDivisionID() <= 54) {
       String countryName = "United States";
       Countries c = new Countries(countryName);
       cbCountry.setValue(c);
-    }
-    else if (fld.getDivisionID() >54 && fld.getDivisionID() <= 72)
-    {
+    } else if (fld.getDivisionID() > 54 && fld.getDivisionID() <= 72) {
       String countryName = "United Kingdom";
       Countries c = new Countries(countryName);
       cbCountry.setValue(c);
-    }
-    else if (fld.getDivisionID() > 72)
-    {
+    } else if (fld.getDivisionID() > 72) {
       String countryName = "Canada";
       Countries c = new Countries(countryName);
       cbCountry.setValue(c);
@@ -164,8 +156,8 @@ public class ModifyCustomerController implements Initializable {
     try {
       cbCountry.setItems(CountriesDB.getAllCountries());
       ObservableList<Countries> allCountries = CountriesDB.allCountries;
-      for (int i = 0, allCountriesSize = allCountries.size(); i < allCountriesSize; i++) {
-        Countries countries = allCountries.get(i);
+      for (Iterator<Countries> iterator = allCountries.iterator(); iterator.hasNext(); ) {
+        Countries countries = iterator.next();
         System.out.println(countries.getCountry());
       }
     } catch (SQLException e) {
@@ -196,19 +188,14 @@ public class ModifyCustomerController implements Initializable {
       System.out.println(cbCountry.getSelectionModel().toString());
       return;
     }
-
-    else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("U.S")) {
+    if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("U.S")) {
 
       var usResult = firstLevelDivisionObservableList.stream().filter(f -> f.getDivisionID() < 54).collect(Collectors.toList());
       cbDivID.setItems(usFirstLevelDivisionObservableList = FXCollections.observableList(usResult));
-    }
-
-    else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("Canada")) {
+    } else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("Canada")) {
       var canadaResult = firstLevelDivisionObservableList.stream().filter(f -> (f.getDivisionID() > 54) && (f.getDivisionID() < 101)).collect(Collectors.toList());
       cbDivID.setItems(canadaFirstLevelDivisionObservableList = FXCollections.observableList(canadaResult));
-    }
-
-    else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("UK")) {
+    } else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("UK")) {
       var ukResult = firstLevelDivisionObservableList.stream().filter(f -> f.getDivisionID() >= 101).collect(Collectors.toList());
       cbDivID.setItems(ukFirstLevelDivisionObservableList = FXCollections.observableList(ukResult));
     }

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AddCustomerController">
@@ -48,41 +47,41 @@
             <Font size="14.0"/>
         </font>
     </Label>
-    <ComboBox fx:id="cbDiv" layoutX="437.0" layoutY="230.0" onAction="#SetDivisionID" onMouseClicked="#SetDivisionID"
+    <ComboBox fx:id="cbDiv" layoutX="425.0" layoutY="188.0" onAction="#SetDivisionID" onMouseClicked="#SetDivisionID"
               prefWidth="150.0"/>
-    <ComboBox fx:id="cbCountry" layoutX="139.0" layoutY="271.0" onMouseClicked="#SetDivisionID" prefWidth="150.0"/>
-    <Label layoutX="335.0" layoutY="234.0" text="Division">
+    <ComboBox fx:id="cbCountry" layoutX="425.0" layoutY="230.0" onMouseClicked="#SetDivisionID" prefWidth="150.0"/>
+    <Label layoutX="336.0" layoutY="192.0" text="Division">
         <font>
             <Font size="14.0"/>
         </font>
     </Label>
-    <Label layoutX="15.0" layoutY="276.0" text="Country">
+    <Label layoutX="336.0" layoutY="234.0" text="Country">
         <font>
             <Font size="14.0"/>
         </font>
     </Label>
-    <TextField fx:id="createdByTxt" layoutX="431.0" layoutY="102.0"/>
-    <Label layoutX="333.0" layoutY="106.0" text="Created By">
+    <TextField fx:id="createdByTxt" layoutX="425.0" layoutY="62.0"/>
+    <Label layoutX="333.0" layoutY="66.0" text="Created By">
         <font>
             <Font size="14.0"/>
         </font>
     </Label>
-    <Label layoutX="331.0" layoutY="67.0" text="Date Created">
+    <Label layoutX="12.0" layoutY="277.0" text="Date Created">
         <font>
             <Font size="14.0"/>
         </font>
     </Label>
-    <TextField fx:id="createDateTxt" layoutX="431.0" layoutY="62.0"/>
-    <Label layoutX="333.0" layoutY="146.0" text="Last Update">
+    <TextField fx:id="createDateTxt" layoutX="139.0" layoutY="273.0"/>
+    <Label layoutX="330.0" layoutY="106.0" text="Last Update">
         <font>
             <Font size="14.0"/>
         </font>
     </Label>
-    <TextField fx:id="lastUpdateTxt" layoutX="431.0" layoutY="142.0"/>
-    <Label layoutX="328.0" layoutY="192.0" text="Last Updater">
+    <TextField fx:id="lastUpdateTxt" layoutX="425.0" layoutY="102.0"/>
+    <Label layoutX="328.0" layoutY="146.0" text="Last Updater">
         <font>
             <Font size="14.0"/>
         </font>
     </Label>
-    <TextField fx:id="lastUpdatedByTxt" layoutX="431.0" layoutY="188.0"/>
+    <TextField fx:id="lastUpdatedByTxt" layoutX="425.0" layoutY="142.0"/>
 </AnchorPane>

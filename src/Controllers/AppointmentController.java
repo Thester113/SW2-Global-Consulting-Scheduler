@@ -36,15 +36,11 @@ public class AppointmentController implements Initializable {
 
     @FXML
     private ToggleGroup aptTableTGLGRP;
-    /**
-     * @param weeklyRB shows weekly appointments
-     */
+
     @FXML
     private RadioButton weeklyRB;
 
-    /**
-     * @param monthlyRB shows monthly appointments
-     */
+
     @FXML
     private RadioButton monthlyRB;
 
@@ -116,6 +112,17 @@ public class AppointmentController implements Initializable {
     public AppointmentController() throws SQLException {
     }
 
+    @FXML
+    void sceneMainMenu(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/Views/MainScreen.fxml"));
+        loader.load();
+
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        Parent scene = loader.getRoot();
+        stage.setScene(new Scene(scene));
+        stage.show();
+    }
 
     @FXML
     void RBallAppointmentsOA(ActionEvent event) throws SQLException {
@@ -232,7 +239,7 @@ public class AppointmentController implements Initializable {
             loader.setLocation(getClass().getResource("/Views/ModifyAppointment.fxml"));
             Parent parent = loader.load();
             Scene modifyCustomerScene = new Scene(parent);
-            /**Sending the selected object from the table to a method on the Edit Appointment Scene*/
+
             ModifyAppointmentController controller = loader.getController();
             controller.sendAppointment(modifyAppointment);
 
@@ -247,18 +254,6 @@ public class AppointmentController implements Initializable {
             alert.setContentText("Please select an appointment you would like to edit.");
             alert.showAndWait();
         }
-    }
-
-    @FXML
-    void sceneMainMenu(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/Views/MainScreen.fxml"));
-        loader.load();
-
-        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        Parent scene = loader.getRoot();
-        stage.setScene(new Scene(scene));
-        stage.show();
     }
 
     @FXML

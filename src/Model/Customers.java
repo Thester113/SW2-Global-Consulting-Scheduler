@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 
 public class Customers {
 
-
   public int customerID;
   public String customerName;
   private String address;
@@ -31,7 +30,6 @@ public class Customers {
     this.lastUpdatedBy=lastUpdatedBy;
     this.divisionID=divisionID;
   }
-
   public int getCustomerID() {
     return customerID;
   }
@@ -72,7 +70,6 @@ public class Customers {
     this.phone = phone;
   }
 
-
   public LocalDateTime getCreateDate() {
     return createDate;
   }
@@ -112,6 +109,7 @@ public class Customers {
   public void setDivisionID(int divisionID) {
     this.divisionID = divisionID;
   }
+
   @Override
 
   public String toString() {
