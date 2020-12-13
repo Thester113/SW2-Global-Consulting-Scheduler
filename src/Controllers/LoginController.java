@@ -121,7 +121,7 @@ public class LoginController implements Initializable {
             rb = ResourceBundle.getBundle("Utilities/lang", Locale.getDefault());
 
             if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
-                GCO.setText(rb.getString("GCO"));
+                GCO.setText(rb.getString("GC"));
                 UserIDLabel.setText(rb.getString("UserIDLabel"));
                 EnterPasswordLabel.setText(rb.getString("EnterPasswordLabel"));
                 loginButton.setText(rb.getString("Login"));
