@@ -54,17 +54,17 @@ public class LoginController implements Initializable {
 
 
     @FXML
-    void handleLogin(ActionEvent event) throws IOException, SQLException {
+    void handlerLogin(ActionEvent event) throws IOException, SQLException {
 
         String username = userIDField.getText();
         String password = passwordField.getText();
 
 
-        boolean verifiedUser = UsersDB.login(username, password);
-        if (verifiedUser) {
+        boolean foundUser = UsersDB.login(username, password);
+        if (foundUser) {
             boolean isFound = true;
             AppointmentDB.getAllAppointments();
-            //foreach lamda loop
+            //foreach lambda loop
             ObservableList<Appointment> allAppointments = AppointmentDB.allAppointments;
             for (int i = 0, allAppointmentsSize = allAppointments.size(); i < allAppointmentsSize; i++) {
                 Appointment appointment = allAppointments.get(i);
@@ -94,7 +94,7 @@ public class LoginController implements Initializable {
             stage.setScene(new Scene((Parent) scene));
             stage.show();
         } else {
-            if (verifiedUser && !userIDField.getText().isEmpty()) {
+            if (foundUser && !userIDField.getText().isEmpty()) {
                 passwordField.getText();
             }
             alert = new Alert(Alert.AlertType.ERROR);
@@ -107,7 +107,7 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    void handleExit(ActionEvent event) throws IOException {
+    void handlerExit(ActionEvent event) throws IOException {
         Button sourceButton = (Button) event.getSource();
         exitButton.setText(sourceButton.getText());
         DBConnection.closeConnection();

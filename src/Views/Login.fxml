@@ -23,9 +23,9 @@
         <AnchorPane prefHeight="587.0" prefWidth="588.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
             <children>
                 <Button fx:id="exitButton" layoutX="523.0" layoutY="536.0" mnemonicParsing="false"
-                        onAction="#handleExit" text="EXIT"/>
+                        onAction="#handlerExit" text="EXIT"/>
                 <Button fx:id="loginButton" layoutX="461.0" layoutY="365.0" mnemonicParsing="false"
-                        onAction="#handleLogin" text="Log In"/>
+                        onAction="#handlerLogin" text="Log In"/>
                 <TextField fx:id="userIDField" alignment="CENTER" layoutX="362.0" layoutY="257.0" prefHeight="34.0"
                            prefWidth="161.0">
                     <font>
