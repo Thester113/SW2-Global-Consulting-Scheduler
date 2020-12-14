@@ -189,7 +189,7 @@ public class AddAppointmentController implements Initializable {
             for (Appointment appointment : AppointmentDB.allAppointments) {
                 if ((startDateTime.isEqual(appointment.getStart()) || startDateTime.isAfter(appointment.getStart()) && startDateTime.isBefore(appointment.getEnd()))) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("CONFLICT");
+                    alert.setTitle("CONFLICT OF TIME");
                     alert.setContentText("Please enter a time for the start and end time of the appointment that is not already taken");
                     alert.showAndWait();
                     return false;
@@ -198,7 +198,7 @@ public class AddAppointmentController implements Initializable {
 
             if (startTime.toLocalTime().isBefore(businessHoursStart) || endTime.toLocalTime().isAfter(businessHoursEnd)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("TOO EARLY!");
+                alert.setTitle("TIME NOT AVAILABLE");
                 alert.setContentText("Please enter a time after business opening hour of 0800 EST and before business closing hours of 1000 EST");
                 alert.showAndWait();
 

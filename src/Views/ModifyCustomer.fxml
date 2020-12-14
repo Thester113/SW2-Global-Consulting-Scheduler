@@ -17,7 +17,8 @@
         </font>
     </Label>
     <Button fx:id="exit" layoutX="531.0" layoutY="359.0" mnemonicParsing="false" onAction="#exitMainMenu" text="Exit"/>
-    <Button fx:id="editCustomer" layoutX="469.0" layoutY="359.0" mnemonicParsing="false" onAction="#editCustomer"
+    <Button fx:id="ModifyCustomerController" layoutX="469.0" layoutY="359.0" mnemonicParsing="false"
+            onAction="#modifyCustomer"
             text="Save"/>
     <TextField fx:id="custIDTxt" disable="true" layoutX="139.0" layoutY="61.0"/>
     <TextField fx:id="custNameTxt" layoutX="139.0" layoutY="101.0"/>

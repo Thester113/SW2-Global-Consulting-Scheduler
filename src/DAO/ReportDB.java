@@ -31,19 +31,19 @@ public class ReportDB {
     contactSchedule.clear();
     try {
       Connection conn = DBConnection.startConnection();
-      ResultSet rb = conn.createStatement().executeQuery("SELECT * FROM appointments WHERE Contact_ID=" + newContactSchedule.getContactID());
-      if (rb.next()) {
+      ResultSet resultBack = conn.createStatement().executeQuery("SELECT * FROM appointments WHERE Contact_ID=" + newContactSchedule.getContactID());
+      if (resultBack.next()) {
         do {
           contactSchedule.add(new Appointment(
-                  rb.getInt("Appointment_ID"),
-                  rb.getString("Title"),
-                  rb.getString("Description"),
-                  rb.getString("Type"),
-                  rb.getTimestamp("Start").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                  rb.getTimestamp("End").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                  rb.getInt("Customer_ID")));
+                  resultBack.getInt("Appointment_ID"),
+                  resultBack.getString("Title"),
+                  resultBack.getString("Description"),
+                  resultBack.getString("Type"),
+                  resultBack.getTimestamp("Start").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                  resultBack.getTimestamp("End").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                  resultBack.getInt("Customer_ID")));
 
-        } while (rb.next());
+        } while (resultBack.next());
       }
       return contactSchedule;
     } catch (SQLException e) {
@@ -65,19 +65,19 @@ public class ReportDB {
     customerSchedule.clear();
     try {
       Connection conn = DBConnection.startConnection();
-      ResultSet rb = conn.createStatement().executeQuery("SELECT * FROM appointments WHERE Customer_ID=" + newCustomerSchedule.getCustomerID());
-      if (rb.next()) {
+      ResultSet resultBack = conn.createStatement().executeQuery("SELECT * FROM appointments WHERE Customer_ID=" + newCustomerSchedule.getCustomerID());
+      if (resultBack.next()) {
         do {
           customerSchedule.add(new Appointment(
-                  rb.getInt("Appointment_ID"),
-                  rb.getString("Title"),
-                  rb.getString("Description"),
-                  rb.getString("Type"),
-                  rb.getTimestamp("Start").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                  rb.getTimestamp("End").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                  rb.getInt("Customer_ID")));
+                  resultBack.getInt("Appointment_ID"),
+                  resultBack.getString("Title"),
+                  resultBack.getString("Description"),
+                  resultBack.getString("Type"),
+                  resultBack.getTimestamp("Start").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                  resultBack.getTimestamp("End").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                  resultBack.getInt("Customer_ID")));
 
-        } while (rb.next());
+        } while (resultBack.next());
       }
       return customerSchedule;
     } catch (SQLException e) {

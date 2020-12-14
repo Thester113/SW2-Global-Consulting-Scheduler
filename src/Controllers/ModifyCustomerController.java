@@ -84,7 +84,7 @@ public class ModifyCustomerController implements Initializable {
 
 
   @FXML
-  boolean editCustomer(ActionEvent event) throws SQLException, IOException {
+  boolean modifyCustomer(ActionEvent event) throws SQLException, IOException {
     try {
       FXMLLoader loader = new FXMLLoader();
       loader.setLocation(getClass().getResource("/Views/Customer.fxml"));

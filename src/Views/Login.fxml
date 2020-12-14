@@ -50,7 +50,7 @@
                         <Font size="18.0"/>
                     </font>
                 </PasswordField>
-                <Label fx:id="GCO" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="80.0" prefWidth="574.0"
+                <Label fx:id="GC" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="80.0" prefWidth="574.0"
                        text="Global Consulting  Scheduler" textAlignment="CENTER" textFill="#0d0d0df7" wrapText="true">
                     <font>
                         <Font size="24.0"/>
