@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class CustomerDB {
+
   public static ObservableList<Customers> allCustomers = FXCollections.observableArrayList();
   static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
@@ -38,6 +39,17 @@ public class CustomerDB {
 
     }
     return null;
+  }
+
+  public static boolean addCustomer(Integer customerID, String customerName, String customerAddress, String customerPostal, String customerPhone, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy, Integer divisionID) {
+
+    try {
+      Statement statement = DBConnection.startConnection().createStatement();
+      statement.executeUpdate("INSERT INTO customers SET Customer_ID='" + customerID + "', Customer_Name='" + customerName + "', Address='" + customerAddress + "', Postal_Code='" + customerPostal + "', Phone='" + customerPhone + "',Create_Date='" + createDate + "', Created_By='" + createdBy + "',Last_Update='" + lastUpdate + "', Last_Updated_By='" + lastUpdatedBy + "', Division_ID= " + divisionID);
+    } catch (SQLException e) {
+      System.out.println("SQLException: " + e.getMessage());
+    }
+    return false;
   }
 
   public static boolean deleteCustomer(int id) {
@@ -70,18 +82,6 @@ public class CustomerDB {
       e.printStackTrace();
     }
 
-    return false;
-  }
-
-
-  public static boolean addCustomer(Integer customerID, String customerName, String customerAddress, String customerPostal, String customerPhone, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy, Integer divisionID) {
-
-    try {
-      Statement statement = DBConnection.startConnection().createStatement();
-      statement.executeUpdate("INSERT INTO customers SET Customer_ID='" + customerID + "', Customer_Name='" + customerName + "', Address='" + customerAddress + "', Postal_Code='" + customerPostal + "', Phone='" + customerPhone + "',Create_Date='" + createDate + "', Created_By='" + createdBy + "',Last_Update='" + lastUpdate + "', Last_Updated_By='" + lastUpdatedBy + "', Division_ID= " + divisionID);
-    } catch (SQLException e) {
-      System.out.println("SQLException: " + e.getMessage());
-    }
     return false;
   }
 }

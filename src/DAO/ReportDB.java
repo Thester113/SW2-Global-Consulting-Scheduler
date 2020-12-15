@@ -1,6 +1,6 @@
 package DAO;
 
-import Model.Appointment;
+import Model.Appointments;
 import Model.Contacts;
 import Model.Customers;
 import javafx.collections.FXCollections;
@@ -22,10 +22,10 @@ public class ReportDB {
     newContactSchedule = contactSchedule;
   }
 
-  public static ObservableList<Appointment> contactSchedule = FXCollections.observableArrayList();
+  public static ObservableList<Appointments> contactSchedule = FXCollections.observableArrayList();
 
 
-  public static ObservableList<Appointment> getContactSchedule() throws SQLException {
+  public static ObservableList<Appointments> getContactSchedule() throws SQLException {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     contactSchedule.clear();
@@ -34,7 +34,7 @@ public class ReportDB {
       ResultSet resultBack = conn.createStatement().executeQuery("SELECT * FROM appointments WHERE Contact_ID=" + newContactSchedule.getContactID());
       if (resultBack.next()) {
         do {
-          contactSchedule.add(new Appointment(
+          contactSchedule.add(new Appointments(
                   resultBack.getInt("Appointment_ID"),
                   resultBack.getString("Title"),
                   resultBack.getString("Description"),
@@ -56,10 +56,10 @@ public class ReportDB {
     newCustomerSchedule = customerSchedule;
   }
 
-  public static ObservableList<Appointment> customerSchedule = FXCollections.observableArrayList();
+  public static ObservableList<Appointments> customerSchedule = FXCollections.observableArrayList();
 
 
-  public static ObservableList<Appointment> getCustomerSchedule() throws SQLException {
+  public static ObservableList<Appointments> getCustomerSchedule() throws SQLException {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     customerSchedule.clear();
@@ -68,7 +68,7 @@ public class ReportDB {
       ResultSet resultBack = conn.createStatement().executeQuery("SELECT * FROM appointments WHERE Customer_ID=" + newCustomerSchedule.getCustomerID());
       if (resultBack.next()) {
         do {
-          customerSchedule.add(new Appointment(
+          customerSchedule.add(new Appointments(
                   resultBack.getInt("Appointment_ID"),
                   resultBack.getString("Title"),
                   resultBack.getString("Description"),

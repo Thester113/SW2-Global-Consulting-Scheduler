@@ -1,7 +1,6 @@
 package DAO;
 
-import Controllers.AddAppointmentController;
-import Model.Appointment;
+import Model.Appointments;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -18,10 +17,10 @@ import java.util.logging.Logger;
 public class AppointmentDB {
 
 
-    public static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+    public static ObservableList<Appointments> allAppointments = FXCollections.observableArrayList();
 
 
-    public static ObservableList<Appointment> getAllAppointments() throws SQLException {
+    public static ObservableList<Appointments> getAllAppointments() throws SQLException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         allAppointments.clear();
@@ -29,7 +28,7 @@ public class AppointmentDB {
             Connection connection = DBConnection.startConnection();
             ResultSet rb = connection.createStatement().executeQuery("SELECT * FROM appointments");
             while (rb.next()) {
-                allAppointments.add(new Appointment(
+                allAppointments.add(new Appointments(
                         rb.getInt("Appointment_ID"),
                         rb.getString("Title"),
                         rb.getString("Description"),

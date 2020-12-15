@@ -3,7 +3,7 @@ package Controllers;
 
 import DAO.AppointmentDB;
 import DAO.DBConnection;
-import Model.Appointment;
+import Model.Appointments;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -46,49 +46,49 @@ public class AppointmentController implements Initializable {
 
 
     @FXML
-    private TableView<Appointment> aptTable;
+    private TableView<Appointments> aptTable;
 
     @FXML
-    private TableColumn<Appointment, Integer> aptAppointmentID;
+    private TableColumn<Appointments, Integer> aptAppointmentID;
 
     @FXML
-    private TableColumn<Appointment, String> aptTitle;
+    private TableColumn<Appointments, String> aptTitle;
 
     @FXML
-    private TableColumn<Appointment, String> aptDescription;
+    private TableColumn<Appointments, String> aptDescription;
 
     @FXML
-    private TableColumn<Appointment, String> aptLocation;
+    private TableColumn<Appointments, String> aptLocation;
 
     @FXML
-    private TableColumn<Appointment, String> aptType;
+    private TableColumn<Appointments, String> aptType;
 
     @FXML
-    private TableColumn<Appointment, LocalDateTime> aptStart;
+    private TableColumn<Appointments, LocalDateTime> aptStart;
 
     @FXML
-    private TableColumn<Appointment, LocalDateTime> aptEnd;
+    private TableColumn<Appointments, LocalDateTime> aptEnd;
 
     @FXML
-    private TableColumn<Appointment, LocalDateTime> aptCreateDate;
+    private TableColumn<Appointments, LocalDateTime> aptCreateDate;
 
     @FXML
-    private TableColumn<Appointment, String> aptCreatedBy;
+    private TableColumn<Appointments, String> aptCreatedBy;
 
     @FXML
-    private TableColumn<Appointment, LocalDateTime> aptLastUpdate;
+    private TableColumn<Appointments, LocalDateTime> aptLastUpdate;
 
     @FXML
-    private TableColumn<Appointment, String> aptLastUpdatedBy;
+    private TableColumn<Appointments, String> aptLastUpdatedBy;
 
     @FXML
-    private TableColumn<Appointment, Integer> aptCID;
+    private TableColumn<Appointments, Integer> aptCID;
 
     @FXML
-    private TableColumn<Appointment, Integer> aptUID;
+    private TableColumn<Appointments, Integer> aptUID;
 
     @FXML
-    private TableColumn<Appointment, Integer> aptContID;
+    private TableColumn<Appointments, Integer> aptContID;
 
     @FXML
     private Button addAppointment;
@@ -105,9 +105,9 @@ public class AppointmentController implements Initializable {
     @FXML
     private Button exitButton;
 
-    ObservableList<Appointment> aptList = AppointmentDB.getAllAppointments();
-    ObservableList<Appointment> weeklyAppointmentList = FXCollections.observableArrayList();
-    ObservableList<Appointment> monthlyAppointmentList = FXCollections.observableArrayList();
+    ObservableList<Appointments> aptList = AppointmentDB.getAllAppointments();
+    ObservableList<Appointments> weeklyAppointmentsList = FXCollections.observableArrayList();
+    ObservableList<Appointments> monthlyAppointmentsList = FXCollections.observableArrayList();
 
     public AppointmentController() throws SQLException {
     }
@@ -130,8 +130,8 @@ public class AppointmentController implements Initializable {
         try {
             aptTable.setItems(AppointmentDB.getAllAppointments());
 
-            for (Appointment appointment : AppointmentDB.allAppointments) {
-                System.out.println(appointment.getStart());
+            for (Appointments appointments : AppointmentDB.allAppointments) {
+                System.out.println(appointments.getStart());
             }
         }
         catch (SQLException e) {
@@ -149,14 +149,14 @@ public class AppointmentController implements Initializable {
 
         if ((this.aptTableTGLGRP.getSelectedToggle().equals(this.weeklyRB))) {
 
-            Predicate<Appointment> weeklyView = appointment -> (appointment.getStart().toLocalDate().equals(today))
+            Predicate<Appointments> weeklyView = appointment -> (appointment.getStart().toLocalDate().equals(today))
                     || appointment.getStart().toLocalDate().isAfter(today)
                     && appointment.getStart().toLocalDate().isBefore((oneWeekFromToday));
             System.out.println(today);
 
             var weeklyResult = aptList.stream().filter(weeklyView).collect(Collectors.toList());
 
-            aptTable.setItems(weeklyAppointmentList = FXCollections.observableList(weeklyResult));
+            aptTable.setItems(weeklyAppointmentsList = FXCollections.observableList(weeklyResult));
         }
     }
 
@@ -168,14 +168,14 @@ public class AppointmentController implements Initializable {
         LocalDate today = LocalDate.from(ZonedDateTime.now());
         LocalDate oneMonthFromToday = LocalDate.from(ZonedDateTime.now()).plusMonths(1);
         if ((this.aptTableTGLGRP.getSelectedToggle().equals(this.monthlyRB))) {
-            Predicate<Appointment> monthlyView = appointment -> (appointment.getStart().toLocalDate().equals(today))
+            Predicate<Appointments> monthlyView = appointment -> (appointment.getStart().toLocalDate().equals(today))
                     || appointment.getStart().toLocalDate().isAfter((today))
                     && appointment.getStart().toLocalDate().isBefore((oneMonthFromToday));
             System.out.println(today);
 
             var monthList = aptList.stream().filter(monthlyView).collect(Collectors.toList());
 
-            aptTable.setItems(monthlyAppointmentList = FXCollections.observableList(monthList));
+            aptTable.setItems(monthlyAppointmentsList = FXCollections.observableList(monthList));
         }
     }
 
@@ -205,7 +205,7 @@ public class AppointmentController implements Initializable {
     void sceneDeleteAppointment(ActionEvent event) {
         try {
 
-            Appointment selectedItem = aptTable.getSelectionModel().getSelectedItem();
+            Appointments selectedItem = aptTable.getSelectionModel().getSelectedItem();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Warning");
             alert.setHeaderText("Delete appointment type: " + selectedItem.getType() + " ID Number: " + selectedItem.getAppointmentID() + " ?");
@@ -234,14 +234,14 @@ public class AppointmentController implements Initializable {
     void sceneEditAppointment(ActionEvent event) throws IOException {
         try {
 
-            Appointment modifyAppointment = aptTable.getSelectionModel().getSelectedItem();
+            Appointments modifyAppointments = aptTable.getSelectionModel().getSelectedItem();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/Views/ModifyAppointment.fxml"));
             Parent parent = loader.load();
             Scene modifyCustomerScene = new Scene(parent);
 
             ModifyAppointmentController controller = loader.getController();
-            controller.sendAppointment(modifyAppointment);
+            controller.sendAppointment(modifyAppointments);
 
             Stage window = (Stage) ((Button) event.getSource()).getScene().getWindow();
             window.setScene(modifyCustomerScene);
@@ -276,10 +276,10 @@ public class AppointmentController implements Initializable {
         try {
             aptTable.setItems(AppointmentDB.getAllAppointments());
 
-            ObservableList<Appointment> allAppointments = AppointmentDB.allAppointments;
+            ObservableList<Appointments> allAppointments = AppointmentDB.allAppointments;
             for (int i = 0, allAppointmentsSize = allAppointments.size(); i < allAppointmentsSize; i++) {
-                Appointment appointment = allAppointments.get(i);
-                System.out.println(appointment.getStart());
+                Appointments appointments = allAppointments.get(i);
+                System.out.println(appointments.getStart());
             }
         } catch (SQLException e) {
             e.printStackTrace();

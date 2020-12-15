@@ -3,7 +3,7 @@ package Model;
 
 import java.time.LocalDateTime;
 
-public class FirstLevelDivision {
+public class FirstLevelDivisions {
   public Integer divisionID;
   private String division;
   private LocalDateTime createDate;
@@ -13,12 +13,12 @@ public class FirstLevelDivision {
   private int countryID;
 
 
-  public FirstLevelDivision(Integer divisionID) {
+  public FirstLevelDivisions(Integer divisionID) {
     this.divisionID=divisionID;
   }
 
 
-  public FirstLevelDivision(Integer divisionID, String division, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy, int countryID) {
+  public FirstLevelDivisions(Integer divisionID, String division, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy, int countryID) {
     this.divisionID = divisionID;
     this.division = division;
     this.createDate = createDate;

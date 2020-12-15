@@ -1,6 +1,6 @@
 package Controllers;
 
-import Model.Appointment;
+import Model.Appointments;
 import DAO.AppointmentDB;
 import DAO.DBConnection;
 import DAO.UsersDB;
@@ -65,16 +65,16 @@ public class LoginController implements Initializable {
             boolean isFound = true;
             AppointmentDB.getAllAppointments();
             //foreach lambda loop
-            ObservableList<Appointment> allAppointments = AppointmentDB.allAppointments;
+            ObservableList<Appointments> allAppointments = AppointmentDB.allAppointments;
             for (int i = 0, allAppointmentsSize = allAppointments.size(); i < allAppointmentsSize; i++) {
-                Appointment appointment = allAppointments.get(i);
+                Appointments appointments = allAppointments.get(i);
                 LocalDateTime within15Minutes = LocalDateTime.now();
                 isFound = true;
                 // 15-1 minute(s) of all start times
-                if (within15Minutes.isAfter(appointment.getStart().minusMinutes(15)) && within15Minutes.isBefore(appointment.getStart())) {
+                if (within15Minutes.isAfter(appointments.getStart().minusMinutes(15)) && within15Minutes.isBefore(appointments.getStart())) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("UPCOMING APPOINTMENT");
-                    alert.setContentText("Appointment: " + appointment.getAppointmentID() + " starts at " + appointment.getStart());
+                    alert.setContentText("Appointment: " + appointments.getAppointmentID() + " starts at " + appointments.getStart());
                     alert.showAndWait();
                     isFound = true;
                     break;

@@ -3,7 +3,7 @@ package Controllers;
 import DAO.CustomerDB;
 import DAO.DBConnection;
 import DAO.ReportDB;
-import Model.Appointment;
+import Model.Appointments;
 import Model.Customers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,28 +33,28 @@ public class CustomerScheduleReportController implements Initializable {
   private ComboBox<Customers> customerCB;
 
   @FXML
-  private TableView<Appointment> customerAppointmentTbl;
+  private TableView<Appointments> customerAppointmentTbl;
 
   @FXML
-  private TableColumn<Appointment, Integer> appointmentID;
+  private TableColumn<Appointments, Integer> appointmentID;
 
   @FXML
-  private TableColumn<Appointment, String> aptTitle;
+  private TableColumn<Appointments, String> aptTitle;
 
   @FXML
-  private TableColumn<Appointment, String> aptType;
+  private TableColumn<Appointments, String> aptType;
 
   @FXML
-  private TableColumn<Appointment, String> aptDescription;
+  private TableColumn<Appointments, String> aptDescription;
 
   @FXML
-  private TableColumn<Appointment, LocalDateTime> aptStart;
+  private TableColumn<Appointments, LocalDateTime> aptStart;
 
   @FXML
-  private TableColumn<Appointment, LocalDateTime> aptEnd;
+  private TableColumn<Appointments, LocalDateTime> aptEnd;
 
   @FXML
-  private TableColumn<Appointment, Integer> aptCustID;
+  private TableColumn<Appointments, Integer> aptCustID;
 
   @FXML
   private Button exitBtn;
@@ -82,8 +82,8 @@ public class CustomerScheduleReportController implements Initializable {
       ReportDB.sendCustomerSelection(customerSchedule);
 
       customerAppointmentTbl.setItems(ReportDB.getCustomerSchedule());
-      for (Appointment appointment : ReportDB.customerSchedule) {
-        System.out.println(appointment.getStart());
+      for (Appointments appointments : ReportDB.customerSchedule) {
+        System.out.println(appointments.getStart());
       }
       appointmentID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
       aptTitle.setCellValueFactory(new PropertyValueFactory<>("title"));

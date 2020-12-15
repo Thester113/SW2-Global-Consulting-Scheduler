@@ -2,7 +2,7 @@ package Controllers;
 
 import DAO.AppointmentDB;
 import DAO.DBConnection;
-import Model.Appointment;
+import Model.Appointments;
 import Model.Contacts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -121,23 +121,23 @@ public class ModifyAppointmentController implements Initializable {
 
 
     @FXML
-    public void sendAppointment(Appointment modifyAppointment)
+    public void sendAppointment(Appointments modifyAppointments)
     {
-        aptIDtxt.setText(String.valueOf(modifyAppointment.getAppointmentID()));
-        aptTitleTxt.setText(modifyAppointment.getTitle());
-        aptDescrTxt.setText(modifyAppointment.getDescription());
-        aptLocTxt.setText(modifyAppointment.getLocation());
-        aptTypeTxt.setText(modifyAppointment.getType());
-        aptStartTxt.setText(modifyAppointment.getStart().format(formatter));
-        aptEndTxt.setText(modifyAppointment.getEnd().format(formatter));
-        aptLstUpdByTxt.setText(modifyAppointment.getLastUpdatedBy());
-        aptLastUpdateTxt.setText(modifyAppointment.getLastUpdate().format(formatter));
-        aptCreateByTxt.setText(modifyAppointment.getCreatedBy());
-        aptCreateDateTxt.setText(modifyAppointment.getCreateDate().format(formatter));
-        aptCustIDTxt.setText(String.valueOf(modifyAppointment.getCustomerID()));
-        aptUIDTxt.setText(String.valueOf(modifyAppointment.getUserID()));
-        aptContIDTxt.setText(String.valueOf(modifyAppointment.getContactID()));
-        int comboBoxPreset = modifyAppointment.getContactID();
+        aptIDtxt.setText(String.valueOf(modifyAppointments.getAppointmentID()));
+        aptTitleTxt.setText(modifyAppointments.getTitle());
+        aptDescrTxt.setText(modifyAppointments.getDescription());
+        aptLocTxt.setText(modifyAppointments.getLocation());
+        aptTypeTxt.setText(modifyAppointments.getType());
+        aptStartTxt.setText(modifyAppointments.getStart().format(formatter));
+        aptEndTxt.setText(modifyAppointments.getEnd().format(formatter));
+        aptLstUpdByTxt.setText(modifyAppointments.getLastUpdatedBy());
+        aptLastUpdateTxt.setText(modifyAppointments.getLastUpdate().format(formatter));
+        aptCreateByTxt.setText(modifyAppointments.getCreatedBy());
+        aptCreateDateTxt.setText(modifyAppointments.getCreateDate().format(formatter));
+        aptCustIDTxt.setText(String.valueOf(modifyAppointments.getCustomerID()));
+        aptUIDTxt.setText(String.valueOf(modifyAppointments.getUserID()));
+        aptContIDTxt.setText(String.valueOf(modifyAppointments.getContactID()));
+        int comboBoxPreset = modifyAppointments.getContactID();
         Contacts c = new Contacts(comboBoxPreset);
         contactName.setValue(c);
     }
@@ -191,10 +191,10 @@ public class ModifyAppointmentController implements Initializable {
             }
 
 
-            ObservableList<Appointment> allAppointments = AppointmentDB.allAppointments;
-            for (Iterator<Appointment> iterator = allAppointments.iterator(); iterator.hasNext(); ) {
-                Appointment appointment = iterator.next();
-                if ((startDateTime.isEqual(appointment.getStart()) || startDateTime.isAfter(appointment.getStart()) && startDateTime.isBefore(appointment.getEnd()))) {
+            ObservableList<Appointments> allAppointments = AppointmentDB.allAppointments;
+            for (Iterator<Appointments> iterator = allAppointments.iterator(); iterator.hasNext(); ) {
+                Appointments appointments = iterator.next();
+                if ((startDateTime.isEqual(appointments.getStart()) || startDateTime.isAfter(appointments.getStart()) && startDateTime.isBefore(appointments.getEnd()))) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("CONFLICT");
                     alert.setContentText("Please enter a time for the start and end time of the appointment that is not already taken");

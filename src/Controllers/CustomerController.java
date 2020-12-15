@@ -78,6 +78,16 @@ public class CustomerController implements Initializable {
   @FXML
   private ComboBox<Customers> cbCustomerTable;
 
+  public CustomerController() {
+
+    try {
+      Statement statement = DBConnection.startConnection().createStatement();
+      statement.executeUpdate("ALTER TABLE customers AUTO_INCREMENT");
+    } catch (SQLException ce) {
+      Logger.getLogger(ce.toString());
+    }
+  }
+
   @FXML
   public void initialize(URL url, ResourceBundle resourceBundle) {
     //Customer Table
@@ -99,8 +109,7 @@ public class CustomerController implements Initializable {
         Customers customer = iterator.next();
         System.out.println(customer.getCustomerName());
       }
-    }
-    catch (SQLException e) {
+    } catch (SQLException e) {
       e.printStackTrace();
     }
   }
@@ -168,7 +177,6 @@ public class CustomerController implements Initializable {
     stage.show();
   }
 
-
   @FXML
   void sceneEditCustomer(ActionEvent event) throws IOException {
     try {
@@ -176,16 +184,16 @@ public class CustomerController implements Initializable {
       FXMLLoader loader = new FXMLLoader();
       loader.setLocation(getClass().getResource("/Views/ModifyCustomer.fxml"));
       Parent parent = loader.load();
+
       Scene modifyCustomerScene = new Scene(parent);
       ModifyCustomerController controller = loader.getController();
-      controller.sendCustomer(modifyCustomer);
+      controller.passCustomer(modifyCustomer);
 
       Stage window = (Stage) ((Button) event.getSource()).getScene().getWindow();
       window.setScene(modifyCustomerScene);
       window.setResizable(false);
       window.show();
-    }
-    catch (NullPointerException e) {
+    } catch (NullPointerException e) {
       Alert alert = new Alert(Alert.AlertType.INFORMATION);
       alert.setHeaderText("Select a Customer");
       alert.setHeaderText("Please select a customer to edit");
@@ -197,15 +205,6 @@ public class CustomerController implements Initializable {
   @FXML
   void onComboBoxSelect(ActionEvent event) {
 
-  }
-  public CustomerController() {
-
-    try {
-      Statement statement = DBConnection.startConnection().createStatement();
-      statement.executeUpdate("ALTER TABLE customers AUTO_INCREMENT");
-    } catch (SQLException ce) {
-      Logger.getLogger(ce.toString());
-    }
   }
 }
 

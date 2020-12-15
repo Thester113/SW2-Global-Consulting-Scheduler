@@ -5,7 +5,7 @@ import DAO.CustomerDB;
 import DAO.DBConnection;
 import DAO.FirstLevelDivisionDB;
 import Model.Countries;
-import Model.FirstLevelDivision;
+import Model.FirstLevelDivisions;
 import Model.Users;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -40,7 +40,7 @@ public class AddCustomerController implements Initializable {
   Long offsetToUTC = (long) (ZonedDateTime.now().getOffset()).getTotalSeconds();
 
 
-  ObservableList<FirstLevelDivision> fldList = FirstLevelDivisionDB.getAllFirstLevelDivisions();
+  ObservableList<FirstLevelDivisions> fldList = FirstLevelDivisionDB.getAllFirstLevelDivisions();
   @FXML
   private Button exit;
   @FXML
@@ -64,7 +64,7 @@ public class AddCustomerController implements Initializable {
   @FXML
   private TextField lastUpdatedByTxt;
   @FXML
-  private ComboBox<FirstLevelDivision> cbDiv;
+  private ComboBox<FirstLevelDivisions> cbDiv;
   @FXML
   private ComboBox<Countries> cbCountry;
 
@@ -133,9 +133,9 @@ public class AddCustomerController implements Initializable {
       try {
         cbDiv.setItems(FirstLevelDivisionDB.getUSFilteredFirstLevelDivisions());
 
-        ObservableList<FirstLevelDivision> usFilteredFirstLevelDivisions = FirstLevelDivisionDB.usFilteredFirstLevelDivisions;
+        ObservableList<FirstLevelDivisions> usFilteredFirstLevelDivisions = FirstLevelDivisionDB.usFilteredFirstLevelDivisions;
         for (int i = 0, usFilteredFirstLevelDivisionsSize = usFilteredFirstLevelDivisions.size(); i < usFilteredFirstLevelDivisionsSize; i++) {
-          FirstLevelDivision usFLD = usFilteredFirstLevelDivisions.get(i);
+          FirstLevelDivisions usFLD = usFilteredFirstLevelDivisions.get(i);
           System.out.println(usFLD.getDivision());
         }
       } catch (SQLException e) {
@@ -147,7 +147,7 @@ public class AddCustomerController implements Initializable {
     else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("Canada")) {
       try {
         cbDiv.setItems(FirstLevelDivisionDB.getCanadaFilteredFirstLevelDivisions());
-        for (FirstLevelDivision canadaFLD : FirstLevelDivisionDB.canadaFilteredFirstLevelDivisions) {
+        for (FirstLevelDivisions canadaFLD : FirstLevelDivisionDB.canadaFilteredFirstLevelDivisions) {
           System.out.println(canadaFLD.getDivision());
         }
       } catch (SQLException e) {
@@ -159,9 +159,9 @@ public class AddCustomerController implements Initializable {
       try {
         cbDiv.setItems(FirstLevelDivisionDB.getUKFilteredFirstLevelDivisions());
 
-        ObservableList<FirstLevelDivision> ukFilteredFirstLevelDivisions = FirstLevelDivisionDB.ukFilteredFirstLevelDivisions;
+        ObservableList<FirstLevelDivisions> ukFilteredFirstLevelDivisions = FirstLevelDivisionDB.ukFilteredFirstLevelDivisions;
         for (int i = 0, ukFilteredFirstLevelDivisionsSize = ukFilteredFirstLevelDivisions.size(); i < ukFilteredFirstLevelDivisionsSize; i++) {
-          FirstLevelDivision ukFLD = ukFilteredFirstLevelDivisions.get(i);
+          FirstLevelDivisions ukFLD = ukFilteredFirstLevelDivisions.get(i);
           System.out.println(ukFLD.getDivision());
         }
       } catch (SQLException e) {
@@ -185,8 +185,8 @@ public class AddCustomerController implements Initializable {
 
     try {
       cbDiv.setItems(FirstLevelDivisionDB.getAllFirstLevelDivisions());
-      for (FirstLevelDivision firstLevelDivision : FirstLevelDivisionDB.allFirstLevelDivisions) {
-        System.out.println(firstLevelDivision.getDivision());
+      for (FirstLevelDivisions firstLevelDivisions : FirstLevelDivisionDB.allFirstLevelDivisions) {
+        System.out.println(firstLevelDivisions.getDivision());
       }
     } catch (SQLException e) {
       e.printStackTrace();

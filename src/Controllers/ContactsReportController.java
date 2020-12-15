@@ -1,6 +1,6 @@
 package Controllers;
 
-import Model.Appointment;
+import Model.Appointments;
 import Model.Contacts;
 
 import DAO.DBConnection;
@@ -35,28 +35,28 @@ public class ContactsReportController implements Initializable {
   private ComboBox<Contacts> contactCB;
 
   @FXML
-  private TableView<Appointment> contactAppointmentTbl;
+  private TableView<Appointments> contactAppointmentTbl;
 
   @FXML
-  private TableColumn<Appointment, Integer> appointmentID;
+  private TableColumn<Appointments, Integer> appointmentID;
 
   @FXML
-  private TableColumn<Appointment, String> aptTitle;
+  private TableColumn<Appointments, String> aptTitle;
 
   @FXML
-  private TableColumn<Appointment, String> aptType;
+  private TableColumn<Appointments, String> aptType;
 
   @FXML
-  private TableColumn<Appointment, String> aptDescription;
+  private TableColumn<Appointments, String> aptDescription;
 
   @FXML
-  private TableColumn<Appointment, LocalDateTime> aptStart;
+  private TableColumn<Appointments, LocalDateTime> aptStart;
 
   @FXML
-  private TableColumn<Appointment, LocalDateTime> aptEnd;
+  private TableColumn<Appointments, LocalDateTime> aptEnd;
 
   @FXML
-  private TableColumn<Appointment, Integer> aptCustID;
+  private TableColumn<Appointments, Integer> aptCustID;
 
   @FXML
   private Button exitBtn;
@@ -84,8 +84,8 @@ public class ContactsReportController implements Initializable {
       ReportDB.sendContactSelection(contactSchedule);
       //Getting the appointments from the DB and populating the tableview
       contactAppointmentTbl.setItems(ReportDB.getContactSchedule());
-      for (Appointment appointment : ReportDB.contactSchedule) {
-        System.out.println(appointment.getStart());
+      for (Appointments appointments : ReportDB.contactSchedule) {
+        System.out.println(appointments.getStart());
       }
       appointmentID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
       aptTitle.setCellValueFactory(new PropertyValueFactory<>("title"));

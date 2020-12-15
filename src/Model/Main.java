@@ -28,10 +28,10 @@ public class Main extends Application {
 
     public static void main(String[] args) throws SQLException {
         //Set up DB connection
-        Connection conn = DBConnection.startConnection();
-        DBQuery.setStatement(conn);
+        Connection connection = DBConnection.startConnection();
+        DBQuery.setStatement(connection);
         Statement statement = DBQuery.getStatement();
-        ResultSet rs = statement.getResultSet();
+        ResultSet resultSet = statement.getResultSet();
 
 
 

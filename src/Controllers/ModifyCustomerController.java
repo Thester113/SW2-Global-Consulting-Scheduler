@@ -5,7 +5,7 @@ import DAO.CustomerDB;
 import DAO.FirstLevelDivisionDB;
 import Model.Countries;
 import Model.Customers;
-import Model.FirstLevelDivision;
+import Model.FirstLevelDivisions;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -77,7 +77,7 @@ public class ModifyCustomerController implements Initializable {
   private ComboBox<Countries> cbCountry;
 
   @FXML
-  private ComboBox<FirstLevelDivision> cbDivID;
+  private ComboBox<FirstLevelDivisions> cbDivID;
 
   public ModifyCustomerController() throws SQLException {
   }
@@ -124,7 +124,7 @@ public class ModifyCustomerController implements Initializable {
   }
 
   @FXML
-  public void sendCustomer(Customers modifyCustomer) {
+  public void passCustomer(Customers modifyCustomer) {
     modifyCustomerNew = modifyCustomer;
     custIDTxt.setText(String.valueOf(modifyCustomerNew.getCustomerID()));
     custNameTxt.setText(modifyCustomerNew.getCustomerName());
@@ -136,7 +136,7 @@ public class ModifyCustomerController implements Initializable {
     createdByTF.setText(modifyCustomerNew.getCreatedBy());
     createDateTF.setText(modifyCustomerNew.getCreateDate().format(formatter));
     int comboBoxPreset = modifyCustomerNew.getDivisionID();
-    FirstLevelDivision fld = new FirstLevelDivision(comboBoxPreset);
+    FirstLevelDivisions fld = new FirstLevelDivisions(comboBoxPreset);
     cbDivID.setValue(fld);
 
     if (fld.getDivisionID() <= 54) {
@@ -166,20 +166,20 @@ public class ModifyCustomerController implements Initializable {
 
     try {
       cbDivID.setItems(FirstLevelDivisionDB.getAllFirstLevelDivisions());
-      ObservableList<FirstLevelDivision> allFirstLevelDivisions = FirstLevelDivisionDB.allFirstLevelDivisions;
+      ObservableList<FirstLevelDivisions> allFirstLevelDivisions = FirstLevelDivisionDB.allFirstLevelDivisions;
       for (int i = 0, allFirstLevelDivisionsSize = allFirstLevelDivisions.size(); i < allFirstLevelDivisionsSize; i++) {
-        FirstLevelDivision firstLevelDivision = allFirstLevelDivisions.get(i);
-        System.out.println(firstLevelDivision.getDivision());
+        FirstLevelDivisions firstLevelDivisions = allFirstLevelDivisions.get(i);
+        System.out.println(firstLevelDivisions.getDivision());
       }
       cbDivID.setValue(fld);
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
-  ObservableList<FirstLevelDivision> firstLevelDivisionObservableList = FirstLevelDivisionDB.getAllFirstLevelDivisions();
-  ObservableList<FirstLevelDivision> usFirstLevelDivisionObservableList = FXCollections.observableArrayList();
-  ObservableList<FirstLevelDivision> canadaFirstLevelDivisionObservableList = FXCollections.observableArrayList();
-  ObservableList<FirstLevelDivision> ukFirstLevelDivisionObservableList = FXCollections.observableArrayList();
+  ObservableList<FirstLevelDivisions> firstLevelDivisionsObservableList = FirstLevelDivisionDB.getAllFirstLevelDivisions();
+  ObservableList<FirstLevelDivisions> usFirstLevelDivisionsObservableList = FXCollections.observableArrayList();
+  ObservableList<FirstLevelDivisions> canadaFirstLevelDivisionsObservableList = FXCollections.observableArrayList();
+  ObservableList<FirstLevelDivisions> ukFirstLevelDivisionsObservableList = FXCollections.observableArrayList();
 
 
   @FXML
@@ -190,14 +190,14 @@ public class ModifyCustomerController implements Initializable {
     }
     if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("U.S")) {
 
-      var usResult = firstLevelDivisionObservableList.stream().filter(f -> f.getDivisionID() < 54).collect(Collectors.toList());
-      cbDivID.setItems(usFirstLevelDivisionObservableList = FXCollections.observableList(usResult));
+      var usResult = firstLevelDivisionsObservableList.stream().filter(f -> f.getDivisionID() < 54).collect(Collectors.toList());
+      cbDivID.setItems(usFirstLevelDivisionsObservableList = FXCollections.observableList(usResult));
     } else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("Canada")) {
-      var canadaResult = firstLevelDivisionObservableList.stream().filter(f -> (f.getDivisionID() > 54) && (f.getDivisionID() < 101)).collect(Collectors.toList());
-      cbDivID.setItems(canadaFirstLevelDivisionObservableList = FXCollections.observableList(canadaResult));
+      var canadaResult = firstLevelDivisionsObservableList.stream().filter(f -> (f.getDivisionID() > 54) && (f.getDivisionID() < 101)).collect(Collectors.toList());
+      cbDivID.setItems(canadaFirstLevelDivisionsObservableList = FXCollections.observableList(canadaResult));
     } else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("UK")) {
-      var ukResult = firstLevelDivisionObservableList.stream().filter(f -> f.getDivisionID() >= 101).collect(Collectors.toList());
-      cbDivID.setItems(ukFirstLevelDivisionObservableList = FXCollections.observableList(ukResult));
+      var ukResult = firstLevelDivisionsObservableList.stream().filter(f -> f.getDivisionID() >= 101).collect(Collectors.toList());
+      cbDivID.setItems(ukFirstLevelDivisionsObservableList = FXCollections.observableList(ukResult));
     }
 
   }
