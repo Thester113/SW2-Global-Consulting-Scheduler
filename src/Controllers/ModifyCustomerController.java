@@ -188,16 +188,20 @@ public class ModifyCustomerController implements Initializable {
       System.out.println(cbCountry.getSelectionModel().toString());
       return;
     }
-    if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("U.S")) {
+    switch (cbCountry.getSelectionModel().getSelectedItem().getCountry()) {
+      case "U.S":
 
-      var usResult = firstLevelDivisionsObservableList.stream().filter(f -> f.getDivisionID() < 54).collect(Collectors.toList());
-      cbDivID.setItems(usFirstLevelDivisionsObservableList = FXCollections.observableList(usResult));
-    } else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("Canada")) {
-      var canadaResult = firstLevelDivisionsObservableList.stream().filter(f -> (f.getDivisionID() > 54) && (f.getDivisionID() < 101)).collect(Collectors.toList());
-      cbDivID.setItems(canadaFirstLevelDivisionsObservableList = FXCollections.observableList(canadaResult));
-    } else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("UK")) {
-      var ukResult = firstLevelDivisionsObservableList.stream().filter(f -> f.getDivisionID() >= 101).collect(Collectors.toList());
-      cbDivID.setItems(ukFirstLevelDivisionsObservableList = FXCollections.observableList(ukResult));
+        var usResult = firstLevelDivisionsObservableList.stream().filter(f -> f.getDivisionID() < 54).collect(Collectors.toList());
+        cbDivID.setItems(usFirstLevelDivisionsObservableList = FXCollections.observableList(usResult));
+        break;
+      case "Canada":
+        var canadaResult = firstLevelDivisionsObservableList.stream().filter(f -> (f.getDivisionID() > 54) && (f.getDivisionID() < 101)).collect(Collectors.toList());
+        cbDivID.setItems(canadaFirstLevelDivisionsObservableList = FXCollections.observableList(canadaResult));
+        break;
+      case "UK":
+        var ukResult = firstLevelDivisionsObservableList.stream().filter(f -> f.getDivisionID() >= 101).collect(Collectors.toList());
+        cbDivID.setItems(ukFirstLevelDivisionsObservableList = FXCollections.observableList(ukResult));
+        break;
     }
 
   }
