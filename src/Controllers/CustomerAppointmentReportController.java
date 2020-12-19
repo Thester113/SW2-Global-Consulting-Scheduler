@@ -2,7 +2,7 @@ package Controllers;
 
 import DAO.AppointmentDB;
 import DAO.DBConnection;
-import Model.Appointment;
+import Model.Appointments;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -108,10 +108,10 @@ public class CustomerAppointmentReportController implements Initializable {
       int octCount = 1;
       int novCount = 1;
       int decCount = 1;
-      ObservableList<Appointment> allAppointments = AppointmentDB.allAppointments;
-      for (Iterator<Appointment> iterator = allAppointments.iterator(); iterator.hasNext(); ) {
-        Appointment appointment = iterator.next();
-        String aptType = appointment.getType();
+      ObservableList<Appointments> allAppointments = AppointmentDB.allAppointments;
+      for (Iterator<Appointments> iterator = allAppointments.iterator(); iterator.hasNext(); ) {
+        Appointments appointments = iterator.next();
+        String aptType = appointments.getType();
         {
           if (aptType.contains("Planning Session")) {
             planningSessionCount = planningSessionCount + 1;
@@ -124,9 +124,9 @@ public class CustomerAppointmentReportController implements Initializable {
 
 
       }
-      ObservableList<Appointment> appointments = AppointmentDB.allAppointments;
-      for (Iterator<Appointment> iterator = appointments.iterator(); iterator.hasNext(); ) {
-        Appointment appointment = iterator.next();
+      ObservableList<Appointments> appointments = AppointmentDB.allAppointments;
+      for (Iterator<Appointments> iterator = appointments.iterator(); iterator.hasNext(); ) {
+        Appointments appointment = iterator.next();
         Month aptStart = appointment.getStart().getMonth();
         switch (aptStart) {
           case JANUARY:

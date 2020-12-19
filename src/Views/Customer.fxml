@@ -7,36 +7,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CustomerController">
-    <Label alignment="CENTER" layoutX="342.0" layoutY="14.0" prefHeight="57.0" prefWidth="316.0" text="Customer Table"
-           textAlignment="CENTER">
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CustomerController">
+    <Label alignment="CENTER" layoutX="277.0" layoutY="14.0" prefHeight="57.0" prefWidth="381.0" text="Customer Information Table" textAlignment="CENTER">
         <font>
-            <Font name="System Bold" size="30.0"/>
+            <Font name="System Bold" size="30.0" />
         </font>
     </Label>
     <TableView fx:id="custTable" layoutX="15.0" layoutY="141.0" prefHeight="406.0" prefWidth="978.0">
         <columns>
-            <TableColumn fx:id="custCustomerId" prefWidth="92.0" text="Customer ID"/>
-            <TableColumn fx:id="custName" prefWidth="138.0" text="Name"/>
-            <TableColumn fx:id="custAddress" prefWidth="118.0" text="Address"/>
-            <TableColumn fx:id="custPostal" text="Postal Code"/>
-            <TableColumn fx:id="custPhone" prefWidth="63.0" text="Phone"/>
-            <TableColumn fx:id="custCreateDate" prefWidth="94.0" text="Created Date"/>
-            <TableColumn fx:id="custCreatedBy" prefWidth="86.0" text="Created By"/>
-            <TableColumn fx:id="custLastUpdate" prefWidth="86.0" text="Last Update"/>
-            <TableColumn fx:id="custLastUpdatedBy" prefWidth="107.0" text="Last Updated By"/>
-            <TableColumn fx:id="custDivisionID" prefWidth="113.0" text="Division ID"/>
+            <TableColumn fx:id="custCustomerId" prefWidth="92.0" text="Customer ID" />
+            <TableColumn fx:id="custName" prefWidth="138.0" text="Name" />
+            <TableColumn fx:id="custAddress" prefWidth="118.0" text="Address" />
+            <TableColumn fx:id="custPostal" text="Postal Code" />
+            <TableColumn fx:id="custPhone" prefWidth="63.0" text="Phone" />
+            <TableColumn fx:id="custCreateDate" prefWidth="94.0" text="Created Date" />
+            <TableColumn fx:id="custCreatedBy" prefWidth="86.0" text="Created By" />
+            <TableColumn fx:id="custLastUpdate" prefWidth="86.0" text="Last Update" />
+            <TableColumn fx:id="custLastUpdatedBy" prefWidth="107.0" text="Last Updated By" />
+            <TableColumn fx:id="custDivisionID" prefWidth="113.0" text="Division ID" />
         </columns>
     </TableView>
-    <Button fx:id="addCustomer" layoutX="713.0" layoutY="552.0" mnemonicParsing="false" onAction="#sceneAddCustomer"
-            prefHeight="27.0" prefWidth="73.0" text="Add"/>
-    <Button fx:id="deleteCustomer" layoutX="891.0" layoutY="552.0" mnemonicParsing="false"
-            onAction="#sceneDeleteCustomer" prefHeight="27.0" prefWidth="73.0" text="Delete"/>
-    <Button fx:id="editCustomer" layoutX="802.0" layoutY="552.0" mnemonicParsing="false" onAction="#sceneEditCustomer"
-            prefHeight="27.0" prefWidth="73.0" text="Edit"/>
-    <Button fx:id="mainButton" layoutX="818.0" layoutY="640.0" mnemonicParsing="false" onAction="#sceneBackToMain"
-            prefHeight="27.0" prefWidth="73.0" text="Main"/>
-    <Button fx:id="exitButton" layoutX="906.0" layoutY="640.0" mnemonicParsing="false" onAction="#exitApp"
-            prefHeight="27.0" prefWidth="73.0" text="Exit"/>
+    <Button fx:id="addCustomer" layoutX="713.0" layoutY="552.0" mnemonicParsing="false" onAction="#sceneAddCustomer" prefHeight="27.0" prefWidth="73.0" text="Add" />
+    <Button fx:id="deleteCustomer" layoutX="891.0" layoutY="552.0" mnemonicParsing="false" onAction="#sceneDeleteCustomer" prefHeight="27.0" prefWidth="73.0" text="Delete" />
+    <Button fx:id="editCustomer" layoutX="802.0" layoutY="552.0" mnemonicParsing="false" onAction="#sceneEditCustomer" prefHeight="27.0" prefWidth="73.0" text="Edit" />
+    <Button fx:id="mainButton" layoutX="818.0" layoutY="640.0" mnemonicParsing="false" onAction="#sceneBackToMain" prefHeight="27.0" prefWidth="73.0" text="Main" />
+    <Button fx:id="exitButton" layoutX="906.0" layoutY="640.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="27.0" prefWidth="73.0" text="Exit" />
 </AnchorPane>

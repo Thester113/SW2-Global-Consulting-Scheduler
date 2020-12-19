@@ -22,16 +22,17 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/Views/Login.fxml"));
         primaryStage.setTitle("Global Scheduler Application");
         primaryStage.setScene(new Scene(root, 600, 600));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
 
     public static void main(String[] args) throws SQLException {
         //Set up DB connection
-        Connection conn = DBConnection.startConnection();
-        DBQuery.setStatement(conn);
+        Connection connection = DBConnection.startConnection();
+        DBQuery.setStatement(connection);
         Statement statement = DBQuery.getStatement();
-        ResultSet rs = statement.getResultSet();
+        ResultSet resultSet = statement.getResultSet();
 
 
 
