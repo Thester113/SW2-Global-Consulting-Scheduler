@@ -40,6 +40,10 @@ import java.util.TimeZone;
 import static java.lang.Integer.valueOf;
 
 public class AddAppointmentController implements Initializable {
+    /**
+     * This is the formatter for properly setting the DTG
+     * Using offsetToUTC to display the time difference between the users OS time zone and UTC
+     */
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");
@@ -106,8 +110,8 @@ public class AddAppointmentController implements Initializable {
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        aptCreateByText.setText(String.valueOf(Users.getUsername()));
-        aptLstUpdByText.setText(String.valueOf(Users.getUsername()));
+        aptCreateByText.setText(String.valueOf(Users.getUserName()));
+        aptLstUpdByText.setText(String.valueOf(Users.getUserName()));
         try {
 
             Connection conn = DBConnection.startConnection();
@@ -125,7 +129,11 @@ public class AddAppointmentController implements Initializable {
         }
         contactName.setItems(contactList);
     }
-
+    /**
+     *  Sets the ID field for an appointment based on the choices of the combobox using the list of contacts.
+     * @param event ActionEvent
+     * @throws IOException
+     */
 
     @FXML
     void SetContactID(ActionEvent event) throws IOException {
@@ -146,9 +154,21 @@ public class AddAppointmentController implements Initializable {
 
     ObservableList<Contacts> contactList = FXCollections.observableArrayList();
 
+    /**
+     * Times entered by the user will default to local tz and then based of the time of the user we get from the offset variable it will set the time to UTC for storage in the DB
+     * Alerts have been set up based off of the requirements section
+     * @param event
+     * @see AppointmentDB#addAppointment(Integer, String, String, String, String, LocalDateTime, LocalDateTime, LocalDateTime, String, LocalDateTime, String, Integer, Integer, Integer)
+     * @return
+     * @throws IOException
+     * @throws SQLException
+     */
+
     @FXML
     boolean OnActionAddAppointment(ActionEvent event) throws IOException, SQLException {
         try {
+
+            //Gets users timezone and OffSets
 
 
             TimeZone est = TimeZone.getTimeZone("est");
@@ -158,6 +178,7 @@ public class AddAppointmentController implements Initializable {
             String description = aptDescrText.getText();
             String location = aptLocText.getText();
             String type = aptTypeText.getText();
+            //Works when going behind, uses EST as per requirements
 
             LocalDateTime start = LocalDateTime.parse(aptStartText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
             LocalDateTime end = LocalDateTime.parse(aptEndText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
@@ -169,24 +190,53 @@ public class AddAppointmentController implements Initializable {
             Integer userID = valueOf(aptUIDText.getText());
             Integer contactID = valueOf(aptContIDText.getText());
 
+            /**
+             * Compare Local time to Business hours converts. This converts the hours.
+             *          Get local time of User and Convert to UTC
+             */
+
             LocalDateTime startTime = LocalDateTime.parse(aptStartText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
+
+            /**
+             * Sets the start time to EST
+             */
 
             startTime = startTime.plus(Duration.ofMinutes(offsetToEST));
 
+            /**
+             *Gets Users local time and converts to UTC
+             */
+
             LocalDateTime endTime = LocalDateTime.parse(aptEndText.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
 
+            /**
+             *Set to EST
+             */
+
             endTime = endTime.plus(Duration.ofMinutes(offsetToEST));
+
+            /**
+             * Check for 8-22 business hours startTime and endTime
+                    */
 
 
             LocalTime businessHoursStart = LocalTime.of(8, 00);
             LocalTime businessHoursEnd = LocalTime.of(22, 00);
-
+            /**
+             * Check if time falls between other appointments and avoids conflict
+             */
 
             LocalDateTime startDateTime = LocalDateTime.parse(aptStartText.getText(), formatter);
             LocalDateTime endDateTime = LocalDateTime.parse(aptEndText.getText(), formatter);
 
+            /**
+             * Uses observable list to make sure sure no overlapping in appointments
+             */
 
-            for (Appointments appointments : AppointmentDB.allAppointments) {
+
+            ObservableList<Appointments> allAppointments = AppointmentDB.allAppointments;
+            for (int i = 0, allAppointmentsSize = allAppointments.size(); i < allAppointmentsSize; i++) {
+                Appointments appointments = allAppointments.get(i);
                 if ((startDateTime.isEqual(appointments.getStart()) || startDateTime.isAfter(appointments.getStart()) && startDateTime.isBefore(appointments.getEnd()))) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("CONFLICT OF TIME");
@@ -224,15 +274,22 @@ public class AddAppointmentController implements Initializable {
         return false;
     }
 
+    /**
+     * Adds contacts in list to be selected using comboBox
+     * @throws SQLException
+     */
+
 
     public AddAppointmentController() throws SQLException {
 
         try {
             Connection conn = DBConnection.startConnection();
             ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM contacts");
-            while (rs.next()) {
+            if (rs.next()) {
+                do {
 
-                contactList.add(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
+                    contactList.add(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
+                } while (rs.next());
             }
         } catch (SQLException ce) {
             Logger.getLogger(ce.toString());

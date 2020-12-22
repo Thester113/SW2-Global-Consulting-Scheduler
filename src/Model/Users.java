@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 public class Users {
     Integer userID;
-    static String username;
+    static String userName;
     String password;
     Date createDate;
     String createdBy;
@@ -34,12 +34,12 @@ public class Users {
         this.userID = userID;
     }
 
-    public static String getUsername() {
-        return username;
+    public static String getUserName() {
+        return userName;
     }
 
     public void setUserName(String userName) {
-        this.username = userName;
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -82,9 +82,9 @@ public class Users {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
-    public Users(Integer userID, String username, String password, Date createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy) {
+    public Users(Integer userID, String userName, String password, Date createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy) {
         this.userID = userID;
-        this.username = username;
+        this.userName = userName;
         this.password = password;
         this.createDate = createDate;
         this.createdBy = createdBy;

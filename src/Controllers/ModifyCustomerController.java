@@ -38,8 +38,6 @@ public class ModifyCustomerController implements Initializable {
   DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
   Long offsetToUTC = (long) (ZonedDateTime.now().getOffset()).getTotalSeconds();
 
-  private Customers modifyCustomerNew;
-
   @FXML
   private Button exit;
 
@@ -125,17 +123,18 @@ public class ModifyCustomerController implements Initializable {
 
   @FXML
   public void passCustomer(Customers modifyCustomer) {
-    modifyCustomerNew = modifyCustomer;
-    custIDTxt.setText(String.valueOf(modifyCustomerNew.getCustomerID()));
-    custNameTxt.setText(modifyCustomerNew.getCustomerName());
-    custAddressTxt.setText(modifyCustomerNew.getAddress());
-    custPostalTxt.setText(modifyCustomerNew.getPostal());
-    custPhoneTxt.setText(String.valueOf(modifyCustomerNew.getPhone()));
-    lastUpdatedByTF.setText(modifyCustomerNew.getLastUpdatedBy());
-    lastUpdateTF.setText(modifyCustomerNew.getLastUpdate().format(formatter));
-    createdByTF.setText(modifyCustomerNew.getCreatedBy());
-    createDateTF.setText(modifyCustomerNew.getCreateDate().format(formatter));
-    int comboBoxPreset = modifyCustomerNew.getDivisionID();
+
+    custIDTxt.setText(String.valueOf(modifyCustomer.getCustomerID()));
+    custNameTxt.setText(modifyCustomer.getCustomerName());
+    custAddressTxt.setText(modifyCustomer.getAddress());
+    custPostalTxt.setText(modifyCustomer.getPostal());
+    custPhoneTxt.setText(String.valueOf(modifyCustomer.getPhone()));
+    lastUpdatedByTF.setText(modifyCustomer.getLastUpdatedBy());
+    lastUpdateTF.setText(modifyCustomer.getLastUpdate().format(formatter));
+    createdByTF.setText(modifyCustomer.getCreatedBy());
+    createDateTF.setText(modifyCustomer.getCreateDate().format(formatter));
+
+    int comboBoxPreset = modifyCustomer.getDivisionID();
     FirstLevelDivisions fld = new FirstLevelDivisions(comboBoxPreset);
     cbDivID.setValue(fld);
 
@@ -178,8 +177,8 @@ public class ModifyCustomerController implements Initializable {
   }
   ObservableList<FirstLevelDivisions> firstLevelDivisionsObservableList = FirstLevelDivisionDB.getAllFirstLevelDivisions();
   ObservableList<FirstLevelDivisions> usFirstLevelDivisionsObservableList = FXCollections.observableArrayList();
-  ObservableList<FirstLevelDivisions> canadaFirstLevelDivisionsObservableList = FXCollections.observableArrayList();
   ObservableList<FirstLevelDivisions> ukFirstLevelDivisionsObservableList = FXCollections.observableArrayList();
+  ObservableList<FirstLevelDivisions> canadaFirstLevelDivisionsObservableList = FXCollections.observableArrayList();
 
 
   @FXML

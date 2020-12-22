@@ -28,7 +28,7 @@ public class Main extends Application {
 
 
     public static void main(String[] args) throws SQLException {
-        //Set up DB connection
+        //Sets up the DB connection
         Connection connection = DBConnection.startConnection();
         DBQuery.setStatement(connection);
         Statement statement = DBQuery.getStatement();

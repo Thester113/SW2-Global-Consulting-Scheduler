@@ -79,10 +79,10 @@ public class ContactsReportController implements Initializable {
   @FXML
   void displayContactSchedule(ActionEvent event) throws IOException {
     try {
-      //selecting the contact object to send to query the DB
+      //Selects which contact to send as a query to the DB
       Contacts contactSchedule = contactCB.getSelectionModel().getSelectedItem();
       ReportDB.sendContactSelection(contactSchedule);
-      //Getting the appointments from the DB and populating the tableview
+      //Verifies the appointments from the DB and populates the tableview
       contactAppointmentTbl.setItems(ReportDB.getContactSchedule());
       for (Appointments appointments : ReportDB.contactSchedule) {
         System.out.println(appointments.getStart());

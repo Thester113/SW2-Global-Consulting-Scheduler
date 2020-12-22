@@ -194,8 +194,8 @@ public class AddCustomerController implements Initializable {
 
 
 
-    createdByTxt.setText(String.valueOf(Users.getUsername()));
-    lastUpdatedByTxt.setText(String.valueOf(Users.getUsername()));
+    createdByTxt.setText(String.valueOf(Users.getUserName()));
+    lastUpdatedByTxt.setText(String.valueOf(Users.getUserName()));
     try {
 
       Connection conn = DBConnection.startConnection();
