@@ -1,4 +1,7 @@
 package Controllers;
+/**
+ * Appointment class where add, edit, and delete are available. A tableview with all Appointments can be found here
+ */
 
 
 import DAO.AppointmentDB;
@@ -31,14 +34,26 @@ import static DAO.AppointmentDB.deleteAppointment;
 
 public class AppointmentController implements Initializable {
 
+    /**
+     * @param allAptsRb displays all appointments
+     */
+
     @FXML
     private RadioButton allAptsRB;
 
     @FXML
     private ToggleGroup aptTableTGLGRP;
 
+    /**
+     * @param weeklyRB shows appointments by week
+     */
+
     @FXML
     private RadioButton weeklyRB;
+
+    /**
+     * @param monthlyRB shows appointments by month
+     */
 
 
     @FXML
@@ -124,24 +139,33 @@ public class AppointmentController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Utilizing a for each lambda loop to reduce amount of code used
+     *
+     * @param event
+     * @throws SQLException
+     */
+
     @FXML
-    void RBallAppointmentsOA(ActionEvent event) throws SQLException {
+    void rescBundallAppointmentsOA(ActionEvent event) throws SQLException {
 
         try {
             aptTable.setItems(AppointmentDB.getAllAppointments());
+            /**
+             * Lambda expression using a for each
+             */
 
             for (Appointments appointments : AppointmentDB.allAppointments) {
                 System.out.println(appointments.getStart());
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
 
     @FXML
-    void RBweeklyAppointmentsOA(ActionEvent event) throws SQLException {
+    void rescBundweeklyAppointmentsOA(ActionEvent event) throws SQLException {
 
         LocalDate today = LocalDate.from(ZonedDateTime.now());
         LocalDate oneWeekFromToday = LocalDate.from(ZonedDateTime.now()).plusWeeks(1);
@@ -160,9 +184,14 @@ public class AppointmentController implements Initializable {
         }
     }
 
+    /**
+     * Uses monthly radio button selection to show only appointment
+     *
+     * @param event
+     */
 
     @FXML
-    void RBmonthlyAppointmentsOA(ActionEvent event) {
+    void rescBundmonthlyAppointmentsOA(ActionEvent event) {
 
 
         LocalDate today = LocalDate.from(ZonedDateTime.now());
@@ -277,8 +306,11 @@ public class AppointmentController implements Initializable {
             aptTable.setItems(AppointmentDB.getAllAppointments());
 
             ObservableList<Appointments> allAppointments = AppointmentDB.allAppointments;
-            for (int i = 0, allAppointmentsSize = allAppointments.size(); i < allAppointmentsSize; i++) {
-                Appointments appointments = allAppointments.get(i);
+            /**
+             *  For each lambda to get appointments
+             *  helps reduce code
+             */
+            for (Appointments appointments : allAppointments) {
                 System.out.println(appointments.getStart());
             }
         } catch (SQLException e) {

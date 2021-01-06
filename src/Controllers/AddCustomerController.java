@@ -117,13 +117,13 @@ public class AddCustomerController implements Initializable {
       return false;
       /**
        * Checks for formatting errors and provides exception if missing a field
-       * Issues alert iof missing formatting
+       * Issues alert if missing formatting
        */
 
     } catch (DateTimeParseException e) {
       Alert alert = new Alert(Alert.AlertType.ERROR);
-      alert.setTitle("Missing selection");
-      alert.setContentText("Please check that date and time fields are formatted YYYY-MM-DD HH:MM when adding an appointment");
+      alert.setTitle("FORMAT INCORRECT");
+      alert.setContentText("Please check that date and time fields are formatted correctly when adding an appointment");
       alert.showAndWait();
       return true;
     }
@@ -138,31 +138,42 @@ public class AddCustomerController implements Initializable {
   }
 
 
+  /**
+   * Countries have own list
+   *
+   * @param event on selection of one of the countries the filtered lists will be set in the division combo box
+   * @throws IOException
+   * @throws SQLException
+   * @see FirstLevelDivisionDB#usFilteredFirstLevelDivisions
+   * @see FirstLevelDivisionDB#ukFilteredFirstLevelDivisions
+   * @see FirstLevelDivisionDB#canadaFilteredFirstLevelDivisions
+   * A for each lambda will run which helps eliminate time that code will need to run through the objects. This satisfies lambda task.
+   */
   @FXML
   void SetDivisionID(MouseEvent event) throws IOException, SQLException {
+
+    /**
+     * Combo Box Division ID list
+     */
 
     if (cbCountry.getSelectionModel().isEmpty()) {
       System.out.println(cbCountry.getSelectionModel().toString());
       return;
-    }
-
-
-    else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("United States")) {
+    } else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("United States")) {
       try {
         cbDiv.setItems(FirstLevelDivisionDB.getUSFilteredFirstLevelDivisions());
+        /**
+         * Filters list of division IDs that connect with a country
+         */
 
         ObservableList<FirstLevelDivisions> usFilteredFirstLevelDivisions = FirstLevelDivisionDB.usFilteredFirstLevelDivisions;
-        for (int i = 0, usFilteredFirstLevelDivisionsSize = usFilteredFirstLevelDivisions.size(); i < usFilteredFirstLevelDivisionsSize; i++) {
-          FirstLevelDivisions usFLD = usFilteredFirstLevelDivisions.get(i);
+        for (FirstLevelDivisions usFLD : usFilteredFirstLevelDivisions) {
           System.out.println(usFLD.getDivision());
         }
       } catch (SQLException e) {
         e.printStackTrace();
       }
-    }
-
-
-    else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("Canada")) {
+    } else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("Canada")) {
       try {
         cbDiv.setItems(FirstLevelDivisionDB.getCanadaFilteredFirstLevelDivisions());
         for (FirstLevelDivisions canadaFLD : FirstLevelDivisionDB.canadaFilteredFirstLevelDivisions) {
@@ -171,15 +182,12 @@ public class AddCustomerController implements Initializable {
       } catch (SQLException e) {
         e.printStackTrace();
       }
-    }
-
-    else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("United Kingdom")) {
+    } else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("United Kingdom")) {
       try {
         cbDiv.setItems(FirstLevelDivisionDB.getUKFilteredFirstLevelDivisions());
 
         ObservableList<FirstLevelDivisions> ukFilteredFirstLevelDivisions = FirstLevelDivisionDB.ukFilteredFirstLevelDivisions;
-        for (int i = 0, ukFilteredFirstLevelDivisionsSize = ukFilteredFirstLevelDivisions.size(); i < ukFilteredFirstLevelDivisionsSize; i++) {
-          FirstLevelDivisions ukFLD = ukFilteredFirstLevelDivisions.get(i);
+        for (FirstLevelDivisions ukFLD : ukFilteredFirstLevelDivisions) {
           System.out.println(ukFLD.getDivision());
         }
       } catch (SQLException e) {
@@ -189,6 +197,12 @@ public class AddCustomerController implements Initializable {
 
   }
 
+  /**
+   * Sets the combo boxes and customer ID
+   *
+   * @param url
+   * @param resourceBundle
+   */
 
   @FXML
   public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -215,11 +229,13 @@ public class AddCustomerController implements Initializable {
     createdByTxt.setText(String.valueOf(Users.getUserName()));
     lastUpdatedByTxt.setText(String.valueOf(Users.getUserName()));
     try {
-
+      // Connects to the database
       Connection conn = DBConnection.startConnection();
-
+      //Query Selects the last row from Customer ID
       ResultSet rs = conn.createStatement().executeQuery("SELECT Customer_ID FROM customers ORDER BY Customer_ID DESC LIMIT 1 ");
-
+      /**
+       * @param custIDTxt is generated automatically
+       */
       if (rs.next()) {
         do {
 
