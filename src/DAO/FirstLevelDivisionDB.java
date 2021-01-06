@@ -23,15 +23,17 @@ public class FirstLevelDivisionDB {
     try {
       Connection conn = DBConnection.startConnection();
       ResultSet rb = conn.createStatement().executeQuery("SELECT * FROM first_level_divisions");
-      while (rb.next()) {
-        allFirstLevelDivisions.add(new FirstLevelDivisions(
-                rb.getInt("Division_ID"),
-                rb.getString("Division"),
-                rb.getTimestamp("Create_Date").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                rb.getString("Created_By"),
-                rb.getTimestamp("Last_Update").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                rb.getString("Last_Updated_By"),
-                rb.getInt("Country_ID")));
+      if (rb.next()) {
+        do {
+          allFirstLevelDivisions.add(new FirstLevelDivisions(
+                  rb.getInt("Division_ID"),
+                  rb.getString("Division"),
+                  rb.getTimestamp("Create_Date").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                  rb.getString("Created_By"),
+                  rb.getTimestamp("Last_Update").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                  rb.getString("Last_Updated_By"),
+                  rb.getInt("Country_ID")));
+        } while (rb.next());
       }
       return allFirstLevelDivisions;
     } catch (SQLException e) {
@@ -47,15 +49,17 @@ public class FirstLevelDivisionDB {
     try {
       Connection conn = DBConnection.startConnection();
       ResultSet rb = conn.createStatement().executeQuery("SELECT * FROM first_level_divisions WHERE COUNTRY_ID = 1");
-      while (rb.next()) {
-        usFilteredFirstLevelDivisions.add(new FirstLevelDivisions(
-                rb.getInt("Division_ID"),
-                rb.getString("Division"),
-                rb.getTimestamp("Create_Date").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                rb.getString("Created_By"),
-                rb.getTimestamp("Last_Update").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                rb.getString("Last_Updated_By"),
-                rb.getInt("Country_ID")));
+      if (rb.next()) {
+        do {
+          usFilteredFirstLevelDivisions.add(new FirstLevelDivisions(
+                  rb.getInt("Division_ID"),
+                  rb.getString("Division"),
+                  rb.getTimestamp("Create_Date").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                  rb.getString("Created_By"),
+                  rb.getTimestamp("Last_Update").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                  rb.getString("Last_Updated_By"),
+                  rb.getInt("Country_ID")));
+        } while (rb.next());
       }
       return usFilteredFirstLevelDivisions;
     } catch (SQLException e) {
@@ -72,15 +76,17 @@ public class FirstLevelDivisionDB {
     try {
       Connection conn = DBConnection.startConnection();
       ResultSet rb = conn.createStatement().executeQuery("SELECT * FROM first_level_divisions WHERE COUNTRY_ID = 2");
-      while (rb.next()) {
-        ukFilteredFirstLevelDivisions.add(new FirstLevelDivisions(
-                rb.getInt("Division_ID"),
-                rb.getString("Division"),
-                rb.getTimestamp("Create_Date").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                rb.getString("Created_By"),
-                rb.getTimestamp("Last_Update").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                rb.getString("Last_Updated_By"),
-                rb.getInt("Country_ID")));
+      if (rb.next()) {
+        do {
+          ukFilteredFirstLevelDivisions.add(new FirstLevelDivisions(
+                  rb.getInt("Division_ID"),
+                  rb.getString("Division"),
+                  rb.getTimestamp("Create_Date").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                  rb.getString("Created_By"),
+                  rb.getTimestamp("Last_Update").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                  rb.getString("Last_Updated_By"),
+                  rb.getInt("Country_ID")));
+        } while (rb.next());
       }
       return ukFilteredFirstLevelDivisions;
     } catch (SQLException e) {
@@ -97,15 +103,17 @@ public class FirstLevelDivisionDB {
     try {
       Connection conn = DBConnection.startConnection();
       ResultSet rb = conn.createStatement().executeQuery("SELECT * FROM first_level_divisions WHERE COUNTRY_ID = 3");
-      while (rb.next()) {
-        canadaFilteredFirstLevelDivisions.add(new FirstLevelDivisions(
-                rb.getInt("Division_ID"),
-                rb.getString("Division"),
-                rb.getTimestamp("Create_Date").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                rb.getString("Created_By"),
-                rb.getTimestamp("Last_Update").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                rb.getString("Last_Updated_By"),
-                rb.getInt("Country_ID")));
+      if (rb.next()) {
+        do {
+          canadaFilteredFirstLevelDivisions.add(new FirstLevelDivisions(
+                  rb.getInt("Division_ID"),
+                  rb.getString("Division"),
+                  rb.getTimestamp("Create_Date").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                  rb.getString("Created_By"),
+                  rb.getTimestamp("Last_Update").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                  rb.getString("Last_Updated_By"),
+                  rb.getInt("Country_ID")));
+        } while (rb.next());
       }
       return canadaFilteredFirstLevelDivisions;
     } catch (SQLException e) {

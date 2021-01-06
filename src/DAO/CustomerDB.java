@@ -19,19 +19,21 @@ public class CustomerDB {
     try {
       Connection conn = DBConnection.startConnection();
       ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM customers");
-      while (rs.next()) {
-        allCustomers.add(new Customers(
-                rs.getInt("Customer_ID"),
-                rs.getString("Customer_Name"),
-                rs.getString("Address"),
-                rs.getString("Postal_Code"),
-                rs.getString("Phone"),
-                rs.getTimestamp("Create_Date").toLocalDateTime(),
-                rs.getString("Created_By"),
-                rs.getTimestamp("Last_Update").toLocalDateTime(),
-                rs.getString("Last_Updated_By"),
-                rs.getInt("Division_ID")));
+      if (rs.next()) {
+        do {
+          allCustomers.add(new Customers(
+                  rs.getInt("Customer_ID"),
+                  rs.getString("Customer_Name"),
+                  rs.getString("Address"),
+                  rs.getString("Postal_Code"),
+                  rs.getString("Phone"),
+                  rs.getTimestamp("Create_Date").toLocalDateTime(),
+                  rs.getString("Created_By"),
+                  rs.getTimestamp("Last_Update").toLocalDateTime(),
+                  rs.getString("Last_Updated_By"),
+                  rs.getInt("Division_ID")));
 
+        } while (rs.next());
       }
       return allCustomers;
     } catch (SQLException e) {

@@ -1,4 +1,7 @@
 package Controllers;
+/**
+ * AddCustomerController adds customers to the DB using the DAO.CustomersDB
+ */
 
 import DAO.CountriesDB;
 import DAO.CustomerDB;
@@ -34,6 +37,9 @@ import java.time.format.DateTimeParseException;
 import java.util.ResourceBundle;
 
 public class AddCustomerController implements Initializable {
+  /**
+   * DateTimeFormatter puts Local Date and Time in format
+   */
 
   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
@@ -71,9 +77,17 @@ public class AddCustomerController implements Initializable {
   public AddCustomerController() throws SQLException {
   }
 
+  /**
+   * Gets customer fields and passes them to database
+   *
+   * @param event
+   * @return
+   * @throws IOException
+   */
+
 
   @FXML
-  boolean addCustomer(ActionEvent event) throws IOException {
+  boolean addCustomerController(ActionEvent event) throws IOException {
     try {
       Integer customerID = Integer.valueOf(custIDTxt.getText());
       String customerName = custNameTxt.getText();
@@ -84,7 +98,7 @@ public class AddCustomerController implements Initializable {
       String createdBy = createdByTxt.getText();
       LocalDateTime lastUpdate = LocalDateTime.parse(lastUpdateTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
       String lastUpdatedBy = lastUpdatedByTxt.getText();
-      int divisionID = Integer.valueOf(String.valueOf(cbDiv.getSelectionModel().getSelectedItem().getDivisionID()));
+      int divisionID = Integer.parseInt(String.valueOf(cbDiv.getSelectionModel().getSelectedItem().getDivisionID()));
 
 
       if (!customerName.equals("") && !address.equals("") && !postal.equals("") && !phone.equals("")) {
@@ -96,23 +110,27 @@ public class AddCustomerController implements Initializable {
         return CustomerDB.addCustomer(customerID, customerName, address, postal, phone, createDate, createdBy, lastUpdate, lastUpdatedBy, divisionID);
       } else {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Missing selection");
-        alert.setContentText("Please enter a customer name, address, postal code, and phone number for customer");
+        alert.setTitle("Selection is Missing");
+        alert.setContentText("A field is missing for customer");
         alert.showAndWait();
       }
       return false;
+      /**
+       * Checks for formatting errors and provides exception if missing a field
+       * Issues alert iof missing formatting
+       */
 
     } catch (DateTimeParseException e) {
       Alert alert = new Alert(Alert.AlertType.ERROR);
       alert.setTitle("Missing selection");
-      alert.setContentText("Please ensure all date and time fields are formatted YYYY-MM-DD HH:MM prior to adding an appointment");
+      alert.setContentText("Please check that date and time fields are formatted YYYY-MM-DD HH:MM when adding an appointment");
       alert.showAndWait();
       return true;
     }
   }
 
   @FXML
-  void exitMainMenu(ActionEvent event) throws IOException {
+  void exitToMainMenu(ActionEvent event) throws IOException {
     Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     Object scene = FXMLLoader.load(getClass().getResource("/Views/Customer.fxml"));
     stage.setScene(new Scene((Parent) scene));

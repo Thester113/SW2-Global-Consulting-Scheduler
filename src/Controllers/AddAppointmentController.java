@@ -1,5 +1,7 @@
 package Controllers;
-
+/**
+ * AddAppointmentController is used to add a new appointment to the DB
+ */
 
 import DAO.AppointmentDB;
 import DAO.DBConnection;
@@ -109,20 +111,32 @@ public class AddAppointmentController implements Initializable {
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        /**
+         *Created By field is auto-populated with the value of a user login that is valid
+         */
 
         aptCreateByText.setText(String.valueOf(Users.getUserName()));
         aptLstUpdByText.setText(String.valueOf(Users.getUserName()));
         try {
+            /**
+             * Connects to the DB
+             */
 
             Connection conn = DBConnection.startConnection();
+            /**
+             * Uses the Max appointment ID and sets it as the highestID with the var tempHighID
+             */
 
             ResultSet rs = conn.createStatement().executeQuery("SELECT MAX(Appointment_ID) AS highestID FROM appointments");
             while (rs.next()) {
 
-                int tempID = rs.getInt("highestID");
+                int tempHighID = rs.getInt("highestID");
+                /**
+                 * Increments tempHighID by 1
+                 */
 
-                aptIDtext.setText(String.valueOf(tempID + 1));
-                System.out.println(rs.getInt(tempID));
+                aptIDtext.setText(String.valueOf(tempHighID + 1));
+                System.out.println(rs.getInt(tempHighID));
             }
         } catch (Exception exc) {
             exc.printStackTrace();
@@ -275,7 +289,7 @@ public class AddAppointmentController implements Initializable {
     }
 
     /**
-     * Adds contacts in list to be selected using comboBox
+     *  Using the comboBox adds the contacts to the list
      * @throws SQLException
      */
 
