@@ -1,4 +1,7 @@
 package Controllers;
+/*
+  Combo Box is used to select a contact this will set a table view with the contact's appointments.
+ */
 
 import Model.Appointments;
 import Model.Contacts;
@@ -79,10 +82,10 @@ public class ContactsReportController implements Initializable {
   @FXML
   void displayContactSchedule(ActionEvent event) throws IOException {
     try {
-      //Selects which contact to send as a query to the DB
+      //Gets the contact to send as a query to the DB
       Contacts contactSchedule = contactCB.getSelectionModel().getSelectedItem();
       ReportDB.sendContactSelection(contactSchedule);
-      //Verifies the appointments from the DB and populates the tableview
+      //Checks the appointments from the DB and populates the tableview
       contactAppointmentTbl.setItems(ReportDB.getContactSchedule());
       for (Appointments appointments : ReportDB.contactSchedule) {
         System.out.println(appointments.getStart());
@@ -101,9 +104,8 @@ public class ContactsReportController implements Initializable {
   }
 
 
-
   @FXML
-  void exitApp(ActionEvent event) {
+  void exitToApp(ActionEvent event) {
     Button sourceButton = (Button) event.getSource();
     exitBtn.setText(sourceButton.getText());
     DBConnection.closeConnection();
@@ -116,9 +118,13 @@ public class ContactsReportController implements Initializable {
     try {
       Connection conn = DBConnection.startConnection();
       ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM contacts");
-      while (rs.next()) {
+      //Creates Country Objects using Strings for Country selection
+      //columnLabel corresponds to Column value and not the attribute of the object
+      if (rs.next()) {
+        do {
 
-        contactList.add(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
+          contactList.add(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
+        } while (rs.next());
       }
       contactCB.setItems(contactList);
 

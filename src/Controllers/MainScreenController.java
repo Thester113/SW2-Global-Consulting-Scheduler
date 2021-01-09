@@ -50,7 +50,12 @@ public class MainScreenController implements Initializable {
         System.exit(0);
     }
 
-
+    /**
+     * Access to the appointment table
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void sceneAptMain(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -59,6 +64,13 @@ public class MainScreenController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Access to the customer table
+     *
+     * @param event
+     * @throws IOException
+     */
+
     @FXML
     void sceneCustMain(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -66,6 +78,14 @@ public class MainScreenController implements Initializable {
         stage.setScene(new Scene((Parent) scene));
         stage.show();
     }
+
+    /**
+     * Gets the Customer Schedules report
+     * Select a customer
+     *
+     * @param event
+     * @throws IOException
+     */
 
 
     @FXML
@@ -76,6 +96,14 @@ public class MainScreenController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Gets the Contact Schedules report
+     * Select a contact
+     *
+     * @param event
+     * @throws IOException
+     */
+
     @FXML
     void sceneContactSchedulesReport(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -83,6 +111,14 @@ public class MainScreenController implements Initializable {
         stage.setScene(new Scene((Parent) scene));
         stage.show();
     }
+
+    /**
+     * Gets the Customer Appointment Schedules report
+     * Gives the total by month and by type
+     *
+     * @param event
+     * @throws IOException
+     */
 
 
     @FXML

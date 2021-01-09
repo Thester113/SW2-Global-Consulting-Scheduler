@@ -31,5 +31,6 @@
     <Button fx:id="deleteCustomer" layoutX="891.0" layoutY="552.0" mnemonicParsing="false" onAction="#sceneDeleteCustomer" prefHeight="27.0" prefWidth="73.0" text="Delete" />
     <Button fx:id="editCustomer" layoutX="802.0" layoutY="552.0" mnemonicParsing="false" onAction="#sceneEditCustomer" prefHeight="27.0" prefWidth="73.0" text="Edit" />
     <Button fx:id="mainButton" layoutX="818.0" layoutY="640.0" mnemonicParsing="false" onAction="#sceneBackToMain" prefHeight="27.0" prefWidth="73.0" text="Main" />
-    <Button fx:id="exitButton" layoutX="906.0" layoutY="640.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="27.0" prefWidth="73.0" text="Exit" />
+    <Button fx:id="exitButton" layoutX="906.0" layoutY="640.0" mnemonicParsing="false" onAction="#exitToApp"
+            prefHeight="27.0" prefWidth="73.0" text="Exit"/>
 </AnchorPane>

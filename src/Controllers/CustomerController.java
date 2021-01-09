@@ -1,5 +1,9 @@
 package Controllers;
 
+/**
+ * Customer class where add, edit, and delete are available. A tableview with all Customers is found here.
+ */
+
 import DAO.CustomerDB;
 import DAO.DBConnection;
 import Model.Customers;
@@ -88,6 +92,14 @@ public class CustomerController implements Initializable {
     }
   }
 
+  /**
+   * Sets the values of the tableview from the MySQL DB
+   * try statement runs a lambda for each to get all objects
+   *
+   * @param url
+   * @param resourceBundle
+   */
+
   @FXML
   public void initialize(URL url, ResourceBundle resourceBundle) {
     //Customer Table
@@ -105,8 +117,7 @@ public class CustomerController implements Initializable {
     try {
       custTable.setItems(CustomerDB.getAllCustomers());
       ObservableList<Customers> allCustomers = CustomerDB.allCustomers;
-      for (Iterator<Customers> iterator = allCustomers.iterator(); iterator.hasNext(); ) {
-        Customers customer = iterator.next();
+      for (Customers customer : allCustomers) {
         System.out.println(customer.getCustomerName());
       }
     } catch (SQLException e) {
@@ -115,12 +126,19 @@ public class CustomerController implements Initializable {
   }
 
   @FXML
-  void exitApp(ActionEvent event) {
+  void exitToApp(ActionEvent event) {
     Button sourceButton = (Button) event.getSource();
     exitButton.setText(sourceButton.getText());
     DBConnection.closeConnection();
     System.exit(0);
   }
+
+  /**
+   * Provides access to add a new customer to the DB
+   *
+   * @param event
+   * @throws IOException
+   */
 
   @FXML
   void sceneAddCustomer(ActionEvent event) throws IOException {
@@ -135,13 +153,21 @@ public class CustomerController implements Initializable {
     stage.show();
   }
 
+  /**
+   * Deletes a customer
+   *
+   * @param event
+   * @throws SQLException
+   * @throws IOException
+   */
+
   @FXML
   void sceneDeleteCustomer(ActionEvent event) throws SQLException, IOException {
     try {
       Customers selectedItem = custTable.getSelectionModel().getSelectedItem();
       Alert alert = new Alert(Alert.AlertType.INFORMATION);
-      alert.setHeaderText("Warning");
-      alert.setHeaderText("All associated appointments for " + selectedItem.getCustomerName() + " will be deleted");
+      alert.setHeaderText("Warning!");
+      alert.setHeaderText("All appointments associated for " + selectedItem.getCustomerName() + " will be deleted");
       alert.setContentText("Are you sure you want to delete the customer?");
 
       Optional<ButtonType> result = alert.showAndWait();
@@ -177,6 +203,13 @@ public class CustomerController implements Initializable {
     stage.show();
   }
 
+  /**
+   * Creates an edit scene upon user selection of an item from the table view, if no selection is made an alert pops up requesting a selection
+   *
+   * @param event
+   * @throws IOException
+   */
+
   @FXML
   void sceneEditCustomer(ActionEvent event) throws IOException {
     try {
@@ -196,8 +229,8 @@ public class CustomerController implements Initializable {
     } catch (NullPointerException e) {
       Alert alert = new Alert(Alert.AlertType.INFORMATION);
       alert.setHeaderText("Select a Customer");
-      alert.setHeaderText("Please select a customer to edit");
-      alert.setContentText("No customer selected!");
+      alert.setHeaderText("Select a customer to edit");
+      alert.setContentText("No customer has been selected!");
     }
 
   }

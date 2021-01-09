@@ -51,63 +51,64 @@ public class AddAppointmentController implements Initializable {
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");
     DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
     Long offsetToUTC = (long) (ZonedDateTime.now().getOffset()).getTotalSeconds();
-
+    ObservableList<Contacts> contactList = FXCollections.observableArrayList();
     @FXML
     private TextField aptIDtext;
-
-
     @FXML
     private TextField aptTitleText;
-
-
     @FXML
     private TextField aptDescrText;
-
-
     @FXML
     private TextField aptLocText;
-
-
     @FXML
     private TextField aptTypeText;
-
-
     @FXML
     private TextField aptCreateByText;
-
     @FXML
     private TextField aptLstUpdByText;
-
     @FXML
     private TextField aptCustIDText;
-
     @FXML
     private TextField aptUIDText;
-
     @FXML
     private TextField aptContIDText;
-
-
     @FXML
     private TextField aptStartText;
-
     @FXML
     private TextField aptEndText;
-
     @FXML
     private TextField aptCreateDateText;
-
     @FXML
     private TextField aptLastUpdateText;
-
     @FXML
     private ComboBox<Contacts> contactName;
-
     @FXML
     private Button AddAppointmentBtn;
-
     @FXML
     private Button ExitBtn;
+
+    /**
+     * Using the comboBox adds the contacts to the list
+     *
+     * @throws SQLException
+     */
+
+
+    public AddAppointmentController() throws SQLException {
+
+        try {
+            Connection conn = DBConnection.startConnection();
+            ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM contacts");
+            if (rs.next()) {
+                do {
+
+                    contactList.add(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
+                } while (rs.next());
+            }
+        } catch (SQLException ce) {
+            Logger.getLogger(ce.toString());
+        }
+    }
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -143,6 +144,7 @@ public class AddAppointmentController implements Initializable {
         }
         contactName.setItems(contactList);
     }
+
     /**
      *  Sets the ID field for an appointment based on the choices of the combobox using the list of contacts.
      * @param event ActionEvent
@@ -165,8 +167,6 @@ public class AddAppointmentController implements Initializable {
         stage.setScene(new Scene((Parent) scene));
         stage.show();
     }
-
-    ObservableList<Contacts> contactList = FXCollections.observableArrayList();
 
     /**
      * Times entered by the user will default to local tz and then based of the time of the user we get from the offset variable it will set the time to UTC for storage in the DB
@@ -276,7 +276,20 @@ public class AddAppointmentController implements Initializable {
                 stage.setScene(new Scene(scene));
                 stage.show();
 
-                return AppointmentDB.addAppointment(appointmentID, title, description, location, type, start, end, createDate, createdBy, lastUpdate, lastUpdatedBy, customerID, userID, contactID);
+                return AppointmentDB.addAppointment(
+                        appointmentID,
+                        title,
+                        description,
+                        location,
+                        type, start,
+                        end,
+                        createDate,
+                        createdBy,
+                        lastUpdate,
+                        lastUpdatedBy,
+                        customerID,
+                        userID,
+                        contactID);
             }
 
         } catch (DateTimeParseException e) {
@@ -286,28 +299,6 @@ public class AddAppointmentController implements Initializable {
             alert.showAndWait();
         }
         return false;
-    }
-
-    /**
-     *  Using the comboBox adds the contacts to the list
-     * @throws SQLException
-     */
-
-
-    public AddAppointmentController() throws SQLException {
-
-        try {
-            Connection conn = DBConnection.startConnection();
-            ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM contacts");
-            if (rs.next()) {
-                do {
-
-                    contactList.add(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
-                } while (rs.next());
-            }
-        } catch (SQLException ce) {
-            Logger.getLogger(ce.toString());
-        }
     }
 
 }

@@ -1,5 +1,10 @@
 package DAO;
 
+/**
+ * CountriesDB is the MySQL database connection to the Countries table and exchange of data
+ */
+
+
 import Model.Countries;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,7 +19,9 @@ import java.util.logging.Logger;
 public class CountriesDB {
   public static ObservableList<Countries> allCountries = FXCollections.observableArrayList();
 
-
+  /**
+   * Generates a list of all appointments
+   */
   public static ObservableList<Countries> getAllCountries() throws SQLException {
     allCountries.clear();
     try {

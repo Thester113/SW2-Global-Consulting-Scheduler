@@ -1,6 +1,9 @@
 package Model;
 
-
+/**
+ * Customer Class for the addition, editing, and deletion of customers
+ * Contains getters/setters
+ */
 import java.time.LocalDateTime;
 
 public class Customers {
@@ -30,6 +33,8 @@ public class Customers {
     this.lastUpdatedBy=lastUpdatedBy;
     this.divisionID=divisionID;
   }
+
+  //getters/setters
   public int getCustomerID() {
     return customerID;
   }

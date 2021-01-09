@@ -18,31 +18,31 @@
     </Label>
     <Button fx:id="menuButton" layoutX="579.0" layoutY="593.0" mnemonicParsing="false" onAction="#sceneMainMenu"
             prefHeight="27.0" prefWidth="73.0" text="Main"/>
-    <Button fx:id="exitButton" layoutX="678.0" layoutY="593.0" mnemonicParsing="false" onAction="#exitApp"
+    <Button fx:id="exitButton" layoutX="678.0" layoutY="593.0" mnemonicParsing="false" onAction="#exitToApp"
             prefHeight="27.0" prefWidth="73.0" text="Exit"/>
-    <TextField fx:id="numJan" disable="true" layoutX="174.0" layoutY="145.0"/>
+    <TextField fx:id="monthJan" disable="true" layoutX="174.0" layoutY="145.0"/>
     <Label layoutX="77.0" layoutY="150.0" text="JANUARY"/>
-    <TextField fx:id="numFeb" disable="true" layoutX="174.0" layoutY="184.0"/>
+    <TextField fx:id="monthFeb" disable="true" layoutX="174.0" layoutY="184.0"/>
     <Label layoutX="77.0" layoutY="189.0" text="FEBRUARY"/>
-    <TextField fx:id="numMar" disable="true" layoutX="174.0" layoutY="225.0"/>
+    <TextField fx:id="monthMar" disable="true" layoutX="174.0" layoutY="225.0"/>
     <Label layoutX="77.0" layoutY="231.0" text="MARCH"/>
-    <TextField fx:id="numApr" disable="true" layoutX="174.0" layoutY="264.0"/>
+    <TextField fx:id="monthApr" disable="true" layoutX="174.0" layoutY="264.0"/>
     <Label layoutX="77.0" layoutY="269.0" text="APRIL"/>
-    <TextField fx:id="numMay" disable="true" layoutX="174.0" layoutY="302.0"/>
+    <TextField fx:id="monthMay" disable="true" layoutX="174.0" layoutY="302.0"/>
     <Label layoutX="77.0" layoutY="307.0" text="MAY"/>
-    <TextField fx:id="numJun" disable="true" layoutX="174.0" layoutY="341.0"/>
+    <TextField fx:id="monthJun" disable="true" layoutX="174.0" layoutY="341.0"/>
     <Label layoutX="77.0" layoutY="346.0" text="JUNE"/>
-    <TextField fx:id="numJul" disable="true" layoutX="174.0" layoutY="382.0"/>
+    <TextField fx:id="monthJul" disable="true" layoutX="174.0" layoutY="382.0"/>
     <Label layoutX="77.0" layoutY="387.0" text="JULY"/>
-    <TextField fx:id="numAug" disable="true" layoutX="174.0" layoutY="421.0"/>
+    <TextField fx:id="monthAug" disable="true" layoutX="174.0" layoutY="421.0"/>
     <Label layoutX="77.0" layoutY="426.0" text="AUGUST"/>
-    <TextField fx:id="numSep" disable="true" layoutX="174.0" layoutY="461.0"/>
+    <TextField fx:id="monthSep" disable="true" layoutX="174.0" layoutY="461.0"/>
     <Label layoutX="77.0" layoutY="466.0" text="SEPTEMBER"/>
-    <TextField fx:id="numOct" disable="true" layoutX="174.0" layoutY="500.0"/>
+    <TextField fx:id="monthOct" disable="true" layoutX="174.0" layoutY="500.0"/>
     <Label layoutX="77.0" layoutY="505.0" text="OCTOBER"/>
-    <TextField fx:id="numNov" disable="true" layoutX="174.0" layoutY="541.0"/>
+    <TextField fx:id="monthNov" disable="true" layoutX="174.0" layoutY="541.0"/>
     <Label layoutX="77.0" layoutY="546.0" text="NOVEMBER"/>
-    <TextField fx:id="numDec" disable="true" layoutX="174.0" layoutY="580.0"/>
+    <TextField fx:id="monthDec" disable="true" layoutX="174.0" layoutY="580.0"/>
     <Label layoutX="77.0" layoutY="585.0" text="DECEMBER"/>
     <Label layoutX="90.0" layoutY="110.0" text="APPOINTMENTS PER MONTH"/>
     <Label layoutX="495.0" layoutY="102.0" text="APPOINTMENTS BY TYPE"/>

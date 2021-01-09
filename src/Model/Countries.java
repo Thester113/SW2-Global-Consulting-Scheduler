@@ -1,5 +1,9 @@
 package Model;
 
+/**
+ * Country class used for customers and sorting the division ID
+ */
+
 
 import java.time.LocalDateTime;
 

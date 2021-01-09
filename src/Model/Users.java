@@ -1,5 +1,9 @@
 package Model;
 
+/**
+ * User class for log in purposes and to log activity
+ */
+
 import DAO.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,25 +17,29 @@ import java.util.logging.Logger;
 
 
 public class Users {
-    Integer userID;
     static String userName;
+    Integer userID;
     String password;
     Date createDate;
     String createdBy;
     Timestamp lastUpdate;
     String lastUpdatedBy;
+    //Contact Table
+    ObservableList<Contacts> contList = FXCollections.observableArrayList();
+
 
     public Users() {
 
     }
 
-
-    public Integer getUserID() {
-        return userID;
-    }
-
-    public void setUserID(Integer userID) {
+    public Users(Integer userID, String userName, String password, Date createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy) {
         this.userID = userID;
+        Users.userName = userName;
+        this.password = password;
+        this.createDate = createDate;
+        this.createdBy = createdBy;
+        this.lastUpdate = lastUpdate;
+        this.lastUpdatedBy = lastUpdatedBy;
     }
 
     public static String getUserName() {
@@ -39,7 +47,15 @@ public class Users {
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        Users.userName = userName;
+    }
+
+    public Integer getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Integer userID) {
+        this.userID = userID;
     }
 
     public String getPassword() {
@@ -82,17 +98,6 @@ public class Users {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
-    public Users(Integer userID, String userName, String password, Date createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy) {
-        this.userID = userID;
-        this.userName = userName;
-        this.password = password;
-        this.createDate = createDate;
-        this.createdBy = createdBy;
-        this.lastUpdate = lastUpdate;
-        this.lastUpdatedBy = lastUpdatedBy;
-    }
-    //Contact Table
-    ObservableList<Contacts> contList = FXCollections.observableArrayList();
     public void UserMain() {
         try {
             Connection conn = DBConnection.startConnection();

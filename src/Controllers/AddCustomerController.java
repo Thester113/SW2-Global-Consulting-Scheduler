@@ -107,7 +107,17 @@ public class AddCustomerController implements Initializable {
         stage.setScene(new Scene((Parent) scene));
         stage.show();
 
-        return CustomerDB.addCustomer(customerID, customerName, address, postal, phone, createDate, createdBy, lastUpdate, lastUpdatedBy, divisionID);
+        return CustomerDB.addCustomer(
+                customerID,
+                customerName,
+                address,
+                postal,
+                phone,
+                createDate,
+                createdBy,
+                lastUpdate,
+                lastUpdatedBy,
+                divisionID);
       } else {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Selection is Missing");
@@ -223,7 +233,6 @@ public class AddCustomerController implements Initializable {
     } catch (SQLException e) {
       e.printStackTrace();
     }
-
 
 
     createdByTxt.setText(String.valueOf(Users.getUserName()));

@@ -1,5 +1,9 @@
 package Controllers;
 
+/**
+ * Shows the total appointments by type and month
+ */
+
 import DAO.CustomerDB;
 import DAO.DBConnection;
 import DAO.ReportDB;
@@ -74,6 +78,10 @@ public class CustomerScheduleReportController implements Initializable {
     stage.show();
   }
 
+  /**
+   * @param event
+   * @throws SQLException if customer schedule not queried correctly
+   */
   @FXML
   void displayCustomerSchedule(ActionEvent event) {
     try {
@@ -82,7 +90,9 @@ public class CustomerScheduleReportController implements Initializable {
       ReportDB.sendCustomerSelection(customerSchedule);
 
       customerAppointmentTbl.setItems(ReportDB.getCustomerSchedule());
-      for (Appointments appointments : ReportDB.customerSchedule) {
+      ObservableList<Appointments> schedule = ReportDB.customerSchedule;
+      for (int i = 0, scheduleSize = schedule.size(); i < scheduleSize; i++) {
+        Appointments appointments = schedule.get(i);
         System.out.println(appointments.getStart());
       }
       appointmentID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
@@ -92,8 +102,7 @@ public class CustomerScheduleReportController implements Initializable {
       aptStart.setCellValueFactory(new PropertyValueFactory<>("start"));
       aptEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
       aptCustID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
-    }
-    catch (SQLException e) {
+    } catch (SQLException e) {
       e.printStackTrace();
     }
   }

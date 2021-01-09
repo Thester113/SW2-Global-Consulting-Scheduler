@@ -1,4 +1,7 @@
 package DAO;
+/**
+ * Used for the DAO classes to connect to the Database
+ */
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,7 +29,7 @@ public class DBConnection
     try
     {
       Class.forName(MYSQLJDBCDriver);
-      connection = (Connection)DriverManager.getConnection(jdbcURL, username, password);
+      connection = DriverManager.getConnection(jdbcURL, username, password);
       System.out.println("Connection is successful!");
     }
     catch (ClassNotFoundException e)

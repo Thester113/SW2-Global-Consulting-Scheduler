@@ -1,5 +1,8 @@
 package DAO;
 
+/**
+ * CustomerDB is the MySQL database connection to the Customers table and exchange of data
+ */
 
 import Model.Customers;
 import javafx.collections.FXCollections;
@@ -54,6 +57,13 @@ public class CustomerDB {
     return false;
   }
 
+  /**
+   * Deletes a customer based on selection in Customers Table View
+   *
+   * @param id
+   * @return
+   */
+
   public static boolean deleteCustomer(int id) {
 
     try {
@@ -71,6 +81,21 @@ public class CustomerDB {
     }
     return false;
   }
+
+  /**
+   * @param customerID      non editable field used to select the customer
+   * @param customerName
+   * @param customerAddress
+   * @param customerPostal
+   * @param customerPhone
+   * @param createDate
+   * @param createdBy
+   * @param lastUpdate
+   * @param lastUpdatedBy
+   * @param divisionID
+   * @return
+   * @throws SQLException
+   */
 
 
   public static boolean editCustomer(Integer customerID, String customerName, String customerAddress, String customerPostal, String customerPhone, Timestamp createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy, Integer divisionID) throws SQLException {

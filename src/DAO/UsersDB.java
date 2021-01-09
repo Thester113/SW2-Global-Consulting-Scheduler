@@ -1,4 +1,7 @@
 package DAO;
+/**
+ * Class is used to connect users to DB and verify
+ */
 
 
 import Model.Users;

@@ -1,4 +1,8 @@
 package Controllers;
+/**
+ * Combo Box is used to select a customer then sets a table view with the selected customer's appointments.
+ */
+
 
 import DAO.AppointmentDB;
 import DAO.DBConnection;
@@ -29,40 +33,40 @@ public class CustomerAppointmentReportController implements Initializable {
   private Button exitButton;
 
   @FXML
-  private TextField numJan;
+  private TextField monthJan;
 
   @FXML
-  private TextField numFeb;
+  private TextField monthFeb;
 
   @FXML
-  private TextField numMar;
+  private TextField monthMar;
 
   @FXML
-  private TextField numApr;
+  private TextField monthApr;
 
   @FXML
-  private TextField numMay;
+  private TextField monthMay;
 
   @FXML
-  private TextField numJun;
+  private TextField monthJun;
 
   @FXML
-  private TextField numJul;
+  private TextField monthJul;
 
   @FXML
-  private TextField numAug;
+  private TextField monthAug;
 
   @FXML
-  private TextField numSep;
+  private TextField monthSep;
 
   @FXML
-  private TextField numOct;
+  private TextField monthOct;
 
   @FXML
-  private TextField numNov;
+  private TextField monthNov;
 
   @FXML
-  private TextField numDec;
+  private TextField monthDec;
 
   @FXML
   private TextField planningTF;
@@ -72,7 +76,7 @@ public class CustomerAppointmentReportController implements Initializable {
 
 
   @FXML
-  void exitApp(ActionEvent event) {
+  void exitToApp(ActionEvent event) {
     Button sourceButton = (Button) event.getSource();
     exitButton.setText(sourceButton.getText());
     DBConnection.closeConnection();
@@ -131,57 +135,57 @@ public class CustomerAppointmentReportController implements Initializable {
         switch (aptStart) {
           case JANUARY:
             janCount = janCount + 1;
-            numJan.setText(String.valueOf(janCount));
+            monthJan.setText(String.valueOf(janCount));
 
             break;
           case FEBRUARY:
             febCount = febCount + 1;
-            numFeb.setText(String.valueOf(febCount));
+            monthFeb.setText(String.valueOf(febCount));
 
             break;
           case MARCH:
             marCount = marCount + 1;
-            numMar.setText(String.valueOf(marCount));
+            monthMar.setText(String.valueOf(marCount));
 
             break;
           case APRIL:
             aprCount = aprCount + 1;
-            numApr.setText(String.valueOf(aprCount));
+            monthApr.setText(String.valueOf(aprCount));
             break;
           case MAY:
             mayCount = mayCount + 1;
-            numMay.setText(String.valueOf(mayCount));
+            monthMay.setText(String.valueOf(mayCount));
             break;
           case JUNE:
             junCount = junCount + 1;
-            numJun.setText(String.valueOf(junCount));
+            monthJun.setText(String.valueOf(junCount));
             break;
           case JULY:
             julCount = julCount + 1;
-            numJul.setText(String.valueOf(julCount));
+            monthJul.setText(String.valueOf(julCount));
             break;
           case AUGUST:
             augCount = augCount + 1;
-            numAug.setText(String.valueOf(augCount));
+            monthAug.setText(String.valueOf(augCount));
             break;
           case SEPTEMBER:
             sepCount = sepCount + 1;
-            numSep.setText(String.valueOf(sepCount));
+            monthSep.setText(String.valueOf(sepCount));
 
             break;
           case OCTOBER:
             octCount++;
-            numOct.setText(String.valueOf(octCount));
+            monthOct.setText(String.valueOf(octCount));
 
             break;
           case NOVEMBER:
             novCount = novCount + 1;
-            numNov.setText(String.valueOf(novCount));
+            monthNov.setText(String.valueOf(novCount));
 
             break;
           case DECEMBER:
             decCount = decCount + 1;
-            numDec.setText(String.valueOf(decCount));
+            monthDec.setText(String.valueOf(decCount));
 
             break;
         }

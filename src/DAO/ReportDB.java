@@ -1,4 +1,7 @@
 package DAO;
+/**
+ * Class is used to generate reports for customers and contacts
+ */
 
 import Model.Appointments;
 import Model.Contacts;
@@ -17,7 +20,9 @@ public class ReportDB {
   private static Contacts newContactSchedule;
   private static Customers newCustomerSchedule;
 
-
+  /**
+   * From the selection of the ComboBox from the Contact Schedules Report
+   */
   public static void sendContactSelection(Contacts contactSchedule) {
     newContactSchedule = contactSchedule;
   }

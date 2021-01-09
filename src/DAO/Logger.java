@@ -1,4 +1,7 @@
 package DAO;
+/**
+ * Class sends the information to a txt file for logging login attempts
+ */
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

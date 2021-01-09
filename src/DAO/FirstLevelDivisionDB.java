@@ -12,12 +12,12 @@ import java.time.ZonedDateTime;
 import java.util.logging.Logger;
 
 /**
- * FLD DB class collects a list of FLD objects from DB
+ * Class collects a list of FLD objects from DB
  */
 public class FirstLevelDivisionDB {
   public static ObservableList<FirstLevelDivisions> allFirstLevelDivisions = FXCollections.observableArrayList();
 
-  //Create a list of all appointments
+  //Generate a list of all appointments
   public static ObservableList<FirstLevelDivisions> getAllFirstLevelDivisions() throws SQLException {
     allFirstLevelDivisions.clear();
     try {
@@ -43,7 +43,7 @@ public class FirstLevelDivisionDB {
   }
   public static ObservableList<FirstLevelDivisions> usFilteredFirstLevelDivisions = FXCollections.observableArrayList();
 
-  //Create a list of all appointments
+  //Generate a list of all appointments
   public static ObservableList<FirstLevelDivisions> getUSFilteredFirstLevelDivisions() throws SQLException {
     usFilteredFirstLevelDivisions.clear();
     try {
@@ -70,7 +70,7 @@ public class FirstLevelDivisionDB {
 
   public static ObservableList<FirstLevelDivisions> ukFilteredFirstLevelDivisions = FXCollections.observableArrayList();
 
-  //Create a list of all appointments
+  //Generate a list of all appointments
   public static ObservableList<FirstLevelDivisions> getUKFilteredFirstLevelDivisions() throws SQLException {
     ukFilteredFirstLevelDivisions.clear();
     try {
@@ -97,7 +97,7 @@ public class FirstLevelDivisionDB {
 
   public static ObservableList<FirstLevelDivisions> canadaFilteredFirstLevelDivisions = FXCollections.observableArrayList();
 
-  //Create a list of all appointments
+  //Generate a list of all appointments
   public static ObservableList<FirstLevelDivisions> getCanadaFilteredFirstLevelDivisions() throws SQLException {
     canadaFilteredFirstLevelDivisions.clear();
     try {

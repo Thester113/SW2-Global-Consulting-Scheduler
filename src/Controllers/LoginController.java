@@ -1,5 +1,11 @@
 package Controllers;
 
+/**
+ * Login Controller verifies the user exists int he DB
+ * Pulls login attempts and logs them them in login_activity.txt. SHows both failed and successful logins
+ * Username is captured and used to auto fill the created by and last updated by fields on adding an appointment or customer.
+ */
+
 import Model.Appointments;
 import DAO.AppointmentDB;
 import DAO.DBConnection;
@@ -52,7 +58,7 @@ public class LoginController implements Initializable {
     @FXML
     private PasswordField passwordField;
 
-
+    //Cases for login are either a successful login or incorrect username or password, username and password are from DB
     @FXML
     void handlerLogin(ActionEvent event) throws IOException, SQLException {
 
@@ -64,10 +70,9 @@ public class LoginController implements Initializable {
         if (foundUser) {
             boolean isFound = true;
             AppointmentDB.getAllAppointments();
-            //foreach lambda loop
+            //foreach lambda loop that runs through observable list
             ObservableList<Appointments> allAppointments = AppointmentDB.allAppointments;
-            for (int i = 0, allAppointmentsSize = allAppointments.size(); i < allAppointmentsSize; i++) {
-                Appointments appointments = allAppointments.get(i);
+            for (Appointments appointments : allAppointments) {
                 LocalDateTime within15Minutes = LocalDateTime.now();
                 isFound = true;
                 // 15-1 minute(s) of all start times
@@ -94,9 +99,6 @@ public class LoginController implements Initializable {
             stage.setScene(new Scene((Parent) scene));
             stage.show();
         } else {
-            if (foundUser && !userIDField.getText().isEmpty()) {
-                passwordField.getText();
-            }
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(loginError);
             alert.setHeaderText(errorHeader);
@@ -115,21 +117,24 @@ public class LoginController implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         detectedLoc.setText(Locale.getDefault().getLanguage());
         try {
-            rb = ResourceBundle.getBundle("Utilities/lang", Locale.getDefault());
+            resourceBundle = ResourceBundle.getBundle("Utilities/lang", Locale.getDefault());
 
-            if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
-                GC.setText(rb.getString("GC"));
-                UserIDLabel.setText(rb.getString("UserIDLabel"));
-                EnterPasswordLabel.setText(rb.getString("EnterPasswordLabel"));
-                loginButton.setText(rb.getString("Login"));
-                exitButton.setText(rb.getString("Exit"));
-                loginError = rb.getString("loginError");
-                enterCorrectUorP = rb.getString("enterCorrectUorP");
-                errorHeader = rb.getString(errorHeader);
+            switch (Locale.getDefault().getLanguage()) {
+                case "fr":
+                case "en":
+                    GC.setText(resourceBundle.getString("GC"));
+                    UserIDLabel.setText(resourceBundle.getString("UserIDLabel"));
+                    EnterPasswordLabel.setText(resourceBundle.getString("EnterPasswordLabel"));
+                    loginButton.setText(resourceBundle.getString("Login"));
+                    exitButton.setText(resourceBundle.getString("Exit"));
+                    loginError = resourceBundle.getString("loginError");
+                    enterCorrectUorP = resourceBundle.getString("enterCorrectUorP");
+                    errorHeader = resourceBundle.getString(errorHeader);
 
+                    break;
             }
         } catch (Exception e) {
         }
