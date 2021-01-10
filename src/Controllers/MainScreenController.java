@@ -14,6 +14,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Main screen controller has access to customer, reports, and appointments
+ */
+
 public class MainScreenController implements Initializable {
 
     @FXML
