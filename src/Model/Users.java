@@ -1,8 +1,6 @@
 package Model;
 
-/**
- * Users class for log in purposes and to log activity
- */
+
 
 import DAO.DBConnection;
 import javafx.collections.FXCollections;
@@ -15,7 +13,9 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.logging.Logger;
 
-
+/**
+ * Users class for log in purposes and to log activity
+ */
 public class Users {
     static String userName;
     Integer userID;
