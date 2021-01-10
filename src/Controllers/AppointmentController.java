@@ -1,7 +1,5 @@
 package Controllers;
-/**
- * Appointment class where add, edit, and delete are available. A tableview with all Appointments can be found here
- */
+
 
 
 import DAO.AppointmentDB;
@@ -31,6 +29,10 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static DAO.AppointmentDB.deleteAppointment;
+
+/**
+ * Appointment class where add, edit, and delete are available. A tableview with all Appointments can be found here
+ */
 
 public class AppointmentController implements Initializable {
 
@@ -251,8 +253,7 @@ public class AppointmentController implements Initializable {
             window.setScene(modifyCustomerScene);
             window.setResizable(false);
             window.show();
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Missing selection");
             alert.setContentText("Please select an appointment you would like to edit.");

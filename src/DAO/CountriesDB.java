@@ -16,6 +16,10 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.logging.Logger;
 
+/**
+ * CountriesDB is the MySQL database connection to the Countries table and exchange of data
+ */
+
 public class CountriesDB {
   public static ObservableList<Countries> allCountries = FXCollections.observableArrayList();
 

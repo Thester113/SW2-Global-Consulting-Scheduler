@@ -1,7 +1,5 @@
 package Controllers;
-/**
- * Allows the user to modify a customer using CustomerDB and access to MYSQL DB
- */
+
 
 import DAO.CountriesDB;
 import DAO.CustomerDB;
@@ -36,6 +34,9 @@ import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+/**
+ * Allows the user to modify a customer using CustomerDB and access to MYSQL DB
+ */
 public class ModifyCustomerController implements Initializable {
   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
   DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");

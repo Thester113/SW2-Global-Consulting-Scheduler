@@ -1,7 +1,5 @@
 package Controllers;
-/**
- * Combo Box is used to select a customer then sets a table view with the selected customer's appointments.
- */
+
 
 
 import DAO.AppointmentDB;
@@ -24,6 +22,10 @@ import java.sql.SQLException;
 import java.time.Month;
 import java.util.Iterator;
 import java.util.ResourceBundle;
+
+/**
+ * Combo Box is used to select a customer then sets a table view with the selected customer's appointments.
+ */
 
 public class CustomerAppointmentReportController implements Initializable {
   @FXML
@@ -194,7 +196,6 @@ public class CustomerAppointmentReportController implements Initializable {
       }
 
       AppointmentDB.getAllAppointments();
-
 
 
     } catch (SQLException e) {

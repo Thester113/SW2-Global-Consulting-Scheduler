@@ -40,6 +40,9 @@ import java.util.ResourceBundle;
 import java.util.TimeZone;
 
 import static java.lang.Integer.valueOf;
+/**
+ * AddAppointmentController is used to add a new appointment to the DB
+ */
 
 public class AddAppointmentController implements Initializable {
     /**
@@ -231,7 +234,7 @@ public class AddAppointmentController implements Initializable {
 
             /**
              * Check for 8-22 business hours startTime and endTime
-                    */
+             */
 
 
             LocalTime businessHoursStart = LocalTime.of(8, 00);

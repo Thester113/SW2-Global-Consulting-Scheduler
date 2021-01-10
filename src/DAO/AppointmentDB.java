@@ -18,46 +18,50 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
 
+/**
+ * AppointmentDB is the MySQL database connection to the Appointment table and exchange of data
+ */
+
 public class AppointmentDB {
 
 
-    public static ObservableList<Appointments> allAppointments = FXCollections.observableArrayList();
+  public static ObservableList<Appointments> allAppointments = FXCollections.observableArrayList();
 
 
-    public static ObservableList<Appointments> getAllAppointments() throws SQLException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+  public static ObservableList<Appointments> getAllAppointments() throws SQLException {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 /**
  * generates a list of all appointments
  */
-        allAppointments.clear();
-        try {
-          Connection connection = DBConnection.startConnection();
-          ResultSet rb = connection.createStatement().executeQuery("SELECT * FROM appointments");
-          if (rb.next()) {
-            do {
-              allAppointments.add(new Appointments(
-                      rb.getInt("Appointment_ID"),
-                      rb.getString("Title"),
-                      rb.getString("Description"),
-                      rb.getString("Location"),
-                      rb.getString("Type"),
-                      rb.getTimestamp("Start").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                      rb.getTimestamp("End").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                      rb.getTimestamp("Create_Date").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                      rb.getString("Created_By"),
-                      rb.getTimestamp("Last_Update").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                      rb.getString("Last_Updated_By"),
-                      rb.getInt("Customer_ID"),
-                      rb.getInt("User_ID"),
-                      rb.getInt("Contact_ID")));
-            } while (rb.next());
-          }
-          return allAppointments;
-        } catch (SQLException e) {
-          Logger.getLogger(e.toString());
-        }
-      return null;
+    allAppointments.clear();
+    try {
+      Connection connection = DBConnection.startConnection();
+      ResultSet rb = connection.createStatement().executeQuery("SELECT * FROM appointments");
+      if (rb.next()) {
+        do {
+          allAppointments.add(new Appointments(
+                  rb.getInt("Appointment_ID"),
+                  rb.getString("Title"),
+                  rb.getString("Description"),
+                  rb.getString("Location"),
+                  rb.getString("Type"),
+                  rb.getTimestamp("Start").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                  rb.getTimestamp("End").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                  rb.getTimestamp("Create_Date").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                  rb.getString("Created_By"),
+                  rb.getTimestamp("Last_Update").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                  rb.getString("Last_Updated_By"),
+                  rb.getInt("Customer_ID"),
+                  rb.getInt("User_ID"),
+                  rb.getInt("Contact_ID")));
+        } while (rb.next());
+      }
+      return allAppointments;
+    } catch (SQLException e) {
+      Logger.getLogger(e.toString());
     }
+    return null;
+  }
 
   /**
    * @param appointmentID auto generated field as its not editable

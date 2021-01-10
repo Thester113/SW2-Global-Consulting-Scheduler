@@ -1,8 +1,6 @@
 package DAO;
 
-/**
- * CustomerDB is the MySQL database connection to the Customers table and exchange of data
- */
+
 
 import Model.Customers;
 import javafx.collections.FXCollections;
@@ -11,6 +9,10 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+/**
+ * CustomerDB is the MySQL database connection to the Customers table and exchange of data
+ */
 
 public class CustomerDB {
 

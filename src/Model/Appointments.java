@@ -1,10 +1,11 @@
 package Model;
-/**
- * Appointment class used for getters/setters
- */
+
 
 import java.time.LocalDateTime;
 
+/**
+ * Appointment class used for getters/setters
+ */
 public class Appointments {
 
   private int appointmentID;

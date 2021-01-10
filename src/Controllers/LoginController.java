@@ -1,10 +1,6 @@
 package Controllers;
 
-/**
- * Login Controller verifies the user exists int he DB
- * Pulls login attempts and logs them them in login_activity.txt. SHows both failed and successful logins
- * Username is captured and used to auto fill the created by and last updated by fields on adding an appointment or customer.
- */
+
 
 import Model.Appointments;
 import DAO.AppointmentDB;
@@ -27,6 +23,11 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * Login Controller verifies the user exists int he DB
+ * Pulls login attempts and logs them them in login_activity.txt. SHows both failed and successful logins
+ * Username is captured and used to auto fill the created by and last updated by fields on adding an appointment or customer.
+ */
 public class LoginController implements Initializable {
 
     private Alert alert;

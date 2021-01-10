@@ -1,13 +1,15 @@
 package DAO;
-/**
- * Class is used to connect users to DB and verify
- */
+
 
 
 import Model.Users;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+/**
+ * Class is used to connect users to DB and verify
+ */
 
 public class UsersDB {
 
@@ -36,8 +38,7 @@ public class UsersDB {
                 return false;
             }
 
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Exception: " + e.getMessage());
             return false;
         }

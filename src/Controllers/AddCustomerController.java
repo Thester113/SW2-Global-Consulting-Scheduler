@@ -1,7 +1,5 @@
 package Controllers;
-/**
- * AddCustomerController adds customers to the DB using the DAO.CustomersDB
- */
+
 
 import DAO.CountriesDB;
 import DAO.CustomerDB;
@@ -35,6 +33,10 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ResourceBundle;
+
+/**
+ * AddCustomerController adds customers to the DB using the DAO.CustomersDB
+ */
 
 public class AddCustomerController implements Initializable {
   /**

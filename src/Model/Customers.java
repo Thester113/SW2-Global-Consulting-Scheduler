@@ -1,11 +1,12 @@
 package Model;
 
+
+import java.time.LocalDateTime;
+
 /**
  * Customer Class for the addition, editing, and deletion of customers
  * Contains getters/setters
  */
-import java.time.LocalDateTime;
-
 public class Customers {
 
   public int customerID;

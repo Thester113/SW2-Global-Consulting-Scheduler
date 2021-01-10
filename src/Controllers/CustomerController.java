@@ -1,8 +1,6 @@
 package Controllers;
 
-/**
- * Customer class where add, edit, and delete are available. A tableview with all Customers is found here.
- */
+
 
 import DAO.CustomerDB;
 import DAO.DBConnection;
@@ -24,10 +22,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Iterator;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
+
+/**
+ * Customer class where add, edit, and delete are available. A tableview with all Customers is found here.
+ */
 
 public class CustomerController implements Initializable {
 

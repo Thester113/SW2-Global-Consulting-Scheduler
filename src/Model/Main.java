@@ -15,6 +15,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Main class that controls application
+ */
 public class Main extends Application {
   public static void main(String[] args) throws SQLException {
     //Sets up the DB connection

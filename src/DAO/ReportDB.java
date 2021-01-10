@@ -1,7 +1,5 @@
 package DAO;
-/**
- * Class is used to generate reports for customers and contacts
- */
+
 
 import Model.Appointments;
 import Model.Contacts;
@@ -16,6 +14,9 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Class is used to generate reports for customers and contacts
+ */
 public class ReportDB {
   private static Contacts newContactSchedule;
   private static Customers newCustomerSchedule;

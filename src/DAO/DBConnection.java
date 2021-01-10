@@ -1,14 +1,15 @@
 package DAO;
-/**
- * Used for the DAO classes to connect to the Database
- */
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DBConnection
-{
+/**
+ * Used for the DAO classes to connect to the Database
+ */
+
+public class DBConnection {
   //JDBC URL
   private static final String protocol = "jdbc";
   private static final String vendorName = ":MySQL:";
@@ -26,28 +27,22 @@ public class DBConnection
 
   //Methods
   public static Connection startConnection() throws SQLException {
-    try
-    {
+    try {
       Class.forName(MYSQLJDBCDriver);
       connection = DriverManager.getConnection(jdbcURL, username, password);
       System.out.println("Connection is successful!");
-    }
-    catch (ClassNotFoundException e)
-    {
+    } catch (ClassNotFoundException e) {
       System.out.println(e.getMessage());
     }
 
     return connection;
   }
 
-  public static void closeConnection()
-  {
+  public static void closeConnection() {
     try {
       connection.close();
       System.out.println("Connection is closed!");
-    }
-    catch (SQLException e)
-    {
+    } catch (SQLException e) {
       System.out.println("Error:" + e.getMessage());
     }
   }

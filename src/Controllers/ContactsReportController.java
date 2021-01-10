@@ -1,7 +1,5 @@
 package Controllers;
-/*
-  Combo Box is used to select a contact this will set a table view with the contact's appointments.
- */
+
 
 import Model.Appointments;
 import Model.Contacts;
@@ -31,6 +29,10 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
+
+/*
+  Combo Box is used to select a contact this will set a table view with the contact's appointments.
+ */
 
 public class ContactsReportController implements Initializable {
 

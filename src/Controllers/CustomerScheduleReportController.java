@@ -1,8 +1,6 @@
 package Controllers;
 
-/**
- * Shows the total appointments by type and month
- */
+
 
 import DAO.CustomerDB;
 import DAO.DBConnection;
@@ -31,6 +29,9 @@ import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.ResourceBundle;
 
+/**
+ * Shows the total appointments by type and month
+ */
 public class CustomerScheduleReportController implements Initializable {
 
   @FXML

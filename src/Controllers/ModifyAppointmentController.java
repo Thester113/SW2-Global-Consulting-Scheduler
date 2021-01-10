@@ -1,7 +1,5 @@
 package Controllers;
-/**
- * Ability for user to edit an appointment using the AppointmentDB class to modify the DB
- */
+
 
 import DAO.AppointmentDB;
 import DAO.DBConnection;
@@ -38,7 +36,9 @@ import java.util.ResourceBundle;
 import java.util.TimeZone;
 import java.util.logging.Logger;
 
-
+/**
+ * Ability for user to edit an appointment using the AppointmentDB class to modify the DB
+ */
 public class ModifyAppointmentController implements Initializable {
   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
   DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");

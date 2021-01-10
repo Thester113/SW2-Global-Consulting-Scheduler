@@ -1,12 +1,13 @@
 package Model;
 
-/**
- * Country class used for customers and sorting the division ID
- */
+
 
 
 import java.time.LocalDateTime;
 
+/**
+ * Country class used for customers and sorting the division ID
+ */
 public class Countries {
   private Integer countryID;
   private String country;

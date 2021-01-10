@@ -1,7 +1,7 @@
 package Model;
 
 /**
- * User class for log in purposes and to log activity
+ * Users class for log in purposes and to log activity
  */
 
 import DAO.DBConnection;
