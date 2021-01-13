@@ -1,6 +1,7 @@
 package Controllers;
 
 
+
 import DAO.AppointmentDB;
 import DAO.DBConnection;
 import Model.Appointments;
@@ -29,85 +30,76 @@ import java.util.stream.Collectors;
 
 import static DAO.AppointmentDB.deleteAppointment;
 
+/**
+ * Appointment class where add, edit, and delete are available. A tableview with all Appointments can be found here
+ */
+
 public class AppointmentController implements Initializable {
-
-    @FXML
-    private RadioButton allAptsRB;
-
-    @FXML
-    private ToggleGroup aptTableTGLGRP;
-
-    @FXML
-    private RadioButton weeklyRB;
-
-
-    @FXML
-    private RadioButton monthlyRB;
-
-
-    @FXML
-    private TableView<Appointments> aptTable;
-
-    @FXML
-    private TableColumn<Appointments, Integer> aptAppointmentID;
-
-    @FXML
-    private TableColumn<Appointments, String> aptTitle;
-
-    @FXML
-    private TableColumn<Appointments, String> aptDescription;
-
-    @FXML
-    private TableColumn<Appointments, String> aptLocation;
-
-    @FXML
-    private TableColumn<Appointments, String> aptType;
-
-    @FXML
-    private TableColumn<Appointments, LocalDateTime> aptStart;
-
-    @FXML
-    private TableColumn<Appointments, LocalDateTime> aptEnd;
-
-    @FXML
-    private TableColumn<Appointments, LocalDateTime> aptCreateDate;
-
-    @FXML
-    private TableColumn<Appointments, String> aptCreatedBy;
-
-    @FXML
-    private TableColumn<Appointments, LocalDateTime> aptLastUpdate;
-
-    @FXML
-    private TableColumn<Appointments, String> aptLastUpdatedBy;
-
-    @FXML
-    private TableColumn<Appointments, Integer> aptCID;
-
-    @FXML
-    private TableColumn<Appointments, Integer> aptUID;
-
-    @FXML
-    private TableColumn<Appointments, Integer> aptContID;
-
-    @FXML
-    private Button addAppointment;
-
-    @FXML
-    private Button editAppointment;
-
-    @FXML
-    private Button deleteAppointment;
-
-    @FXML
-    private Button menuButton;
-
-    @FXML
-    private Button exitButton;
 
     ObservableList<Appointments> aptList = AppointmentDB.getAllAppointments();
     ObservableList<Appointments> weeklyAppointmentsList = FXCollections.observableArrayList();
     ObservableList<Appointments> monthlyAppointmentsList = FXCollections.observableArrayList();
+    /**
+     * @param allAptsRb displays all appointments
+     */
+
+    @FXML
+    private RadioButton allAptsRB;
+    @FXML
+    private ToggleGroup aptTableTGLGRP;
+    /**
+     * @param weeklyRB shows appointments by week
+     */
+
+    @FXML
+    private RadioButton weeklyRB;
+    /**
+     * @param monthlyRB shows appointments by month
+     */
+
+
+    @FXML
+    private RadioButton monthlyRB;
+    @FXML
+    private TableView<Appointments> aptTable;
+    @FXML
+    private TableColumn<Appointments, Integer> aptAppointmentID;
+    @FXML
+    private TableColumn<Appointments, String> aptTitle;
+    @FXML
+    private TableColumn<Appointments, String> aptDescription;
+    @FXML
+    private TableColumn<Appointments, String> aptLocation;
+    @FXML
+    private TableColumn<Appointments, String> aptType;
+    @FXML
+    private TableColumn<Appointments, LocalDateTime> aptStart;
+    @FXML
+    private TableColumn<Appointments, LocalDateTime> aptEnd;
+    @FXML
+    private TableColumn<Appointments, LocalDateTime> aptCreateDate;
+    @FXML
+    private TableColumn<Appointments, String> aptCreatedBy;
+    @FXML
+    private TableColumn<Appointments, LocalDateTime> aptLastUpdate;
+    @FXML
+    private TableColumn<Appointments, String> aptLastUpdatedBy;
+    @FXML
+    private TableColumn<Appointments, Integer> aptCID;
+    @FXML
+    private TableColumn<Appointments, Integer> aptUID;
+    @FXML
+    private TableColumn<Appointments, Integer> aptContID;
+    @FXML
+    private Button addAppointment;
+    @FXML
+    private Button editAppointment;
+    @FXML
+    private Button deleteAppointment;
+    @FXML
+    private Button menuButton;
+    @FXML
+    private Button exitButton;
 
     public AppointmentController() throws SQLException {
     }
@@ -124,24 +116,33 @@ public class AppointmentController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Utilizing a for each lambda loop to reduce amount of code used when showing all appointments.
+     *
+     * @param event
+     * @throws SQLException
+     */
+
     @FXML
-    void RBallAppointmentsOA(ActionEvent event) throws SQLException {
+    void rescBundallAppointmentsOA(ActionEvent event) throws SQLException {
 
         try {
             aptTable.setItems(AppointmentDB.getAllAppointments());
+            /*
+             * Lambda expression using a for each
+             */
 
             for (Appointments appointments : AppointmentDB.allAppointments) {
                 System.out.println(appointments.getStart());
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
 
     @FXML
-    void RBweeklyAppointmentsOA(ActionEvent event) throws SQLException {
+    void rescBundweeklyAppointmentsOA(ActionEvent event) throws SQLException {
 
         LocalDate today = LocalDate.from(ZonedDateTime.now());
         LocalDate oneWeekFromToday = LocalDate.from(ZonedDateTime.now()).plusWeeks(1);
@@ -160,9 +161,14 @@ public class AppointmentController implements Initializable {
         }
     }
 
+    /**
+     * Uses monthly radio button selection to show only appointment
+     *
+     * @param event
+     */
 
     @FXML
-    void RBmonthlyAppointmentsOA(ActionEvent event) {
+    void rescBundmonthlyAppointmentsOA(ActionEvent event) {
 
 
         LocalDate today = LocalDate.from(ZonedDateTime.now());
@@ -202,7 +208,7 @@ public class AppointmentController implements Initializable {
     }
 
     @FXML
-    void sceneDeleteAppointment(ActionEvent event) {
+    void sceneDeleteAppointment(ActionEvent event) throws NullPointerException {
         try {
 
             Appointments selectedItem = aptTable.getSelectionModel().getSelectedItem();
@@ -225,7 +231,11 @@ public class AppointmentController implements Initializable {
                 stage.show();
 
             }
-        } catch (IOException e) {
+        } catch (NullPointerException | IOException n) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No appointment selected.");
+            alert.setContentText("No appointment has been selected for deletion");
+            alert.showAndWait();
             String s = "a customer";
         }
     }
@@ -233,6 +243,9 @@ public class AppointmentController implements Initializable {
     @FXML
     void sceneEditAppointment(ActionEvent event) throws IOException {
         try {
+            /**
+             * @see AppointmentDB#modifyAppointment (String, String, String, String, LocalDateTime, LocalDateTime, LocalDateTime, String, LocalDateTime, String, Integer, Integer, Integer)
+             */
 
             Appointments modifyAppointments = aptTable.getSelectionModel().getSelectedItem();
             FXMLLoader loader = new FXMLLoader();
@@ -247,8 +260,7 @@ public class AppointmentController implements Initializable {
             window.setScene(modifyCustomerScene);
             window.setResizable(false);
             window.show();
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Missing selection");
             alert.setContentText("Please select an appointment you would like to edit.");
@@ -256,6 +268,10 @@ public class AppointmentController implements Initializable {
         }
     }
 
+    /**
+     * For each lambda to get appointments added under Initialize
+     * helps reduce code
+     */
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Appointments Table
@@ -276,9 +292,7 @@ public class AppointmentController implements Initializable {
         try {
             aptTable.setItems(AppointmentDB.getAllAppointments());
 
-            ObservableList<Appointments> allAppointments = AppointmentDB.allAppointments;
-            for (int i = 0, allAppointmentsSize = allAppointments.size(); i < allAppointmentsSize; i++) {
-                Appointments appointments = allAppointments.get(i);
+            for (Appointments appointments : AppointmentDB.allAppointments) {
                 System.out.println(appointments.getStart());
             }
         } catch (SQLException e) {

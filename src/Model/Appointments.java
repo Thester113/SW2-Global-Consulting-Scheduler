@@ -1,7 +1,11 @@
 package Model;
 
+
 import java.time.LocalDateTime;
 
+/**
+ * Appointment class used for getters/setters
+ */
 public class Appointments {
 
   private int appointmentID;
@@ -18,6 +22,7 @@ public class Appointments {
   private int customerID;
   private int userID;
   private int contactID;
+
 
   public Appointments(int appointmentID, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy, int customerID, int userID, int contactID) {
     this.appointmentID = appointmentID;
@@ -36,7 +41,9 @@ public class Appointments {
     this.contactID = contactID;
   }
 
-
+  /**
+   * Constructor For weekly and monthly Appointment Schedules
+   */
   public Appointments(int appointmentID, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerID, int contactID) {
     this.appointmentID = appointmentID;
     this.title = title;
@@ -49,6 +56,17 @@ public class Appointments {
     this.contactID = contactID;
   }
 
+  /**
+   * Constructor for the Customer Schedule Reports and Contact schedule
+   *
+   * @param appointmentID
+   * @param title
+   * @param description
+   * @param type
+   * @param start
+   * @param end
+   * @param customerID
+   */
 
   public Appointments(int appointmentID, String title, String description, String type, LocalDateTime start, LocalDateTime end, int customerID) {
     this.appointmentID = appointmentID;

@@ -51,6 +51,6 @@
         </font>
     </Button>
     <Button fx:id="exitBtn" layoutX="536.0" layoutY="549.0" mnemonicParsing="false" onAction="#exitApp" text="Exit"/>
-    <Button fx:id="logoutBtn" layoutX="475.0" layoutY="549.0" mnemonicParsing="false" onAction="#sceneLogin"
+    <Button fx:id="logoutButton" layoutX="475.0" layoutY="549.0" mnemonicParsing="false" onAction="#sceneLogout"
             text="Logout"/>
 </AnchorPane>

@@ -93,7 +93,8 @@
     <TextField fx:id="aptCustIDTxt" layoutX="431.0" layoutY="135.0" />
     <TextField fx:id="aptUIDTxt" editable="false" layoutX="431.0" layoutY="169.0" text="1" />
     <TextField fx:id="aptContIDTxt" disable="true" layoutX="431.0" layoutY="204.0" />
-    <Button fx:id="EditAppointmentBtn" layoutX="482.0" layoutY="312.0" mnemonicParsing="false" onAction="#OnActionEditAppointment" prefHeight="27.0" prefWidth="92.0" text="Save" />
+    <Button fx:id="EditAppointmentBtn" layoutX="482.0" layoutY="312.0" mnemonicParsing="false"
+            onAction="#OnActionModifyAppointment" prefHeight="27.0" prefWidth="92.0" text="Save"/>
     <Button fx:id="ExitBtn" layoutX="581.0" layoutY="356.0" mnemonicParsing="false" onAction="#ExitToMain" text="Exit" />
     <TextField fx:id="aptStartTxt" layoutX="151.0" layoutY="238.0" />
     <TextField fx:id="aptEndTxt" layoutX="151.0" layoutY="276.0" />

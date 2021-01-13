@@ -1,5 +1,6 @@
 package Controllers;
 
+
 import DAO.CountriesDB;
 import DAO.CustomerDB;
 import DAO.FirstLevelDivisionDB;
@@ -33,56 +34,69 @@ import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+/**
+ * Allows the user to modify a customer using CustomerDB and access to MYSQL DB
+ */
 public class ModifyCustomerController implements Initializable {
   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
   DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
   Long offsetToUTC = (long) (ZonedDateTime.now().getOffset()).getTotalSeconds();
+  ObservableList<FirstLevelDivisions> firstLevelDivisionsObservableList = FirstLevelDivisionDB.getAllFirstLevelDivisions();
+  ObservableList<FirstLevelDivisions> usFirstLevelDivisionsObservableList = FXCollections.observableArrayList();
+  ObservableList<FirstLevelDivisions> ukFirstLevelDivisionsObservableList = FXCollections.observableArrayList();
+  ObservableList<FirstLevelDivisions> canadaFirstLevelDivisionsObservableList = FXCollections.observableArrayList();
 
-  private Customers modifyCustomerNew;
+  private Customers newModifyCustomer;
 
   @FXML
   private Button exit;
-
   @FXML
   private Button addCustomer;
-
   @FXML
   private TextField custIDTxt;
-
   @FXML
   private TextField custNameTxt;
-
   @FXML
   private TextField custAddressTxt;
-
   @FXML
   private TextField custPostalTxt;
-
   @FXML
   private TextField custPhoneTxt;
-
   @FXML
   private TextField lastUpdatedByTF;
-
   @FXML
   private TextField lastUpdateTF;
-
   @FXML
   private TextField createdByTF;
-
   @FXML
   private TextField createDateTF;
-
   @FXML
   private ComboBox<Countries> cbCountry;
-
   @FXML
   private ComboBox<FirstLevelDivisions> cbDivID;
 
   public ModifyCustomerController() throws SQLException {
   }
 
-
+  /**
+   * Sends and returns fields that re updated to the database
+   *
+   * @param event
+   * @return
+   * @throws SQLException
+   * @throws IOException
+   * @see CustomerDB#editCustomer(
+   *Integer,
+   * String,
+   * String,
+   * String,
+   * String,
+   * Timestamp,
+   * String,
+   * Timestamp,
+   * String,
+   * Integer)
+   */
   @FXML
   boolean modifyCustomer(ActionEvent event) throws SQLException, IOException {
     try {
@@ -109,8 +123,8 @@ public class ModifyCustomerController implements Initializable {
     }
     catch (DateTimeParseException e) {
       Alert alert = new Alert(Alert.AlertType.ERROR);
-      alert.setTitle("Missing selection");
-      alert.setContentText("Please ensure all date and time fields are formatted YYYY-MM-DD HH:MM prior to adding an appointment");
+      alert.setTitle("Selection Missing");
+      alert.setContentText("Please ensure all date and time fields are formatted correctly prior to adding an appointment");
       alert.showAndWait();
       return false;
     }
@@ -118,26 +132,34 @@ public class ModifyCustomerController implements Initializable {
   }
 
   @FXML
-  private void addCustomer(ActionEvent event)
-  {
+  private void addCustomer(ActionEvent event) {
 
   }
 
+  /**
+   * Sets the selected object from the Customer tableview
+   */
+
   @FXML
   public void passCustomer(Customers modifyCustomer) {
-    modifyCustomerNew = modifyCustomer;
-    custIDTxt.setText(String.valueOf(modifyCustomerNew.getCustomerID()));
-    custNameTxt.setText(modifyCustomerNew.getCustomerName());
-    custAddressTxt.setText(modifyCustomerNew.getAddress());
-    custPostalTxt.setText(modifyCustomerNew.getPostal());
-    custPhoneTxt.setText(String.valueOf(modifyCustomerNew.getPhone()));
-    lastUpdatedByTF.setText(modifyCustomerNew.getLastUpdatedBy());
-    lastUpdateTF.setText(modifyCustomerNew.getLastUpdate().format(formatter));
-    createdByTF.setText(modifyCustomerNew.getCreatedBy());
-    createDateTF.setText(modifyCustomerNew.getCreateDate().format(formatter));
-    int comboBoxPreset = modifyCustomerNew.getDivisionID();
+    newModifyCustomer = modifyCustomer;
+    custIDTxt.setText(String.valueOf(newModifyCustomer.getCustomerID()));
+    custNameTxt.setText(newModifyCustomer.getCustomerName());
+    custAddressTxt.setText(newModifyCustomer.getAddress());
+    custPostalTxt.setText(newModifyCustomer.getPostal());
+    custPhoneTxt.setText(String.valueOf(newModifyCustomer.getPhone()));
+    lastUpdatedByTF.setText(newModifyCustomer.getLastUpdatedBy());
+    lastUpdateTF.setText(newModifyCustomer.getLastUpdate().format(formatter));
+    createdByTF.setText(newModifyCustomer.getCreatedBy());
+    createDateTF.setText(newModifyCustomer.getCreateDate().format(formatter));
+
+    int comboBoxPreset = newModifyCustomer.getDivisionID();
     FirstLevelDivisions fld = new FirstLevelDivisions(comboBoxPreset);
     cbDivID.setValue(fld);
+
+    /**
+     * Combobox is set to the division name based on country selected
+     */
 
     if (fld.getDivisionID() <= 54) {
       String countryName = "United States";
@@ -156,7 +178,8 @@ public class ModifyCustomerController implements Initializable {
     try {
       cbCountry.setItems(CountriesDB.getAllCountries());
       ObservableList<Countries> allCountries = CountriesDB.allCountries;
-      for (Iterator<Countries> iterator = allCountries.iterator(); iterator.hasNext(); ) {
+      Iterator<Countries> iterator = allCountries.iterator();
+      while (iterator.hasNext()) {
         Countries countries = iterator.next();
         System.out.println(countries.getCountry());
       }
@@ -167,20 +190,22 @@ public class ModifyCustomerController implements Initializable {
     try {
       cbDivID.setItems(FirstLevelDivisionDB.getAllFirstLevelDivisions());
       ObservableList<FirstLevelDivisions> allFirstLevelDivisions = FirstLevelDivisionDB.allFirstLevelDivisions;
-      for (int i = 0, allFirstLevelDivisionsSize = allFirstLevelDivisions.size(); i < allFirstLevelDivisionsSize; i++) {
+      int i = 0, allFirstLevelDivisionsSize = allFirstLevelDivisions.size();
+      while (i < allFirstLevelDivisionsSize) {
         FirstLevelDivisions firstLevelDivisions = allFirstLevelDivisions.get(i);
         System.out.println(firstLevelDivisions.getDivision());
+        i++;
       }
       cbDivID.setValue(fld);
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
-  ObservableList<FirstLevelDivisions> firstLevelDivisionsObservableList = FirstLevelDivisionDB.getAllFirstLevelDivisions();
-  ObservableList<FirstLevelDivisions> usFirstLevelDivisionsObservableList = FXCollections.observableArrayList();
-  ObservableList<FirstLevelDivisions> canadaFirstLevelDivisionsObservableList = FXCollections.observableArrayList();
-  ObservableList<FirstLevelDivisions> ukFirstLevelDivisionsObservableList = FXCollections.observableArrayList();
 
+  /**
+   * Lambda filtered lists for each country based on division id and country id utilizing a predicate f, and sorting through the objects
+   * Uses switch
+   */
 
   @FXML
   private void SetDivisionID(ActionEvent event) throws IOException, SQLException {
@@ -208,7 +233,7 @@ public class ModifyCustomerController implements Initializable {
 
 
   @FXML
-  void exitMainMenu(ActionEvent event) throws IOException {
+  void exitToMainMenu(ActionEvent event) throws IOException {
     Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     Object scene = FXMLLoader.load(getClass().getResource("/Views/Customer.fxml"));
     stage.setScene(new Scene((Parent) scene));

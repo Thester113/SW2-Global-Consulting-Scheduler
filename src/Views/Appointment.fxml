@@ -33,16 +33,24 @@
             <TableColumn fx:id="aptContID" prefWidth="84.0" text="Contact ID" />
         </columns>
     </TableView>
-    <Button fx:id="addAppointment" layoutX="473.0" layoutY="478.0" mnemonicParsing="false" onAction="#sceneAddAppointment" prefHeight="27.0" prefWidth="73.0" text="Add" />
-    <Button fx:id="editAppointment" layoutX="558.0" layoutY="478.0" mnemonicParsing="false" onAction="#sceneEditAppointment" prefHeight="27.0" prefWidth="73.0" text="Edit" />
-    <Button fx:id="deleteAppointment" layoutX="645.0" layoutY="478.0" mnemonicParsing="false" onAction="#sceneDeleteAppointment" prefHeight="27.0" prefWidth="73.0" text="Delete" />
-    <Button fx:id="menuButton" layoutX="473.0" layoutY="524.0" mnemonicParsing="false" onAction="#sceneMainMenu" prefHeight="27.0" prefWidth="73.0" text="Main" />
-    <Button fx:id="exitButton" layoutX="645.0" layoutY="524.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="27.0" prefWidth="73.0" text="Exit" />
-    <RadioButton fx:id="allAptsRB" layoutX="233.0" layoutY="48.0" mnemonicParsing="false" onAction="#RBallAppointmentsOA" text="All Appointments">
+    <Button fx:id="addAppointment" layoutX="473.0" layoutY="478.0" mnemonicParsing="false"
+            onAction="#sceneAddAppointment" prefHeight="27.0" prefWidth="73.0" text="Add"/>
+    <Button fx:id="editAppointment" layoutX="558.0" layoutY="478.0" mnemonicParsing="false"
+            onAction="#sceneEditAppointment" prefHeight="27.0" prefWidth="73.0" text="Edit"/>
+    <Button fx:id="deleteAppointment" layoutX="645.0" layoutY="478.0" mnemonicParsing="false"
+            onAction="#sceneDeleteAppointment" prefHeight="27.0" prefWidth="73.0" text="Delete"/>
+    <Button fx:id="menuButton" layoutX="473.0" layoutY="524.0" mnemonicParsing="false" onAction="#sceneMainMenu"
+            prefHeight="27.0" prefWidth="73.0" text="Main"/>
+    <Button fx:id="exitButton" layoutX="645.0" layoutY="524.0" mnemonicParsing="false" onAction="#exitApp"
+            prefHeight="27.0" prefWidth="73.0" text="Exit"/>
+    <RadioButton fx:id="allAptsRB" layoutX="233.0" layoutY="48.0" mnemonicParsing="false"
+                 onAction="#rescBundallAppointmentsOA" text="All Appointments">
         <toggleGroup>
-            <ToggleGroup fx:id="aptTableTGLGRP" />
+            <ToggleGroup fx:id="aptTableTGLGRP"/>
         </toggleGroup>
     </RadioButton>
-    <RadioButton fx:id="weeklyRB" layoutX="356.0" layoutY="48.0" mnemonicParsing="false" onAction="#RBweeklyAppointmentsOA" text="Weekly" toggleGroup="$aptTableTGLGRP" />
-    <RadioButton fx:id="monthlyRB" layoutX="455.0" layoutY="48.0" mnemonicParsing="false" onAction="#RBmonthlyAppointmentsOA" text="Monthly" toggleGroup="$aptTableTGLGRP" />
+    <RadioButton fx:id="weeklyRB" layoutX="356.0" layoutY="48.0" mnemonicParsing="false"
+                 onAction="#rescBundweeklyAppointmentsOA" text="Weekly" toggleGroup="$aptTableTGLGRP"/>
+    <RadioButton fx:id="monthlyRB" layoutX="455.0" layoutY="48.0" mnemonicParsing="false"
+                 onAction="#rescBundmonthlyAppointmentsOA" text="Monthly" toggleGroup="$aptTableTGLGRP"/>
 </AnchorPane>

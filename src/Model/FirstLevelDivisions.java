@@ -3,6 +3,10 @@ package Model;
 
 import java.time.LocalDateTime;
 
+/**
+ * Filtered using country selection
+ */
+
 public class FirstLevelDivisions {
   public Integer divisionID;
   private String division;
@@ -12,12 +16,12 @@ public class FirstLevelDivisions {
   private String lastUpdatedBy;
   private int countryID;
 
-
+  //Constructor for Add Customer Combo Box
   public FirstLevelDivisions(Integer divisionID) {
     this.divisionID=divisionID;
   }
 
-
+  //Main Constructor
   public FirstLevelDivisions(Integer divisionID, String division, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy, int countryID) {
     this.divisionID = divisionID;
     this.division = division;

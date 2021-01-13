@@ -16,7 +16,8 @@
             <Font name="System Bold" size="18.0"/>
         </font>
     </Label>
-    <Button fx:id="exit" layoutX="531.0" layoutY="359.0" mnemonicParsing="false" onAction="#exitMainMenu" text="Exit"/>
+    <Button fx:id="exit" layoutX="531.0" layoutY="359.0" mnemonicParsing="false" onAction="#exitToMainMenu"
+            text="Exit"/>
     <Button fx:id="ModifyCustomerController" layoutX="469.0" layoutY="359.0" mnemonicParsing="false"
             onAction="#modifyCustomer"
             text="Save"/>

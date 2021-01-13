@@ -1,5 +1,6 @@
 package DAO;
 
+
 import Model.Appointments;
 import Model.Contacts;
 import Model.Customers;
@@ -13,11 +14,16 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Class is used to generate reports for customers and contacts
+ */
 public class ReportDB {
   private static Contacts newContactSchedule;
   private static Customers newCustomerSchedule;
 
-
+  /**
+   * From the selection of the ComboBox from the Contact Schedules Report
+   */
   public static void sendContactSelection(Contacts contactSchedule) {
     newContactSchedule = contactSchedule;
   }
@@ -32,18 +38,16 @@ public class ReportDB {
     try {
       Connection conn = DBConnection.startConnection();
       ResultSet resultBack = conn.createStatement().executeQuery("SELECT * FROM appointments WHERE Contact_ID=" + newContactSchedule.getContactID());
-      if (resultBack.next()) {
-        do {
-          contactSchedule.add(new Appointments(
-                  resultBack.getInt("Appointment_ID"),
-                  resultBack.getString("Title"),
-                  resultBack.getString("Description"),
-                  resultBack.getString("Type"),
-                  resultBack.getTimestamp("Start").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                  resultBack.getTimestamp("End").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                  resultBack.getInt("Customer_ID")));
+      while (resultBack.next()) {
+        contactSchedule.add(new Appointments(
+                resultBack.getInt("Appointment_ID"),
+                resultBack.getString("Title"),
+                resultBack.getString("Description"),
+                resultBack.getString("Type"),
+                resultBack.getTimestamp("Start").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                resultBack.getTimestamp("End").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                resultBack.getInt("Customer_ID")));
 
-        } while (resultBack.next());
       }
       return contactSchedule;
     } catch (SQLException e) {
@@ -66,18 +70,16 @@ public class ReportDB {
     try {
       Connection conn = DBConnection.startConnection();
       ResultSet resultBack = conn.createStatement().executeQuery("SELECT * FROM appointments WHERE Customer_ID=" + newCustomerSchedule.getCustomerID());
-      if (resultBack.next()) {
-        do {
-          customerSchedule.add(new Appointments(
-                  resultBack.getInt("Appointment_ID"),
-                  resultBack.getString("Title"),
-                  resultBack.getString("Description"),
-                  resultBack.getString("Type"),
-                  resultBack.getTimestamp("Start").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                  resultBack.getTimestamp("End").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                  resultBack.getInt("Customer_ID")));
+      while (resultBack.next()) {
+        customerSchedule.add(new Appointments(
+                resultBack.getInt("Appointment_ID"),
+                resultBack.getString("Title"),
+                resultBack.getString("Description"),
+                resultBack.getString("Type"),
+                resultBack.getTimestamp("Start").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                resultBack.getTimestamp("End").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                resultBack.getInt("Customer_ID")));
 
-        } while (resultBack.next());
       }
       return customerSchedule;
     } catch (SQLException e) {

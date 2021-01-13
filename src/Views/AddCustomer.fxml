@@ -7,21 +7,24 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AddCustomerController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AddCustomerController">
     <Label alignment="CENTER" contentDisplay="CENTER" layoutX="245.0" layoutY="14.0" text="Add Customer Form">
         <font>
-            <Font size="18.0" />
+            <Font size="18.0"/>
         </font>
     </Label>
-    <Button fx:id="exit" layoutX="531.0" layoutY="359.0" mnemonicParsing="false" onAction="#exitMainMenu" text="Exit" />
-    <Button fx:id="addCustomer" layoutX="251.0" layoutY="332.0" mnemonicParsing="false" onAction="#addCustomer" text="Add Customer" />
-    <TextField fx:id="custIDTxt" disable="true" layoutX="139.0" layoutY="61.0" />
-    <TextField fx:id="custNameTxt" layoutX="139.0" layoutY="101.0" />
-    <TextField fx:id="custAddressTxt" layoutX="139.0" layoutY="141.0" />
-    <TextField fx:id="custPostalTxt" layoutX="139.0" layoutY="187.0" />
+    <Button fx:id="exit" layoutX="531.0" layoutY="359.0" mnemonicParsing="false" onAction="#exitToMainMenu"
+            text="Exit"/>
+    <Button fx:id="addCustomer" layoutX="251.0" layoutY="332.0" mnemonicParsing="false"
+            onAction="#addCustomerController" text="Add Customer"/>
+    <TextField fx:id="custIDTxt" disable="true" layoutX="139.0" layoutY="61.0"/>
+    <TextField fx:id="custNameTxt" layoutX="139.0" layoutY="101.0"/>
+    <TextField fx:id="custAddressTxt" layoutX="139.0" layoutY="141.0"/>
+    <TextField fx:id="custPostalTxt" layoutX="139.0" layoutY="187.0"/>
     <Label layoutX="14.0" layoutY="66.0" text="Customer ID">
         <font>
-            <Font size="14.0" />
+            <Font size="14.0"/>
         </font>
     </Label>
     <Label layoutX="14.0" layoutY="106.0" text="Customer Name">

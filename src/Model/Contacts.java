@@ -1,5 +1,7 @@
 package Model;
-
+/**
+ * Contacts Class which allows for associated attributes and allows for interface to show combo box selections
+ */
 
 public class Contacts {
     private int contactID;
@@ -50,6 +52,6 @@ public class Contacts {
     //(credit Mark Kinkead Webinar on Combo Boxes)
     public String toString() {
 
-        return ("Contact Name: " + (contactName) + " Contact ID: " + contactID);
+        return ("Contact Name: " + contactName + " Contact ID: " + contactID);
     }
 }

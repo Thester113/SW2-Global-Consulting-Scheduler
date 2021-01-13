@@ -3,6 +3,10 @@ package Model;
 
 import java.time.LocalDateTime;
 
+/**
+ * Customer Class for the addition, editing, and deletion of customers
+ * Contains getters/setters
+ */
 public class Customers {
 
   public int customerID;
@@ -30,6 +34,8 @@ public class Customers {
     this.lastUpdatedBy=lastUpdatedBy;
     this.divisionID=divisionID;
   }
+
+  //getters/setters
   public int getCustomerID() {
     return customerID;
   }

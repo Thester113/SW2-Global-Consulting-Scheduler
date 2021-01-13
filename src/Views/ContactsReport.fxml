@@ -36,6 +36,6 @@
             <Font size="16.0"/>
         </font>
     </Label>
-    <Button fx:id="exitBtn" layoutX="534.0" layoutY="359.0" mnemonicParsing="false" onAction="#exitApp" text="EXIT"/>
+    <Button fx:id="exitBtn" layoutX="534.0" layoutY="359.0" mnemonicParsing="false" onAction="#exitToApp" text="EXIT"/>
     <Button fx:id="mainBtn" layoutX="473.0" layoutY="359.0" mnemonicParsing="false" onAction="#backToMain" text="MAIN"/>
 </AnchorPane>
