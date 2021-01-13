@@ -81,7 +81,7 @@ public class CustomerScheduleReportController implements Initializable {
 
   /**
    * @param event
-   * @throws SQLException if customer schedule not queried correctly
+   *  For each Lambda that finds and displays customer schedules. This solves a long load time when using a foreach with iterator
    */
   @FXML
   void displayCustomerSchedule(ActionEvent event) {
@@ -91,9 +91,7 @@ public class CustomerScheduleReportController implements Initializable {
       ReportDB.sendCustomerSelection(customerSchedule);
 
       customerAppointmentTbl.setItems(ReportDB.getCustomerSchedule());
-      ObservableList<Appointments> schedule = ReportDB.customerSchedule;
-      for (int i = 0, scheduleSize = schedule.size(); i < scheduleSize; i++) {
-        Appointments appointments = schedule.get(i);
+      for (Appointments appointments : ReportDB.customerSchedule) {
         System.out.println(appointments.getStart());
       }
       appointmentID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));

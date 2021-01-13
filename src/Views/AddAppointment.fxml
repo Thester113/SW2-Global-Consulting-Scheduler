@@ -93,7 +93,7 @@
         </font>
     </Label>
     <TextField fx:id="aptLstUpdByText" layoutX="431.0" layoutY="101.0"/>
-    <TextField fx:id="aptCustIDText" layoutX="431.0" layoutY="135.0"/>
+    <TextField fx:id="aptCustIDText" layoutX="431.0" layoutY="135.0" promptText="Enter Customer_ID"/>
     <TextField fx:id="aptUIDText" layoutX="431.0" layoutY="169.0"/>
     <TextField fx:id="aptContIDText" disable="true" layoutX="431.0" layoutY="204.0"/>
     <Button fx:id="AddAppointmentBtn" layoutX="387.0" layoutY="312.0" mnemonicParsing="false"

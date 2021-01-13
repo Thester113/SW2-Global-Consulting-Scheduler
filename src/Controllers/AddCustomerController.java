@@ -127,7 +127,7 @@ public class AddCustomerController implements Initializable {
       }
 
       Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-      Object scene = FXMLLoader.load(getClass().getResource("/Views/Customer.fxml"));
+      Object scene = FXMLLoader.load(getClass().getResource("/Views/AddCustomer.fxml"));
       stage.setScene(new Scene((Parent) scene));
       stage.show();
 
@@ -142,7 +142,13 @@ public class AddCustomerController implements Initializable {
       alert.setTitle("FORMAT INCORRECT");
       alert.setContentText("Please check that date and time fields are formatted correctly when adding an appointment");
       alert.showAndWait();
-      return true;
+
+      Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+      Object scene = FXMLLoader.load(getClass().getResource("/Views/AddCustomer.fxml"));
+      stage.setScene(new Scene((Parent) scene));
+      stage.show();
+
+      return false;
     } finally {
       Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
       Object scene = FXMLLoader.load(getClass().getResource("/Views/Customer.fxml"));
