@@ -40,10 +40,10 @@ import java.util.logging.Logger;
  * Ability for user to edit an appointment using the AppointmentDB class to modify the DB
  */
 public class ModifyAppointmentController implements Initializable {
+  private Appointments newModifyAppointments;
   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
   DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-  Long offsetToUTC = (long) (ZonedDateTime.now().getOffset()).getTotalSeconds();
-  ObservableList<Contacts> contactList = FXCollections.observableArrayList();
+  Long offsetToUTC = Long.valueOf((ZonedDateTime.now().getOffset()).getTotalSeconds());
   @FXML
   private TextField aptIDtxt;
   @FXML
@@ -78,6 +78,8 @@ public class ModifyAppointmentController implements Initializable {
   private TextField aptLastUpdateTxt;
   @FXML
   private ComboBox<Contacts> contactName;
+  ObservableList<Contacts> contactList = FXCollections.observableArrayList();
+
 
   public ModifyAppointmentController() throws SQLException {
     try {
@@ -90,20 +92,16 @@ public class ModifyAppointmentController implements Initializable {
         contactList.add(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
 
       }
-    } catch (SQLException ce) {
-      Logger.getLogger(ce.toString());
+    } catch (SQLException c) {
+      Logger.getLogger(c.toString());
     }
   }
 
   @FXML
-  void SetContactID(MouseEvent event) throws IOException {
-    if (contactName.getSelectionModel().isEmpty()) {
-    } else {
-      Contacts c = contactName.getSelectionModel().getSelectedItem();
-      aptContIDTxt.setText(String.valueOf(c.getContactID()));
-    }
+  private void SetContactID(MouseEvent event) throws IOException {
 
   }
+
 
   /**
    * @see AppointmentController#sceneEditAppointment(ActionEvent)
@@ -113,24 +111,40 @@ public class ModifyAppointmentController implements Initializable {
 
   @FXML
   public void sendAppointment(Appointments modifyAppointments) {
-    aptIDtxt.setText(String.valueOf(modifyAppointments.getAppointmentID()));
-    aptTitleTxt.setText(modifyAppointments.getTitle());
-    aptDescrTxt.setText(modifyAppointments.getDescription());
-    aptLocTxt.setText(modifyAppointments.getLocation());
-    aptTypeTxt.setText(modifyAppointments.getType());
-    aptStartTxt.setText(modifyAppointments.getStart().format(formatter));
-    aptEndTxt.setText(modifyAppointments.getEnd().format(formatter));
-    aptLstUpdByTxt.setText(modifyAppointments.getLastUpdatedBy());
-    aptLastUpdateTxt.setText(modifyAppointments.getLastUpdate().format(formatter));
-    aptCreateByTxt.setText(modifyAppointments.getCreatedBy());
-    aptCreateDateTxt.setText(modifyAppointments.getCreateDate().format(formatter));
-    aptCustIDTxt.setText(String.valueOf(modifyAppointments.getCustomerID()));
-    aptUIDTxt.setText(String.valueOf(modifyAppointments.getUserID()));
-    aptContIDTxt.setText(String.valueOf(modifyAppointments.getContactID()));
+    newModifyAppointments = modifyAppointments;
+    aptIDtxt.setText(String.valueOf(newModifyAppointments.getAppointmentID()));
+    aptTitleTxt.setText(newModifyAppointments.getTitle());
+    aptDescrTxt.setText(newModifyAppointments.getDescription());
+    aptLocTxt.setText(newModifyAppointments.getLocation());
+    aptTypeTxt.setText(newModifyAppointments.getType());
+    aptStartTxt.setText(newModifyAppointments.getStart().format(formatter));
+    aptEndTxt.setText(newModifyAppointments.getEnd().format(formatter));
+    aptLstUpdByTxt.setText(newModifyAppointments.getLastUpdatedBy());
+    aptLastUpdateTxt.setText(newModifyAppointments.getLastUpdate().format(formatter));
+    aptCreateByTxt.setText(newModifyAppointments.getCreatedBy());
+    aptCreateDateTxt.setText(newModifyAppointments.getCreateDate().format(formatter));
+    aptCustIDTxt.setText(String.valueOf(newModifyAppointments.getCustomerID()));
+    aptUIDTxt.setText(String.valueOf(newModifyAppointments.getUserID()));
+    aptContIDTxt.setText(String.valueOf(newModifyAppointments.getContactID()));
 
-    int comboBoxPreset = modifyAppointments.getContactID();
+    int comboBoxPreset = newModifyAppointments.getContactID();
     Contacts c = new Contacts(comboBoxPreset);
     contactName.setValue(c);
+//    try
+//    {
+//      Connection conn = DBConnection.startConnection();
+//      ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM contacts WHERE Contact_ID = " + comboBoxPreset);
+//     contactName.setValue(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
+//
+//
+//    } catch (SQLException e) {
+//      e.printStackTrace();
+//    }
+
+
+//    String contactName = modifyAppointments.getContactName();
+//    String contactEmail = modifyAppointments.getContactEmail();
+
   }
 
   @FXML
@@ -147,7 +161,7 @@ public class ModifyAppointmentController implements Initializable {
    * @param event
    */
   @FXML
-  void OAFillContID(ActionEvent event) {
+  public void OAFillContID(ActionEvent event) {
     if (contactName.getSelectionModel().isEmpty()) {
       return;
     } else {
@@ -179,7 +193,7 @@ public class ModifyAppointmentController implements Initializable {
    * edited appointment sent to the DB
    */
   @FXML
-  boolean OnActionEditAppointment(ActionEvent event) throws SQLException, IOException {
+  boolean OnActionModifyAppointment(ActionEvent event) throws SQLException, IOException {
     TimeZone tz = TimeZone.getTimeZone("America/New_York");
     long offsetToEST = tz.getOffset(new Date().getTime()) / 1000 / 60;
     LocalDateTime startTime = LocalDateTime.parse(aptStartTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
@@ -224,7 +238,7 @@ public class ModifyAppointmentController implements Initializable {
 
       if (aptTitleTxt.getText().isEmpty() || aptDescrTxt.getText().isEmpty() || aptLocTxt.getText().isEmpty() || aptTypeTxt.getText().isEmpty() || aptStartTxt.getText().isEmpty() || aptEndTxt.getText().isEmpty() || aptCreateDateTxt.getText().isEmpty() || aptCreateByTxt.getText().isEmpty() || aptLastUpdateTxt.getText().isEmpty() || aptLstUpdByTxt.getText().isEmpty() || aptCustIDTxt.getText().isEmpty() || aptCustIDTxt.getText().isEmpty() || aptContIDTxt.getText().isEmpty()) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Missing Entries");
+        alert.setTitle("Entries Missing");
         alert.setContentText("Please ensure all fields are entered");
         alert.showAndWait();
       }
@@ -234,9 +248,9 @@ public class ModifyAppointmentController implements Initializable {
        */
 
 
-      ObservableList<Appointments> allAppointments = AppointmentDB.allAppointments;
+
       //Lambda expression
-      for (Appointments appointments : allAppointments) {
+      for (Appointments appointments : AppointmentDB.allAppointments) {
         if ((startDateTime.isEqual(appointments.getStart()) || startDateTime.isAfter(appointments.getStart()) && startDateTime.isBefore(appointments.getEnd()))) {
           Alert alert = new Alert(Alert.AlertType.ERROR);
           alert.setTitle("CONFLICT");

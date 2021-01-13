@@ -123,19 +123,16 @@ public class LoginController implements Initializable {
         try {
             resourceBundle = ResourceBundle.getBundle("Utilities/lang", Locale.getDefault());
 
-            switch (Locale.getDefault().getLanguage()) {
-                case "fr":
-                case "en":
-                    GC.setText(resourceBundle.getString("GC"));
-                    UserIDLabel.setText(resourceBundle.getString("UserIDLabel"));
-                    EnterPasswordLabel.setText(resourceBundle.getString("EnterPasswordLabel"));
-                    loginButton.setText(resourceBundle.getString("Login"));
-                    exitButton.setText(resourceBundle.getString("Exit"));
-                    loginError = resourceBundle.getString("loginError");
-                    enterCorrectUorP = resourceBundle.getString("enterCorrectUorP");
-                    errorHeader = resourceBundle.getString(errorHeader);
-
-                    break;
+            String language = Locale.getDefault().getLanguage();
+            if ("fr".equals(language) || "en".equals(language)) {
+                GC.setText(resourceBundle.getString("GC"));
+                UserIDLabel.setText(resourceBundle.getString("UserIDLabel"));
+                EnterPasswordLabel.setText(resourceBundle.getString("EnterPasswordLabel"));
+                loginButton.setText(resourceBundle.getString("Login"));
+                exitButton.setText(resourceBundle.getString("Exit"));
+                loginError = resourceBundle.getString("loginError");
+                enterCorrectUorP = resourceBundle.getString("enterCorrectUorP");
+                errorHeader = resourceBundle.getString(errorHeader);
             }
         } catch (Exception e) {
         }

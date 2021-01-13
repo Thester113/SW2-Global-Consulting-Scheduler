@@ -31,16 +31,14 @@ public class CountriesDB {
     try {
       Connection conn = DBConnection.startConnection();
       ResultSet rb = conn.createStatement().executeQuery("SELECT * FROM countries");
-      if (rb.next()) {
-        do {
-          allCountries.add(new Countries(
-                  rb.getInt("Country_ID"),
-                  rb.getString("Country"),
-                  rb.getTimestamp("Create_Date").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                  rb.getString("Created_By"),
-                  rb.getTimestamp("Last_Update").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                  rb.getString("Last_Updated_By")));
-        } while (rb.next());
+      while (rb.next()) {
+        allCountries.add(new Countries(
+                rb.getInt("Country_ID"),
+                rb.getString("Country"),
+                rb.getTimestamp("Create_Date").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                rb.getString("Created_By"),
+                rb.getTimestamp("Last_Update").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                rb.getString("Last_Updated_By")));
       }
       return allCountries;
     } catch (SQLException e) {

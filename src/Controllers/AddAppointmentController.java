@@ -1,5 +1,5 @@
 package Controllers;
-/**
+/*
  * AddAppointmentController is used to add a new appointment to the DB
  */
 
@@ -102,11 +102,9 @@ public class AddAppointmentController implements Initializable {
         try {
             Connection conn = DBConnection.startConnection();
             ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM contacts");
-            if (rs.next()) {
-                do {
+            while (rs.next()) {
 
-                    contactList.add(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
-                } while (rs.next());
+                contactList.add(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
             }
         } catch (SQLException ce) {
             Logger.getLogger(ce.toString());
@@ -140,7 +138,6 @@ public class AddAppointmentController implements Initializable {
                  */
 
                 aptIDtext.setText(String.valueOf(tempHighID + 1));
-                System.out.println(rs.getInt(tempHighID));
             }
         } catch (Exception exc) {
             exc.printStackTrace();
@@ -149,14 +146,16 @@ public class AddAppointmentController implements Initializable {
     }
 
     /**
-     *  Sets the ID field for an appointment based on the choices of the combobox using the list of contacts.
+     * Sets the ID field for an appointment based on the choices of the combobox using the list of contacts.
+     *
      * @param event ActionEvent
      * @throws IOException
      */
 
     @FXML
-    void SetContactID(ActionEvent event) throws IOException {
+    private void SetContactID(ActionEvent event) throws IOException {
         if (contactName.getSelectionModel().isEmpty()) {
+            return;
         } else {
             Contacts c = contactName.getSelectionModel().getSelectedItem();
             aptContIDText.setText(String.valueOf(c.getContactID()));
@@ -251,9 +250,7 @@ public class AddAppointmentController implements Initializable {
              */
 
 
-            ObservableList<Appointments> allAppointments = AppointmentDB.allAppointments;
-            for (int i = 0, allAppointmentsSize = allAppointments.size(); i < allAppointmentsSize; i++) {
-                Appointments appointments = allAppointments.get(i);
+            for (Appointments appointments : AppointmentDB.allAppointments) {
                 if ((startDateTime.isEqual(appointments.getStart()) || startDateTime.isAfter(appointments.getStart()) && startDateTime.isBefore(appointments.getEnd()))) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("CONFLICT OF TIME");
@@ -297,8 +294,8 @@ public class AddAppointmentController implements Initializable {
 
         } catch (DateTimeParseException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Missing selection");
-            alert.setContentText("Please ensure all date and time fields are formatted YYYY-MM-DD HH:MM prior to adding an appointment");
+            alert.setTitle("Selection Missing");
+            alert.setContentText("Please ensure all date and time fields are formatted correctly prior to adding an appointment");
             alert.showAndWait();
         }
         return false;

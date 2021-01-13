@@ -37,24 +37,22 @@ public class AppointmentDB {
     try {
       Connection connection = DBConnection.startConnection();
       ResultSet rb = connection.createStatement().executeQuery("SELECT * FROM appointments");
-      if (rb.next()) {
-        do {
-          allAppointments.add(new Appointments(
-                  rb.getInt("Appointment_ID"),
-                  rb.getString("Title"),
-                  rb.getString("Description"),
-                  rb.getString("Location"),
-                  rb.getString("Type"),
-                  rb.getTimestamp("Start").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                  rb.getTimestamp("End").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                  rb.getTimestamp("Create_Date").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
-                  rb.getString("Created_By"),
+      while (rb.next()) {
+        allAppointments.add(new Appointments(
+                rb.getInt("Appointment_ID"),
+                rb.getString("Title"),
+                rb.getString("Description"),
+                rb.getString("Location"),
+                rb.getString("Type"),
+                rb.getTimestamp("Start").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                rb.getTimestamp("End").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                rb.getTimestamp("Create_Date").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
+                rb.getString("Created_By"),
                   rb.getTimestamp("Last_Update").toInstant().atOffset(ZoneOffset.from(ZonedDateTime.now())).toLocalDateTime(),
                   rb.getString("Last_Updated_By"),
                   rb.getInt("Customer_ID"),
                   rb.getInt("User_ID"),
                   rb.getInt("Contact_ID")));
-        } while (rb.next());
       }
       return allAppointments;
     } catch (SQLException e) {

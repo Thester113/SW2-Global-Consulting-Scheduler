@@ -45,6 +45,9 @@ public class ModifyCustomerController implements Initializable {
   ObservableList<FirstLevelDivisions> usFirstLevelDivisionsObservableList = FXCollections.observableArrayList();
   ObservableList<FirstLevelDivisions> ukFirstLevelDivisionsObservableList = FXCollections.observableArrayList();
   ObservableList<FirstLevelDivisions> canadaFirstLevelDivisionsObservableList = FXCollections.observableArrayList();
+
+  private Customers newModifyCustomer;
+
   @FXML
   private Button exit;
   @FXML
@@ -139,18 +142,18 @@ public class ModifyCustomerController implements Initializable {
 
   @FXML
   public void passCustomer(Customers modifyCustomer) {
+    newModifyCustomer = modifyCustomer;
+    custIDTxt.setText(String.valueOf(newModifyCustomer.getCustomerID()));
+    custNameTxt.setText(newModifyCustomer.getCustomerName());
+    custAddressTxt.setText(newModifyCustomer.getAddress());
+    custPostalTxt.setText(newModifyCustomer.getPostal());
+    custPhoneTxt.setText(String.valueOf(newModifyCustomer.getPhone()));
+    lastUpdatedByTF.setText(newModifyCustomer.getLastUpdatedBy());
+    lastUpdateTF.setText(newModifyCustomer.getLastUpdate().format(formatter));
+    createdByTF.setText(newModifyCustomer.getCreatedBy());
+    createDateTF.setText(newModifyCustomer.getCreateDate().format(formatter));
 
-    custIDTxt.setText(String.valueOf(modifyCustomer.getCustomerID()));
-    custNameTxt.setText(modifyCustomer.getCustomerName());
-    custAddressTxt.setText(modifyCustomer.getAddress());
-    custPostalTxt.setText(modifyCustomer.getPostal());
-    custPhoneTxt.setText(String.valueOf(modifyCustomer.getPhone()));
-    lastUpdatedByTF.setText(modifyCustomer.getLastUpdatedBy());
-    lastUpdateTF.setText(modifyCustomer.getLastUpdate().format(formatter));
-    createdByTF.setText(modifyCustomer.getCreatedBy());
-    createDateTF.setText(modifyCustomer.getCreateDate().format(formatter));
-
-    int comboBoxPreset = modifyCustomer.getDivisionID();
+    int comboBoxPreset = newModifyCustomer.getDivisionID();
     FirstLevelDivisions fld = new FirstLevelDivisions(comboBoxPreset);
     cbDivID.setValue(fld);
 

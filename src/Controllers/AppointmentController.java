@@ -117,7 +117,7 @@ public class AppointmentController implements Initializable {
     }
 
     /**
-     * Utilizing a for each lambda loop to reduce amount of code used
+     * Utilizing a for each lambda loop to reduce amount of code used when showing all appointments.
      *
      * @param event
      * @throws SQLException
@@ -128,7 +128,7 @@ public class AppointmentController implements Initializable {
 
         try {
             aptTable.setItems(AppointmentDB.getAllAppointments());
-            /**
+            /*
              * Lambda expression using a for each
              */
 
@@ -208,7 +208,7 @@ public class AppointmentController implements Initializable {
     }
 
     @FXML
-    void sceneDeleteAppointment(ActionEvent event) {
+    void sceneDeleteAppointment(ActionEvent event) throws NullPointerException {
         try {
 
             Appointments selectedItem = aptTable.getSelectionModel().getSelectedItem();
@@ -231,7 +231,11 @@ public class AppointmentController implements Initializable {
                 stage.show();
 
             }
-        } catch (IOException e) {
+        } catch (NullPointerException | IOException n) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No appointment selected.");
+            alert.setContentText("No appointment has been selected for deletion");
+            alert.showAndWait();
             String s = "a customer";
         }
     }
@@ -239,6 +243,9 @@ public class AppointmentController implements Initializable {
     @FXML
     void sceneEditAppointment(ActionEvent event) throws IOException {
         try {
+            /**
+             * @see AppointmentDB#modifyAppointment (String, String, String, String, LocalDateTime, LocalDateTime, LocalDateTime, String, LocalDateTime, String, Integer, Integer, Integer)
+             */
 
             Appointments modifyAppointments = aptTable.getSelectionModel().getSelectedItem();
             FXMLLoader loader = new FXMLLoader();
@@ -261,6 +268,10 @@ public class AppointmentController implements Initializable {
         }
     }
 
+    /**
+     * For each lambda to get appointments added under Initialize
+     * helps reduce code
+     */
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Appointments Table
@@ -281,12 +292,7 @@ public class AppointmentController implements Initializable {
         try {
             aptTable.setItems(AppointmentDB.getAllAppointments());
 
-            ObservableList<Appointments> allAppointments = AppointmentDB.allAppointments;
-            /**
-             *  For each lambda to get appointments
-             *  helps reduce code
-             */
-            for (Appointments appointments : allAppointments) {
+            for (Appointments appointments : AppointmentDB.allAppointments) {
                 System.out.println(appointments.getStart());
             }
         } catch (SQLException e) {

@@ -47,8 +47,6 @@ public class AddCustomerController implements Initializable {
 
   Long offsetToUTC = (long) (ZonedDateTime.now().getOffset()).getTotalSeconds();
 
-
-  ObservableList<FirstLevelDivisions> fldList = FirstLevelDivisionDB.getAllFirstLevelDivisions();
   @FXML
   private Button exit;
   @FXML
@@ -89,7 +87,7 @@ public class AddCustomerController implements Initializable {
 
 
   @FXML
-  boolean addCustomerController(ActionEvent event) throws IOException {
+  public boolean addCustomerController(ActionEvent event) throws IOException {
     try {
       Integer customerID = Integer.valueOf(custIDTxt.getText());
       String customerName = custNameTxt.getText();
@@ -161,6 +159,8 @@ public class AddCustomerController implements Initializable {
    * @see FirstLevelDivisionDB#canadaFilteredFirstLevelDivisions
    * A for each lambda will run which helps eliminate time that code will need to run through the objects. This satisfies lambda task.
    */
+
+  ObservableList<FirstLevelDivisions> fldList = FirstLevelDivisionDB.getAllFirstLevelDivisions();
   @FXML
   void SetDivisionID(MouseEvent event) throws IOException, SQLException {
 
@@ -178,8 +178,8 @@ public class AddCustomerController implements Initializable {
          * Filters list of division IDs that connect with a country
          */
 
-        ObservableList<FirstLevelDivisions> usFilteredFirstLevelDivisions = FirstLevelDivisionDB.usFilteredFirstLevelDivisions;
-        for (FirstLevelDivisions usFLD : usFilteredFirstLevelDivisions) {
+
+        for (FirstLevelDivisions usFLD : FirstLevelDivisionDB.usFilteredFirstLevelDivisions) {
           System.out.println(usFLD.getDivision());
         }
       } catch (SQLException e) {
@@ -229,9 +229,7 @@ public class AddCustomerController implements Initializable {
 
     try {
       cbDiv.setItems(FirstLevelDivisionDB.getAllFirstLevelDivisions());
-      for (FirstLevelDivisions firstLevelDivisions : FirstLevelDivisionDB.allFirstLevelDivisions) {
-        System.out.println(firstLevelDivisions.getDivision());
-      }
+      FirstLevelDivisionDB.allFirstLevelDivisions.stream().map(FirstLevelDivisions::getDivision).forEach(System.out::println);
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -243,22 +241,19 @@ public class AddCustomerController implements Initializable {
       // Connects to the database
       Connection conn = DBConnection.startConnection();
       //Query Selects the last row from Customer ID
-      ResultSet rs = conn.createStatement().executeQuery("SELECT Customer_ID FROM customers ORDER BY Customer_ID DESC LIMIT 1 ");
+      ResultSet rs = conn.createStatement().executeQuery("SELECT Customer_ID FROM customers ORDER BY Customer_ID DESC LIMIT 1");
       /**
        * @param custIDTxt is generated automatically
        */
-      if (rs.next()) {
-        do {
+//
+      while (rs.next()) {
 
-          int tempID = rs.getInt("Customer_ID");
 
-          custIDTxt.setText(String.valueOf(tempID + 1));
-          System.out.println(rs.getInt(tempID));
+        int tempID = rs.getInt("Customer_ID");
 
-        } while (rs.next());
+        custIDTxt.setText(String.valueOf(tempID + 1));
+
       }
-
-
     } catch (Exception exc) {
       exc.printStackTrace();
     }

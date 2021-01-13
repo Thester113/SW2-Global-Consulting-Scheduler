@@ -83,6 +83,11 @@ public class CustomerController implements Initializable {
   @FXML
   private ComboBox<Customers> cbCustomerTable;
 
+  @FXML
+  void onComboBoxSelect(ActionEvent event) {
+
+  }
+
   public CustomerController() {
 
     try {
@@ -92,6 +97,7 @@ public class CustomerController implements Initializable {
       Logger.getLogger(ce.toString());
     }
   }
+
 
   /**
    * Sets the values of the tableview from the MySQL DB
@@ -117,8 +123,8 @@ public class CustomerController implements Initializable {
 
     try {
       custTable.setItems(CustomerDB.getAllCustomers());
-      ObservableList<Customers> allCustomers = CustomerDB.allCustomers;
-      for (Customers customer : allCustomers) {
+
+      for (Customers customer : CustomerDB.allCustomers) {
         System.out.println(customer.getCustomerName());
       }
     } catch (SQLException e) {
@@ -236,9 +242,6 @@ public class CustomerController implements Initializable {
 
   }
 
-  @FXML
-  void onComboBoxSelect(ActionEvent event) {
 
-  }
 }
 

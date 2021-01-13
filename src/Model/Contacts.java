@@ -52,6 +52,6 @@ public class Contacts {
     //(credit Mark Kinkead Webinar on Combo Boxes)
     public String toString() {
 
-        return (new StringBuilder().append("Contact Name: ").append(contactName).append(" Contact ID: ").append(contactID).toString());
+        return ("Contact Name: " + contactName + " Contact ID: " + contactID);
     }
 }
