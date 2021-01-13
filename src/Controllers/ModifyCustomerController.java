@@ -130,7 +130,7 @@ public class ModifyCustomerController implements Initializable {
       alert.showAndWait();
       return false;
 
-    } catch (IOException e) {
+    } catch (IOException | NullPointerException e) {
       e.printStackTrace();
     } finally {
       Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
