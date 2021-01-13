@@ -5,10 +5,7 @@ import DAO.CountriesDB;
 import DAO.CustomerDB;
 import DAO.DBConnection;
 import DAO.FirstLevelDivisionDB;
-import Model.Contacts;
-import Model.Countries;
-import Model.Customers;
-import Model.FirstLevelDivisions;
+import Model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -125,15 +122,23 @@ public class ModifyCustomerController implements Initializable {
               Timestamp.valueOf(LocalDateTime.parse(lastUpdateTF.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC))),
               lastUpdatedByTF.getText(),
               Integer.valueOf(String.valueOf(cbDivID.getSelectionModel().getSelectedItem().getDivisionID())));
-    }
-    catch (DateTimeParseException e) {
+
+    } catch (DateTimeParseException e) {
       Alert alert = new Alert(Alert.AlertType.ERROR);
       alert.setTitle("Selection Missing");
       alert.setContentText("Please ensure all date and time fields are formatted correctly prior to adding an appointment");
       alert.showAndWait();
       return false;
-    }
 
+    } catch (IOException e) {
+      e.printStackTrace();
+    } finally {
+      Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+      Object scene = FXMLLoader.load(getClass().getResource("/Views/Customer.fxml"));
+      stage.setScene(new Scene((Parent) scene));
+      stage.show();
+    }
+    return false;
   }
 
   @FXML
@@ -159,7 +164,7 @@ public class ModifyCustomerController implements Initializable {
     createDateTF.setText(newModifyCustomer.getCreateDate().format(formatter));
 
     int comboBoxPreset = newModifyCustomer.getDivisionID();
-    FirstLevelDivisions fld = new FirstLevelDivisions(comboBoxPreset);
+//    FirstLevelDivisions fld = new FirstLevelDivisions(comboBoxPreset);
 //    cbDivID.setValue(fld);
 
     try {
@@ -197,6 +202,7 @@ public class ModifyCustomerController implements Initializable {
     if (cbCountry.getSelectionModel().isEmpty()) {
       System.out.println(cbCountry.getSelectionModel().toString());
       return;
+
     } else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("U.S")) {
       var usResult = firstLevelDivisionsObservableList.stream().filter(f -> f.getDivisionID() < 54).collect(Collectors.toList());
       cbDivID.setItems(usFirstLevelDivisionsObservableList = FXCollections.observableList(usResult));
@@ -221,6 +227,21 @@ public class ModifyCustomerController implements Initializable {
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
+    try {
+      cbCountry.setItems(CountriesDB.getAllCountries());
+      for (Countries countries : CountriesDB.allCountries) {
+        System.out.println(countries.getCountry());
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    try {
+      cbDivID.setItems(FirstLevelDivisionDB.getAllFirstLevelDivisions());
+      FirstLevelDivisionDB.allFirstLevelDivisions.stream().map(FirstLevelDivisions::getDivision).forEach(System.out::println);
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
 
   }
 }

@@ -187,8 +187,8 @@ public class AddAppointmentController implements Initializable {
             //Gets users timezone and OffSets
 
 
-            TimeZone est = TimeZone.getTimeZone("est");
-            long offsetToEST = est.getOffset(new Date().getTime()) / 1000 / 60;
+            TimeZone est = TimeZone.getTimeZone("America/New_York");
+            Long offsetToEST = Long.valueOf(est.getOffset(new Date().getTime()) / 1000 / 60);
             Integer appointmentID = valueOf(aptIDtext.getText());
             String title = aptTitleText.getText();
             String description = aptDescrText.getText();
@@ -236,8 +236,8 @@ public class AddAppointmentController implements Initializable {
              */
 
 
-            LocalTime businessHoursStart = LocalTime.of(8, 00);
-            LocalTime businessHoursEnd = LocalTime.of(22, 00);
+            LocalTime businessHoursStart = LocalTime.of(8, 0);
+            LocalTime businessHoursEnd = LocalTime.of(22, 0);
             /**
              * Check if time falls between other appointments and avoids conflict
              */
@@ -259,6 +259,9 @@ public class AddAppointmentController implements Initializable {
                     return false;
                 }
             }
+            /**
+             * Check if time of start and end are within the business hours
+             */
 
             if (startTime.toLocalTime().isBefore(businessHoursStart) || endTime.toLocalTime().isAfter(businessHoursEnd)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -297,6 +300,15 @@ public class AddAppointmentController implements Initializable {
             alert.setTitle("Selection Missing");
             alert.setContentText("Please ensure all date and time fields are formatted correctly prior to adding an appointment");
             alert.showAndWait();
+        } finally {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/Views/Appointment.fxml"));
+            Parent parent = loader.load();
+
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            Parent scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show();
         }
         return false;
     }

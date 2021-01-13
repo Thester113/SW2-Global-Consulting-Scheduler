@@ -128,8 +128,7 @@ public class ModifyAppointmentController implements Initializable {
     aptContIDTxt.setText(String.valueOf(newModifyAppointments.getContactID()));
 
     int comboBoxPreset = newModifyAppointments.getContactID();
-//    Contacts c = new Contacts(comboBoxPreset);
-//    contactName.setValue(c);
+
     try {
       Connection conn = DBConnection.startConnection();
       ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM contacts WHERE Contact_ID = " + comboBoxPreset);
@@ -217,8 +216,8 @@ public class ModifyAppointmentController implements Initializable {
      */
 
 
-    LocalTime businessHoursStart = LocalTime.of(8, 00);
-    LocalTime businessHoursEnd = LocalTime.of(22, 00);
+    LocalTime businessHoursStart = LocalTime.of(8, 0);
+    LocalTime businessHoursEnd = LocalTime.of(22, 0);
 
     /**
      * Checks if date time falls between other scheduled appointments
@@ -242,7 +241,6 @@ public class ModifyAppointmentController implements Initializable {
       /**
        * Makes sure no overlapping appointment times
        */
-
 
 
       //Lambda expression
@@ -314,15 +312,28 @@ public class ModifyAppointmentController implements Initializable {
                 Integer.valueOf(aptUIDTxt.getText()),
                 Integer.valueOf(aptContIDTxt.getText()));
       }
-    }
-    /**
-     * @exception DateTimeParseException e if date time fields are not formatted correctly this is caught to alert the user to modify them correctly
-     */ catch (DateTimeParseException e) {
+      /**
+       * @exception DateTimeParseException e if date time fields are not formatted correctly this is caught to alert the user to modify them correctly
+       */
+
+
+    } catch (DateTimeParseException e) {
       Alert alert = new Alert(Alert.AlertType.ERROR);
       alert.setTitle("Missing selection");
       alert.setContentText("Please ensure all date and time fields are formatted YYYY-MM-DD HH:MM prior to adding an appointment");
       alert.showAndWait();
       return false;
+
+    } finally {
+      FXMLLoader loader = new FXMLLoader();
+      loader.setLocation(getClass().getResource("/Views/Appointment.fxml"));
+      Parent parent = loader.load();
+
+      Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+      Parent scene = loader.getRoot();
+      stage.setScene(new Scene(scene));
+      stage.show();
+
     }
     return false;
   }

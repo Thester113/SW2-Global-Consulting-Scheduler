@@ -118,12 +118,19 @@ public class AddCustomerController implements Initializable {
                 lastUpdate,
                 lastUpdatedBy,
                 divisionID);
+
       } else {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Selection is Missing");
         alert.setContentText("A field is missing for customer");
         alert.showAndWait();
       }
+
+      Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+      Object scene = FXMLLoader.load(getClass().getResource("/Views/Customer.fxml"));
+      stage.setScene(new Scene((Parent) scene));
+      stage.show();
+
       return false;
       /**
        * Checks for formatting errors and provides exception if missing a field
@@ -136,6 +143,11 @@ public class AddCustomerController implements Initializable {
       alert.setContentText("Please check that date and time fields are formatted correctly when adding an appointment");
       alert.showAndWait();
       return true;
+    } finally {
+      Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+      Object scene = FXMLLoader.load(getClass().getResource("/Views/Customer.fxml"));
+      stage.setScene(new Scene((Parent) scene));
+      stage.show();
     }
   }
 

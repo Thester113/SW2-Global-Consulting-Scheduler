@@ -72,8 +72,8 @@ public class LoginController implements Initializable {
             boolean isFound = true;
             AppointmentDB.getAllAppointments();
             //foreach lambda loop that runs through observable list
-            ObservableList<Appointments> allAppointments = AppointmentDB.allAppointments;
-            for (Appointments appointments : allAppointments) {
+
+            for (Appointments appointments : AppointmentDB.allAppointments) {
                 LocalDateTime within15Minutes = LocalDateTime.now();
                 isFound = true;
                 // 15-1 minute(s) of all start times
