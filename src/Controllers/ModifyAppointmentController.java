@@ -128,22 +128,18 @@ public class ModifyAppointmentController implements Initializable {
     aptContIDTxt.setText(String.valueOf(newModifyAppointments.getContactID()));
 
     int comboBoxPreset = newModifyAppointments.getContactID();
-    Contacts c = new Contacts(comboBoxPreset);
-    contactName.setValue(c);
-//    try
-//    {
-//      Connection conn = DBConnection.startConnection();
-//      ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM contacts WHERE Contact_ID = " + comboBoxPreset);
-//     contactName.setValue(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
-//
-//
-//    } catch (SQLException e) {
-//      e.printStackTrace();
-//    }
+//    Contacts c = new Contacts(comboBoxPreset);
+//    contactName.setValue(c);
+    try {
+      Connection conn = DBConnection.startConnection();
+      ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM contacts WHERE Contact_ID = " + comboBoxPreset);
+      rs.next();
+      contactName.setValue(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
 
 
-//    String contactName = modifyAppointments.getContactName();
-//    String contactEmail = modifyAppointments.getContactEmail();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
 
   }
 
@@ -195,7 +191,7 @@ public class ModifyAppointmentController implements Initializable {
   @FXML
   boolean OnActionModifyAppointment(ActionEvent event) throws SQLException, IOException {
     TimeZone tz = TimeZone.getTimeZone("America/New_York");
-    long offsetToEST = tz.getOffset(new Date().getTime()) / 1000 / 60;
+    Long offsetToEST = Long.valueOf(tz.getOffset(new Date().getTime()) / 1000 / 60);
     LocalDateTime startTime = LocalDateTime.parse(aptStartTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
 
     /**
@@ -253,7 +249,7 @@ public class ModifyAppointmentController implements Initializable {
       for (Appointments appointments : AppointmentDB.allAppointments) {
         if ((startDateTime.isEqual(appointments.getStart()) || startDateTime.isAfter(appointments.getStart()) && startDateTime.isBefore(appointments.getEnd()))) {
           Alert alert = new Alert(Alert.AlertType.ERROR);
-          alert.setTitle("CONFLICT");
+          alert.setTitle("APPOINTMENT TIME CONFLICT");
           alert.setContentText("Please enter a time for the start and end time of the appointment that is not already taken");
           alert.showAndWait();
           return false;

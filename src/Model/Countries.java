@@ -27,7 +27,12 @@ public class Countries {
 
   //Populate Single parameter country
   public Countries(String country) {
-    this.country=country;
+    this.country = country;
+  }
+
+  public Countries(String country, int country_id) {
+    this.country = country;
+    this.countryID = country_id;
   }
 
   public Integer getCountryID() {

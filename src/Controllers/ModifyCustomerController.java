@@ -3,7 +3,9 @@ package Controllers;
 
 import DAO.CountriesDB;
 import DAO.CustomerDB;
+import DAO.DBConnection;
 import DAO.FirstLevelDivisionDB;
+import Model.Contacts;
 import Model.Countries;
 import Model.Customers;
 import Model.FirstLevelDivisions;
@@ -19,10 +21,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Duration;
@@ -155,48 +160,26 @@ public class ModifyCustomerController implements Initializable {
 
     int comboBoxPreset = newModifyCustomer.getDivisionID();
     FirstLevelDivisions fld = new FirstLevelDivisions(comboBoxPreset);
-    cbDivID.setValue(fld);
-
-    /**
-     * Combobox is set to the division name based on country selected
-     */
-
-    if (fld.getDivisionID() <= 54) {
-      String countryName = "United States";
-      Countries c = new Countries(countryName);
-      cbCountry.setValue(c);
-    } else if (fld.getDivisionID() > 54 && fld.getDivisionID() <= 72) {
-      String countryName = "United Kingdom";
-      Countries c = new Countries(countryName);
-      cbCountry.setValue(c);
-    } else if (fld.getDivisionID() > 72) {
-      String countryName = "Canada";
-      Countries c = new Countries(countryName);
-      cbCountry.setValue(c);
-    }
+//    cbDivID.setValue(fld);
 
     try {
-      cbCountry.setItems(CountriesDB.getAllCountries());
-      ObservableList<Countries> allCountries = CountriesDB.allCountries;
-      Iterator<Countries> iterator = allCountries.iterator();
-      while (iterator.hasNext()) {
-        Countries countries = iterator.next();
-        System.out.println(countries.getCountry());
-      }
+      Connection conn = DBConnection.startConnection();
+      ResultSet rs = conn.createStatement().executeQuery("SELECT fld.Division_ID, fld.Division, countries.Country_ID, countries.Country FROM first_level_divisions AS fld JOIN countries ON (fld.COUNTRY_ID = countries.Country_ID)  WHERE Division_ID = " + comboBoxPreset);
+      rs.next();
+      cbDivID.setValue(new FirstLevelDivisions(rs.getInt("Division_ID"), rs.getString("Division")));
+      cbCountry.setValue(new Countries(rs.getString("Country"), rs.getInt("Country_ID")));
+
     } catch (SQLException e) {
       e.printStackTrace();
     }
 
+
     try {
       cbDivID.setItems(FirstLevelDivisionDB.getAllFirstLevelDivisions());
-      ObservableList<FirstLevelDivisions> allFirstLevelDivisions = FirstLevelDivisionDB.allFirstLevelDivisions;
-      int i = 0, allFirstLevelDivisionsSize = allFirstLevelDivisions.size();
-      while (i < allFirstLevelDivisionsSize) {
-        FirstLevelDivisions firstLevelDivisions = allFirstLevelDivisions.get(i);
-        System.out.println(firstLevelDivisions.getDivision());
-        i++;
+      for (FirstLevelDivisions firstLevelDivision : FirstLevelDivisionDB.allFirstLevelDivisions) {
+        System.out.println(firstLevelDivision.getDivision());
       }
-      cbDivID.setValue(fld);
+
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -205,28 +188,24 @@ public class ModifyCustomerController implements Initializable {
   /**
    * Lambda filtered lists for each country based on division id and country id utilizing a predicate f, and sorting through the objects
    * Uses switch
+   *
+   * @param event
    */
 
   @FXML
-  private void SetDivisionID(ActionEvent event) throws IOException, SQLException {
+  private void SetDivisionID(MouseEvent event) throws IOException, SQLException {
     if (cbCountry.getSelectionModel().isEmpty()) {
       System.out.println(cbCountry.getSelectionModel().toString());
       return;
-    }
-    switch (cbCountry.getSelectionModel().getSelectedItem().getCountry()) {
-      case "U.S":
-
-        var usResult = firstLevelDivisionsObservableList.stream().filter(f -> f.getDivisionID() < 54).collect(Collectors.toList());
-        cbDivID.setItems(usFirstLevelDivisionsObservableList = FXCollections.observableList(usResult));
-        break;
-      case "Canada":
-        var canadaResult = firstLevelDivisionsObservableList.stream().filter(f -> (f.getDivisionID() > 54) && (f.getDivisionID() < 101)).collect(Collectors.toList());
-        cbDivID.setItems(canadaFirstLevelDivisionsObservableList = FXCollections.observableList(canadaResult));
-        break;
-      case "UK":
-        var ukResult = firstLevelDivisionsObservableList.stream().filter(f -> f.getDivisionID() >= 101).collect(Collectors.toList());
-        cbDivID.setItems(ukFirstLevelDivisionsObservableList = FXCollections.observableList(ukResult));
-        break;
+    } else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("U.S")) {
+      var usResult = firstLevelDivisionsObservableList.stream().filter(f -> f.getDivisionID() < 54).collect(Collectors.toList());
+      cbDivID.setItems(usFirstLevelDivisionsObservableList = FXCollections.observableList(usResult));
+    } else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("Canada")) {
+      var canadaResult = firstLevelDivisionsObservableList.stream().filter(f -> (f.getDivisionID() > 54) && (f.getDivisionID() < 101)).collect(Collectors.toList());
+      cbDivID.setItems(canadaFirstLevelDivisionsObservableList = FXCollections.observableList(canadaResult));
+    } else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("UK")) {
+      var ukResult = firstLevelDivisionsObservableList.stream().filter(f -> f.getDivisionID() >= 101).collect(Collectors.toList());
+      cbDivID.setItems(ukFirstLevelDivisionsObservableList = FXCollections.observableList(ukResult));
     }
 
   }

@@ -24,8 +24,7 @@ public class Users {
     String createdBy;
     Timestamp lastUpdate;
     String lastUpdatedBy;
-    //Contact Table
-    ObservableList<Contacts> contList = FXCollections.observableArrayList();
+
 
 
     public Users() {
@@ -90,25 +89,27 @@ public class Users {
         this.lastUpdate = lastUpdate;
     }
 
-    public String getLastUpdatedBy() {
-        return lastUpdatedBy;
-    }
+  public String getLastUpdatedBy() {
+    return lastUpdatedBy;
+  }
 
-    public void setLastUpdatedBy(String lastUpdatedBy) {
-        this.lastUpdatedBy = lastUpdatedBy;
-    }
+  public void setLastUpdatedBy(String lastUpdatedBy) {
+    this.lastUpdatedBy = lastUpdatedBy;
+  }
 
-    public void UserMain() {
-        try {
-            Connection conn = DBConnection.startConnection();
-            ResultSet rc = conn.createStatement().executeQuery("select * FROM contacts");
-            while (rc.next()) {
-                contList.add(new Contacts(rc.getInt("Contact_ID"), rc.getString("Contact_Name"), rc.getString("Email")));
-            }
-        }
-        catch (
-                SQLException e) {
-            Logger.getLogger(e.toString());
+  //Contact Table
+  ObservableList<Contacts> contList = FXCollections.observableArrayList();
+
+  public void UsersMain() {
+    try {
+      Connection conn = DBConnection.startConnection();
+      ResultSet rc = conn.createStatement().executeQuery("SELECT * FROM contacts");
+      while (rc.next()) {
+        contList.add(new Contacts(rc.getInt("Contact_ID"), rc.getString("Contact_Name"), rc.getString("Email")));
+      }
+    } catch (
+            SQLException e) {
+      Logger.getLogger(e.toString());
         }
 
     }
