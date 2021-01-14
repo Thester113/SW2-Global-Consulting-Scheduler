@@ -343,6 +343,7 @@ public class ModifyAppointmentController implements Initializable {
 
     } finally {
       try {
+
         FXMLLoader loader = new FXMLLoader();
 
         loader.setLocation(getClass().getResource("/Views/Appointment.fxml"));
@@ -352,6 +353,7 @@ public class ModifyAppointmentController implements Initializable {
         Parent scene = loader.getRoot();
         stage.setScene(new Scene(scene));
         stage.show();
+
       } catch (NullPointerException ignored) {
 
       }

@@ -159,7 +159,7 @@ public class ModifyCustomerController implements Initializable {
   /**
    * Sets the selected object from the Customer tableview
    */
-
+//TODO: Make Work
   @FXML
   public void passCustomer(Customers modifyCustomer) {
     newModifyCustomer = modifyCustomer;
@@ -174,8 +174,29 @@ public class ModifyCustomerController implements Initializable {
     createDateTF.setText(newModifyCustomer.getCreateDate().format(formatter));
 
     int comboBoxPreset = newModifyCustomer.getDivisionID();
-//    FirstLevelDivisions fld = new FirstLevelDivisions(comboBoxPreset);
-//    cbDivID.setValue(fld);
+    FirstLevelDivisions fld = new FirstLevelDivisions(comboBoxPreset);
+    cbDivID.setValue(fld);
+
+//TODO: Make work
+    if (fld.getDivisionID() <= 54)
+    {
+      String countryName = "U.S";
+      Countries c = new Countries(countryName);
+      cbCountry.setValue(c);
+    }
+    else if (fld.getDivisionID() >54 && fld.getDivisionID() <= 72)
+    {
+      String countryName = "UK";
+      Countries c = new Countries(countryName);
+      cbCountry.setValue(c);
+    }
+    else if (fld.getDivisionID() > 72)
+    {
+      String countryName = "Canada";
+      Countries c = new Countries(countryName);
+      cbCountry.setValue(c);
+    }
+
 
     try {
       Connection conn = DBConnection.startConnection();
