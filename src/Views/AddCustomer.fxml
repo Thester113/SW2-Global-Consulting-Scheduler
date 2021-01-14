@@ -60,7 +60,7 @@
             <Font size="14.0" />
         </font>
     </Label>
-    <TextField fx:id="createdByTxt" layoutX="425.0" layoutY="62.0" promptText="YYYY-MM-DD HH:MMYYYY-MM-DD HH:MM"/>
+    <TextField fx:id="createdByTxt" layoutX="425.0" layoutY="62.0" promptText="YYYY-MM-DD HH:MM"/>
     <Label layoutX="333.0" layoutY="66.0" text="Created By">
         <font>
             <Font size="14.0" />
@@ -71,13 +71,13 @@
             <Font size="14.0" />
         </font>
     </Label>
-    <TextField fx:id="createDateTxt" layoutX="139.0" layoutY="273.0" promptText="YYYY-MM-DD HH:MMYYYY-MM-DD HH:MM"/>
+    <TextField fx:id="createDateTxt" layoutX="139.0" layoutY="273.0" promptText="YYYY-MM-DD HH:MM"/>
     <Label layoutX="330.0" layoutY="106.0" text="Last Update">
         <font>
             <Font size="14.0" />
         </font>
     </Label>
-    <TextField fx:id="lastUpdateTxt" layoutX="425.0" layoutY="102.0" promptText="YYYY-MM-DD HH:MMYYYY-MM-DD HH:MM"/>
+    <TextField fx:id="lastUpdateTxt" layoutX="425.0" layoutY="102.0" promptText="YYYY-MM-DD HH:MM"/>
     <Label layoutX="328.0" layoutY="146.0" text="Last Updater">
         <font>
             <Font size="14.0" />

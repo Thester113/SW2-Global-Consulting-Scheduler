@@ -111,11 +111,12 @@ public class AddAppointmentController implements Initializable {
         }
     }
 
+    /**
+     * Created By field is auto-populated with the value of a user login that is valid
+     */
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        /**
-         *Created By field is auto-populated with the value of a user login that is valid
-         */
+
 
         aptCreateByText.setText(String.valueOf(Users.getUserName()));
         aptLstUpdByText.setText(String.valueOf(Users.getUserName()));
@@ -173,15 +174,16 @@ public class AddAppointmentController implements Initializable {
     /**
      * Times entered by the user will default to local tz and then based of the time of the user we get from the offset variable it will set the time to UTC for storage in the DB
      * Alerts have been set up based off of the requirements section
+     *
      * @param event
-     * @see AppointmentDB#addAppointment(Integer, String, String, String, String, LocalDateTime, LocalDateTime, LocalDateTime, String, LocalDateTime, String, Integer, Integer, Integer)
      * @return
      * @throws IOException
      * @throws SQLException
+     * @see AppointmentDB#addAppointment(Integer, String, String, String, String, LocalDateTime, LocalDateTime, LocalDateTime, String, LocalDateTime, String, Integer, Integer, Integer)
      */
 
     @FXML
-    boolean OnActionAddAppointment(ActionEvent event) throws IOException, SQLException {
+    boolean OnActionAddAppointment(ActionEvent event) throws IOException, NullPointerException, SQLException {
         try {
 
             //Gets users timezone and OffSets
@@ -301,16 +303,18 @@ public class AddAppointmentController implements Initializable {
             alert.setContentText("Please ensure all date and time fields are formatted correctly prior to adding an appointment");
             alert.showAndWait();
         } finally {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/Views/Appointment.fxml"));
-            Parent parent = loader.load();
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/Views/Appointment.fxml"));
+                Parent parent = loader.load();
 
-            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            Parent scene = loader.getRoot();
-            stage.setScene(new Scene(scene));
-            stage.show();
+                Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                stage.show();
+
+            } catch (NullPointerException ignored) {
+            }
+            return false;
         }
-        return false;
-    }
 
+    }
 }

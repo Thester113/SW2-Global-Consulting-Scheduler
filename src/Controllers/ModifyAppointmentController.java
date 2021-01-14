@@ -325,14 +325,19 @@ public class ModifyAppointmentController implements Initializable {
       return false;
 
     } finally {
-      FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(getClass().getResource("/Views/Appointment.fxml"));
-      Parent parent = loader.load();
+      try {
+        FXMLLoader loader = new FXMLLoader();
 
-      Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-      Parent scene = loader.getRoot();
-      stage.setScene(new Scene(scene));
-      stage.show();
+        loader.setLocation(getClass().getResource("/Views/Appointment.fxml"));
+        Parent parent = loader.load();
+
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        Parent scene = loader.getRoot();
+        stage.setScene(new Scene(scene));
+        stage.show();
+      } catch (NullPointerException ignored) {
+
+      }
 
     }
     return false;

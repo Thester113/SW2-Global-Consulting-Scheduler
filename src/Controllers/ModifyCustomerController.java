@@ -130,13 +130,17 @@ public class ModifyCustomerController implements Initializable {
       alert.showAndWait();
       return false;
 
-    } catch (IOException | NullPointerException e) {
+    } catch (IOException e) {
       e.printStackTrace();
     } finally {
-      Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-      Object scene = FXMLLoader.load(getClass().getResource("/Views/Customer.fxml"));
-      stage.setScene(new Scene((Parent) scene));
-      stage.show();
+      try {
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        Object scene = FXMLLoader.load(getClass().getResource("/Views/Customer.fxml"));
+        stage.setScene(new Scene((Parent) scene));
+        stage.show();
+      } catch (NullPointerException ignored) {
+      }
+
     }
     return false;
   }
