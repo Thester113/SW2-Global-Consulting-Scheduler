@@ -163,6 +163,12 @@ public class AddAppointmentController implements Initializable {
         }
     }
 
+    /**
+     * Exits Add Appointment Screen to main Screen
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void ExitToMain(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();

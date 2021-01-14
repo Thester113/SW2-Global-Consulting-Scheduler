@@ -157,6 +157,12 @@ public class AddCustomerController implements Initializable {
     }
   }
 
+  /**
+   * Exits Add Customer screen to main menu
+   *
+   * @param event
+   * @throws IOException
+   */
   @FXML
   void exitToMainMenu(ActionEvent event) throws IOException {
     Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -179,12 +185,17 @@ public class AddCustomerController implements Initializable {
    */
 
   ObservableList<FirstLevelDivisions> fldList = FirstLevelDivisionDB.getAllFirstLevelDivisions();
+
+  /**
+   * Combo Box Division ID list is handled when a mouse clicks combo box
+   *
+   * @param event
+   * @throws IOException
+   * @throws SQLException
+   */
   @FXML
   void SetDivisionID(MouseEvent event) throws IOException, SQLException {
 
-    /**
-     * Combo Box Division ID list
-     */
 
     if (cbCountry.getSelectionModel().isEmpty()) {
       System.out.println(cbCountry.getSelectionModel().toString());
