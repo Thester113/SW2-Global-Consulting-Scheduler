@@ -76,7 +76,11 @@ public class CustomerAppointmentReportController implements Initializable {
   @FXML
   private TextField deBriefingTF;
 
-
+  /**
+   * Exits the application
+   *
+   * @param event
+   */
   @FXML
   void exitToApp(ActionEvent event) {
     Button sourceButton = (Button) event.getSource();
@@ -85,6 +89,12 @@ public class CustomerAppointmentReportController implements Initializable {
     System.exit(0);
   }
 
+  /**
+   * Opens main menu screen from reports screen
+   *
+   * @param event
+   * @throws IOException
+   */
   @FXML
   void sceneMainMenu(ActionEvent event) throws IOException {
     FXMLLoader loader = new FXMLLoader();
@@ -97,6 +107,13 @@ public class CustomerAppointmentReportController implements Initializable {
     stage.show();
   }
 
+  /**
+   * Gets all customer appointments by a monthly/weekly basis
+   * Filters appointments with Planning or De-Briefing type
+   *
+   * @param url
+   * @param resourceBundle
+   */
   @FXML
   public void initialize(URL url, ResourceBundle resourceBundle) {
     try {

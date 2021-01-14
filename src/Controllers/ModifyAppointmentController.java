@@ -80,14 +80,19 @@ public class ModifyAppointmentController implements Initializable {
   private ComboBox<Contacts> contactName;
   ObservableList<Contacts> contactList = FXCollections.observableArrayList();
 
-
+  /**
+   * Modifies appointment
+   * Creates a Country Object using Strings for Country selection
+   * columnLabel corresponds to Column! not the attribute of the object
+   *
+   * @throws SQLException
+   */
   public ModifyAppointmentController() throws SQLException {
     try {
       Connection conn = DBConnection.startConnection();
       ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM contacts");
       while (rs.next()) {
-        /**Creates a Country Object using Strings for Country selection
-         //columnLabel corresponds to Column! not the attribute of the object*/
+
 
         contactList.add(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
 
@@ -97,6 +102,12 @@ public class ModifyAppointmentController implements Initializable {
     }
   }
 
+  /**
+   * Displays contact using Combo Box when mouse is used on box
+   *
+   * @param event
+   * @throws IOException
+   */
   @FXML
   private void SetContactID(MouseEvent event) throws IOException {
 
@@ -142,6 +153,12 @@ public class ModifyAppointmentController implements Initializable {
 
   }
 
+  /**
+   * Exits to main screen
+   *
+   * @param event
+   * @throws IOException
+   */
   @FXML
   public void ExitToMain(ActionEvent event) throws IOException {
     Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -151,7 +168,7 @@ public class ModifyAppointmentController implements Initializable {
   }
 
   /**
-   * Uses combobox selection based on name and sets ID
+   * Uses combo box selection based on name and sets ID
    *
    * @param event
    */
@@ -343,6 +360,12 @@ public class ModifyAppointmentController implements Initializable {
     return false;
   }
 
+  /**
+   * Loads comb box with contact name from contact ID using Contacts
+   *
+   * @param url
+   * @param resourceBundle
+   */
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
     contactName.setItems(contactList);

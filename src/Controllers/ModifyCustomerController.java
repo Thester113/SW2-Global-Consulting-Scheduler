@@ -77,6 +77,12 @@ public class ModifyCustomerController implements Initializable {
   @FXML
   private ComboBox<FirstLevelDivisions> cbDivID;
 
+  /**
+   * Initializes the Modify Customer Controller
+   *
+   * @throws SQLException
+   */
+
   public ModifyCustomerController() throws SQLException {
   }
 
@@ -197,6 +203,7 @@ public class ModifyCustomerController implements Initializable {
   /**
    * Lambda filtered lists for each country based on division id and country id utilizing a predicate f, and sorting through the objects
    * Uses switch
+   * Lambda improves code performance and makes response quicker
    *
    * @param event
    */
@@ -220,7 +227,12 @@ public class ModifyCustomerController implements Initializable {
 
   }
 
-
+  /**
+   * Exits to main menu
+   *
+   * @param event
+   * @throws IOException
+   */
   @FXML
   void exitToMainMenu(ActionEvent event) throws IOException {
     Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -229,6 +241,12 @@ public class ModifyCustomerController implements Initializable {
     stage.show();
   }
 
+  /**
+   * Gets Combo Box data for Country and Division
+   *
+   * @param url
+   * @param resourceBundle
+   */
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
     try {

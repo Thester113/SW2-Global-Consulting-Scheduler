@@ -44,7 +44,11 @@ public class MainScreenController implements Initializable {
     @FXML
     private Button exitButton;
 
-
+    /**
+     * Exits application from Main Screen
+     *
+     * @param event
+     */
     @FXML
     void exitApp(ActionEvent event) {
 
@@ -133,6 +137,12 @@ public class MainScreenController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Logs user out of application
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void sceneLogout(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -141,11 +151,21 @@ public class MainScreenController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Login handler for Main Screen
+     *
+     * @param event
+     */
     public void sceneLogin(ActionEvent event) {
 
     }
 
-
+    /**
+     * Loads combo box and resource bundle
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

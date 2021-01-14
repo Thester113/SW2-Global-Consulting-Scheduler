@@ -67,6 +67,12 @@ public class CustomerScheduleReportController implements Initializable {
   @FXML
   private Button mainBtn;
 
+  /**
+   * Opens main screen and loads changes
+   *
+   * @param event
+   * @throws IOException
+   */
   @FXML
   void backToMain(ActionEvent event) throws IOException {
     FXMLLoader loader = new FXMLLoader();
@@ -116,13 +122,18 @@ public class CustomerScheduleReportController implements Initializable {
 
   ObservableList<Customers> customerList = FXCollections.observableArrayList();
 
+  /**
+   * Loads all customers using a for each lambda.
+   * Lambda expression reduces code needed to get customers from DB
+   *
+   * @param url
+   * @param resourceBundle
+   */
   @FXML
   public void initialize(URL url, ResourceBundle resourceBundle) {
     try {
       customerCB.setItems(CustomerDB.getAllCustomers());
-      ObservableList<Customers> allCustomers = CustomerDB.allCustomers;
-      for (Iterator<Customers> iterator = allCustomers.iterator(); iterator.hasNext(); ) {
-        Customers customer = iterator.next();
+      for (Customers customer : CustomerDB.allCustomers) {
         System.out.println(customer.getCustomerID());
       }
     } catch (SQLException e) {
