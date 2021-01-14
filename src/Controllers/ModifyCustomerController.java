@@ -234,16 +234,40 @@ public class ModifyCustomerController implements Initializable {
     if (cbCountry.getSelectionModel().isEmpty()) {
       System.out.println(cbCountry.getSelectionModel().toString());
       return;
+    } else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("United States")) {
+      try {
+        cbDivID.setItems(FirstLevelDivisionDB.getUSFilteredFirstLevelDivisions());
+        /**
+         * Filters list of division IDs that connect with a country
+         */
 
-    } else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("U.S")) {
-      var usResult = firstLevelDivisionsObservableList.stream().filter(f -> f.getDivisionID() < 54).collect(Collectors.toList());
-      cbDivID.setItems(usFirstLevelDivisionsObservableList = FXCollections.observableList(usResult));
+
+        for (FirstLevelDivisions usFLD : FirstLevelDivisionDB.usFilteredFirstLevelDivisions) {
+          System.out.println(usFLD.getDivision());
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
     } else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("Canada")) {
-      var canadaResult = firstLevelDivisionsObservableList.stream().filter(f -> (f.getDivisionID() > 54) && (f.getDivisionID() < 101)).collect(Collectors.toList());
-      cbDivID.setItems(canadaFirstLevelDivisionsObservableList = FXCollections.observableList(canadaResult));
-    } else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("UK")) {
-      var ukResult = firstLevelDivisionsObservableList.stream().filter(f -> f.getDivisionID() >= 101).collect(Collectors.toList());
-      cbDivID.setItems(ukFirstLevelDivisionsObservableList = FXCollections.observableList(ukResult));
+      try {
+        cbDivID.setItems(FirstLevelDivisionDB.getCanadaFilteredFirstLevelDivisions());
+        for (FirstLevelDivisions canadaFLD : FirstLevelDivisionDB.canadaFilteredFirstLevelDivisions) {
+          System.out.println(canadaFLD.getDivision());
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
+    } else if (cbCountry.getSelectionModel().getSelectedItem().getCountry().equals("United Kingdom")) {
+      try {
+        cbDivID.setItems(FirstLevelDivisionDB.getUKFilteredFirstLevelDivisions());
+
+        ObservableList<FirstLevelDivisions> ukFilteredFirstLevelDivisions = FirstLevelDivisionDB.ukFilteredFirstLevelDivisions;
+        for (FirstLevelDivisions ukFLD : ukFilteredFirstLevelDivisions) {
+          System.out.println(ukFLD.getDivision());
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
     }
 
   }

@@ -87,5 +87,5 @@
             <Font size="14.0"/>
         </font>
     </Label>
-    <ComboBox fx:id="cbDivID" layoutX="417.0" layoutY="265.0" prefWidth="150.0"/>
+    <ComboBox fx:id="cbDivID" onMouseClicked="#SetDivisionID" layoutX="417.0" layoutY="265.0" prefWidth="150.0"/>
 </AnchorPane>
