@@ -111,11 +111,12 @@ public class AddAppointmentController implements Initializable {
         }
     }
 
+    /**
+     * Created By field is auto-populated with the value of a user login that is valid
+     */
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        /**
-         *Created By field is auto-populated with the value of a user login that is valid
-         */
+
 
         aptCreateByText.setText(String.valueOf(Users.getUserName()));
         aptLstUpdByText.setText(String.valueOf(Users.getUserName()));
@@ -162,6 +163,12 @@ public class AddAppointmentController implements Initializable {
         }
     }
 
+    /**
+     * Exits Add Appointment Screen to main Screen
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void ExitToMain(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -173,22 +180,23 @@ public class AddAppointmentController implements Initializable {
     /**
      * Times entered by the user will default to local tz and then based of the time of the user we get from the offset variable it will set the time to UTC for storage in the DB
      * Alerts have been set up based off of the requirements section
+     *
      * @param event
-     * @see AppointmentDB#addAppointment(Integer, String, String, String, String, LocalDateTime, LocalDateTime, LocalDateTime, String, LocalDateTime, String, Integer, Integer, Integer)
      * @return
      * @throws IOException
      * @throws SQLException
+     * @see AppointmentDB#addAppointment(Integer, String, String, String, String, LocalDateTime, LocalDateTime, LocalDateTime, String, LocalDateTime, String, Integer, Integer, Integer)
      */
 
     @FXML
-    boolean OnActionAddAppointment(ActionEvent event) throws IOException, SQLException {
+    boolean OnActionAddAppointment(ActionEvent event) throws IOException, NullPointerException, SQLException {
         try {
 
             //Gets users timezone and OffSets
 
 
-            TimeZone est = TimeZone.getTimeZone("est");
-            long offsetToEST = est.getOffset(new Date().getTime()) / 1000 / 60;
+            TimeZone est = TimeZone.getTimeZone("America/New_York");
+            Long offsetToEST = Long.valueOf(est.getOffset(new Date().getTime()) / 1000 / 60);
             Integer appointmentID = valueOf(aptIDtext.getText());
             String title = aptTitleText.getText();
             String description = aptDescrText.getText();
@@ -236,8 +244,8 @@ public class AddAppointmentController implements Initializable {
              */
 
 
-            LocalTime businessHoursStart = LocalTime.of(8, 00);
-            LocalTime businessHoursEnd = LocalTime.of(22, 00);
+            LocalTime businessHoursStart = LocalTime.of(8, 0);
+            LocalTime businessHoursEnd = LocalTime.of(22, 0);
             /**
              * Check if time falls between other appointments and avoids conflict
              */
@@ -259,6 +267,9 @@ public class AddAppointmentController implements Initializable {
                     return false;
                 }
             }
+            /**
+             * Check if time of start and end are within the business hours
+             */
 
             if (startTime.toLocalTime().isBefore(businessHoursStart) || endTime.toLocalTime().isAfter(businessHoursEnd)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -297,8 +308,19 @@ public class AddAppointmentController implements Initializable {
             alert.setTitle("Selection Missing");
             alert.setContentText("Please ensure all date and time fields are formatted correctly prior to adding an appointment");
             alert.showAndWait();
-        }
-        return false;
-    }
+        } finally {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/Views/Appointment.fxml"));
+                Parent parent = loader.load();
 
+                Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                stage.show();
+
+            } catch (NullPointerException ignored) {
+            }
+            return false;
+        }
+
+    }
 }

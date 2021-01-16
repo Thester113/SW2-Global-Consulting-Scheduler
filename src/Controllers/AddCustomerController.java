@@ -118,12 +118,19 @@ public class AddCustomerController implements Initializable {
                 lastUpdate,
                 lastUpdatedBy,
                 divisionID);
+
       } else {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Selection is Missing");
         alert.setContentText("A field is missing for customer");
         alert.showAndWait();
       }
+
+      Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+      Object scene = FXMLLoader.load(getClass().getResource("/Views/AddCustomer.fxml"));
+      stage.setScene(new Scene((Parent) scene));
+      stage.show();
+
       return false;
       /**
        * Checks for formatting errors and provides exception if missing a field
@@ -135,10 +142,27 @@ public class AddCustomerController implements Initializable {
       alert.setTitle("FORMAT INCORRECT");
       alert.setContentText("Please check that date and time fields are formatted correctly when adding an appointment");
       alert.showAndWait();
-      return true;
+
+      Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+      Object scene = FXMLLoader.load(getClass().getResource("/Views/AddCustomer.fxml"));
+      stage.setScene(new Scene((Parent) scene));
+      stage.show();
+
+      return false;
+    } finally {
+      Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+      Object scene = FXMLLoader.load(getClass().getResource("/Views/Customer.fxml"));
+      stage.setScene(new Scene((Parent) scene));
+      stage.show();
     }
   }
 
+  /**
+   * Exits Add Customer screen to main menu
+   *
+   * @param event
+   * @throws IOException
+   */
   @FXML
   void exitToMainMenu(ActionEvent event) throws IOException {
     Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -161,12 +185,17 @@ public class AddCustomerController implements Initializable {
    */
 
   ObservableList<FirstLevelDivisions> fldList = FirstLevelDivisionDB.getAllFirstLevelDivisions();
+
+  /**
+   * Combo Box Division ID list is handled when a mouse clicks combo box
+   *
+   * @param event
+   * @throws IOException
+   * @throws SQLException
+   */
   @FXML
   void SetDivisionID(MouseEvent event) throws IOException, SQLException {
 
-    /**
-     * Combo Box Division ID list
-     */
 
     if (cbCountry.getSelectionModel().isEmpty()) {
       System.out.println(cbCountry.getSelectionModel().toString());

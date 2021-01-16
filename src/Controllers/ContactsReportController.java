@@ -69,6 +69,12 @@ public class ContactsReportController implements Initializable {
   @FXML
   private Button mainBtn;
 
+  /**
+   * Opens main screen from reports
+   *
+   * @param event
+   * @throws IOException
+   */
   @FXML
   void backToMain(ActionEvent event) throws IOException {
     FXMLLoader loader = new FXMLLoader();
@@ -81,6 +87,13 @@ public class ContactsReportController implements Initializable {
     stage.show();
   }
 
+  /**
+   * Shows contacts report. Display appointments for contact using a lambda.
+   * Lambda Expression reduces code and makes getting appointments easier.
+   *
+   * @param event
+   * @throws IOException
+   */
   @FXML
   void displayContactSchedule(ActionEvent event) throws IOException {
     try {
@@ -99,13 +112,16 @@ public class ContactsReportController implements Initializable {
       aptStart.setCellValueFactory(new PropertyValueFactory<>("start"));
       aptEnd.setCellValueFactory(new PropertyValueFactory<>("end"));
       aptCustID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
-    }
-    catch (SQLException e) {
+    } catch (SQLException e) {
       e.printStackTrace();
     }
   }
 
-
+  /**
+   * Exits the application
+   *
+   * @param event
+   */
   @FXML
   void exitToApp(ActionEvent event) {
     Button sourceButton = (Button) event.getSource();
@@ -113,8 +129,15 @@ public class ContactsReportController implements Initializable {
     DBConnection.closeConnection();
     System.exit(0);
   }
+
   ObservableList<Contacts> contactList = FXCollections.observableArrayList();
 
+  /**
+   * Gets all contacts and displays in Combo Box Contact Name and ID.
+   *
+   * @param url
+   * @param resourceBundle
+   */
   @FXML
   public void initialize(URL url, ResourceBundle resourceBundle) {
     try {
@@ -130,8 +153,7 @@ public class ContactsReportController implements Initializable {
       }
       contactCB.setItems(contactList);
 
-    }
-    catch (SQLException ce) {
+    } catch (SQLException ce) {
       Logger.getLogger(ce.toString());
     }
   }

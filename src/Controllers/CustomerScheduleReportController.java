@@ -67,6 +67,12 @@ public class CustomerScheduleReportController implements Initializable {
   @FXML
   private Button mainBtn;
 
+  /**
+   * Opens main screen and loads changes
+   *
+   * @param event
+   * @throws IOException
+   */
   @FXML
   void backToMain(ActionEvent event) throws IOException {
     FXMLLoader loader = new FXMLLoader();
@@ -81,7 +87,7 @@ public class CustomerScheduleReportController implements Initializable {
 
   /**
    * @param event
-   * @throws SQLException if customer schedule not queried correctly
+   *  For each Lambda that finds and displays customer schedules. This solves a long load time when using a foreach with iterator
    */
   @FXML
   void displayCustomerSchedule(ActionEvent event) {
@@ -91,9 +97,7 @@ public class CustomerScheduleReportController implements Initializable {
       ReportDB.sendCustomerSelection(customerSchedule);
 
       customerAppointmentTbl.setItems(ReportDB.getCustomerSchedule());
-      ObservableList<Appointments> schedule = ReportDB.customerSchedule;
-      for (int i = 0, scheduleSize = schedule.size(); i < scheduleSize; i++) {
-        Appointments appointments = schedule.get(i);
+      for (Appointments appointments : ReportDB.customerSchedule) {
         System.out.println(appointments.getStart());
       }
       appointmentID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
@@ -118,13 +122,18 @@ public class CustomerScheduleReportController implements Initializable {
 
   ObservableList<Customers> customerList = FXCollections.observableArrayList();
 
+  /**
+   * Loads all customers using a for each lambda.
+   * Lambda expression reduces code needed to get customers from DB
+   *
+   * @param url
+   * @param resourceBundle
+   */
   @FXML
   public void initialize(URL url, ResourceBundle resourceBundle) {
     try {
       customerCB.setItems(CustomerDB.getAllCustomers());
-      ObservableList<Customers> allCustomers = CustomerDB.allCustomers;
-      for (Iterator<Customers> iterator = allCustomers.iterator(); iterator.hasNext(); ) {
-        Customers customer = iterator.next();
+      for (Customers customer : CustomerDB.allCustomers) {
         System.out.println(customer.getCustomerID());
       }
     } catch (SQLException e) {

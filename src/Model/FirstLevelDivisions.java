@@ -32,6 +32,12 @@ public class FirstLevelDivisions {
     this.countryID = countryID;
   }
 
+  public FirstLevelDivisions(int division_id, String division) {
+    this.divisionID = division_id;
+    this.division = division;
+
+  }
+
   public Integer getDivisionID() {
     return divisionID;
   }

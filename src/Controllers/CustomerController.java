@@ -83,11 +83,19 @@ public class CustomerController implements Initializable {
   @FXML
   private ComboBox<Customers> cbCustomerTable;
 
+  /**
+   * Method adds handling for combo box on Customer
+   *
+   * @param event
+   */
   @FXML
-  void onComboBoxSelect(ActionEvent event) {
+  public void onComboBoxSelect(ActionEvent event) {
 
   }
 
+  /**
+   * Auto increments customers
+   */
   public CustomerController() {
 
     try {
@@ -101,7 +109,8 @@ public class CustomerController implements Initializable {
 
   /**
    * Sets the values of the tableview from the MySQL DB
-   * try statement runs a lambda for each to get all objects
+   * Try/Catch block runs a lambda for each to get all objects
+   * Lambda Expression improves code efficiency and makes getting customers data quicker
    *
    * @param url
    * @param resourceBundle
@@ -132,6 +141,11 @@ public class CustomerController implements Initializable {
     }
   }
 
+  /**
+   * Exits to main screen from Customer
+   *
+   * @param event
+   */
   @FXML
   void exitToApp(ActionEvent event) {
     Button sourceButton = (Button) event.getSource();
@@ -197,6 +211,12 @@ public class CustomerController implements Initializable {
 
   }
 
+  /**
+   * Loads main screen
+   *
+   * @param event
+   * @throws IOException
+   */
   @FXML
   void sceneBackToMain(ActionEvent event) throws IOException {
 

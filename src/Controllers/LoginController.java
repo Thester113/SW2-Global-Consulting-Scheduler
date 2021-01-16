@@ -59,7 +59,9 @@ public class LoginController implements Initializable {
     @FXML
     private PasswordField passwordField;
 
-    //Cases for login are either a successful login or incorrect username or password, username and password are from DB
+    /**
+     * Cases for login are either a successful login or incorrect username or password, username and password are from DB
+     */
     @FXML
     void handlerLogin(ActionEvent event) throws IOException, SQLException {
 
@@ -72,8 +74,8 @@ public class LoginController implements Initializable {
             boolean isFound = true;
             AppointmentDB.getAllAppointments();
             //foreach lambda loop that runs through observable list
-            ObservableList<Appointments> allAppointments = AppointmentDB.allAppointments;
-            for (Appointments appointments : allAppointments) {
+
+            for (Appointments appointments : AppointmentDB.allAppointments) {
                 LocalDateTime within15Minutes = LocalDateTime.now();
                 isFound = true;
                 // 15-1 minute(s) of all start times
@@ -109,6 +111,12 @@ public class LoginController implements Initializable {
 
     }
 
+    /**
+     * Exits application from Login Screen
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void handlerExit(ActionEvent event) throws IOException {
         Button sourceButton = (Button) event.getSource();
@@ -117,6 +125,12 @@ public class LoginController implements Initializable {
         System.exit(0);
     }
 
+    /**
+     * Sets based on location of user to either French or English Language
+     *
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         detectedLoc.setText(Locale.getDefault().getLanguage());

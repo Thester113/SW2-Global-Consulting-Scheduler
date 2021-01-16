@@ -80,12 +80,12 @@
             <Font size="14.0"/>
         </font>
     </Label>
-    <ComboBox fx:id="cbCountry" layoutX="417.0" layoutY="227.0" onAction="#SetDivisionID"
+    <ComboBox fx:id="cbCountry" layoutX="417.0" layoutY="227.0"
               onMouseClicked="#SetDivisionID" prefWidth="150.0"/>
     <Label layoutX="321.0" layoutY="269.0" text="Division ID">
         <font>
             <Font size="14.0"/>
         </font>
     </Label>
-    <ComboBox fx:id="cbDivID" layoutX="417.0" layoutY="265.0" prefWidth="150.0"/>
+    <ComboBox fx:id="cbDivID" onMouseClicked="#SetDivisionID" layoutX="417.0" layoutY="265.0" prefWidth="150.0"/>
 </AnchorPane>

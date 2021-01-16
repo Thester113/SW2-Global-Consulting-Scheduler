@@ -80,14 +80,19 @@ public class ModifyAppointmentController implements Initializable {
   private ComboBox<Contacts> contactName;
   ObservableList<Contacts> contactList = FXCollections.observableArrayList();
 
-
+  /**
+   * Modifies appointment
+   * Creates a Country Object using Strings for Country selection
+   * columnLabel corresponds to Column! not the attribute of the object
+   *
+   * @throws SQLException
+   */
   public ModifyAppointmentController() throws SQLException {
     try {
       Connection conn = DBConnection.startConnection();
       ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM contacts");
       while (rs.next()) {
-        /**Creates a Country Object using Strings for Country selection
-         //columnLabel corresponds to Column! not the attribute of the object*/
+
 
         contactList.add(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
 
@@ -97,6 +102,12 @@ public class ModifyAppointmentController implements Initializable {
     }
   }
 
+  /**
+   * Displays contact using Combo Box when mouse is used on box
+   *
+   * @param event
+   * @throws IOException
+   */
   @FXML
   private void SetContactID(MouseEvent event) throws IOException {
 
@@ -128,25 +139,26 @@ public class ModifyAppointmentController implements Initializable {
     aptContIDTxt.setText(String.valueOf(newModifyAppointments.getContactID()));
 
     int comboBoxPreset = newModifyAppointments.getContactID();
-    Contacts c = new Contacts(comboBoxPreset);
-    contactName.setValue(c);
-//    try
-//    {
-//      Connection conn = DBConnection.startConnection();
-//      ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM contacts WHERE Contact_ID = " + comboBoxPreset);
-//     contactName.setValue(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
-//
-//
-//    } catch (SQLException e) {
-//      e.printStackTrace();
-//    }
+
+    try {
+      Connection conn = DBConnection.startConnection();
+      ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM contacts WHERE Contact_ID = " + comboBoxPreset);
+      rs.next();
+      contactName.setValue(new Contacts(rs.getInt("Contact_ID"), rs.getString("Contact_Name"), rs.getString("Email")));
 
 
-//    String contactName = modifyAppointments.getContactName();
-//    String contactEmail = modifyAppointments.getContactEmail();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
 
   }
 
+  /**
+   * Exits to main screen
+   *
+   * @param event
+   * @throws IOException
+   */
   @FXML
   public void ExitToMain(ActionEvent event) throws IOException {
     Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
@@ -156,7 +168,7 @@ public class ModifyAppointmentController implements Initializable {
   }
 
   /**
-   * Uses combobox selection based on name and sets ID
+   * Uses combo box selection based on name and sets ID
    *
    * @param event
    */
@@ -195,7 +207,7 @@ public class ModifyAppointmentController implements Initializable {
   @FXML
   boolean OnActionModifyAppointment(ActionEvent event) throws SQLException, IOException {
     TimeZone tz = TimeZone.getTimeZone("America/New_York");
-    long offsetToEST = tz.getOffset(new Date().getTime()) / 1000 / 60;
+    Long offsetToEST = Long.valueOf(tz.getOffset(new Date().getTime()) / 1000 / 60);
     LocalDateTime startTime = LocalDateTime.parse(aptStartTxt.getText(), formatter).minus(Duration.ofSeconds(offsetToUTC));
 
     /**
@@ -221,8 +233,8 @@ public class ModifyAppointmentController implements Initializable {
      */
 
 
-    LocalTime businessHoursStart = LocalTime.of(8, 00);
-    LocalTime businessHoursEnd = LocalTime.of(22, 00);
+    LocalTime businessHoursStart = LocalTime.of(8, 0);
+    LocalTime businessHoursEnd = LocalTime.of(22, 0);
 
     /**
      * Checks if date time falls between other scheduled appointments
@@ -248,12 +260,11 @@ public class ModifyAppointmentController implements Initializable {
        */
 
 
-
       //Lambda expression
       for (Appointments appointments : AppointmentDB.allAppointments) {
         if ((startDateTime.isEqual(appointments.getStart()) || startDateTime.isAfter(appointments.getStart()) && startDateTime.isBefore(appointments.getEnd()))) {
           Alert alert = new Alert(Alert.AlertType.ERROR);
-          alert.setTitle("CONFLICT");
+          alert.setTitle("APPOINTMENT TIME CONFLICT");
           alert.setContentText("Please enter a time for the start and end time of the appointment that is not already taken");
           alert.showAndWait();
           return false;
@@ -318,19 +329,45 @@ public class ModifyAppointmentController implements Initializable {
                 Integer.valueOf(aptUIDTxt.getText()),
                 Integer.valueOf(aptContIDTxt.getText()));
       }
-    }
-    /**
-     * @exception DateTimeParseException e if date time fields are not formatted correctly this is caught to alert the user to modify them correctly
-     */ catch (DateTimeParseException e) {
+      /**
+       * @exception DateTimeParseException e if date time fields are not formatted correctly this is caught to alert the user to modify them correctly
+       */
+
+
+    } catch (DateTimeParseException e) {
       Alert alert = new Alert(Alert.AlertType.ERROR);
       alert.setTitle("Missing selection");
       alert.setContentText("Please ensure all date and time fields are formatted YYYY-MM-DD HH:MM prior to adding an appointment");
       alert.showAndWait();
       return false;
+
+    } finally {
+      try {
+
+        FXMLLoader loader = new FXMLLoader();
+
+        loader.setLocation(getClass().getResource("/Views/Appointment.fxml"));
+        Parent parent = loader.load();
+
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        Parent scene = loader.getRoot();
+        stage.setScene(new Scene(scene));
+        stage.show();
+
+      } catch (NullPointerException ignored) {
+
+      }
+
     }
     return false;
   }
 
+  /**
+   * Loads comb box with contact name from contact ID using Contacts
+   *
+   * @param url
+   * @param resourceBundle
+   */
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
     contactName.setItems(contactList);

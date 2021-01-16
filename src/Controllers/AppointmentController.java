@@ -101,8 +101,21 @@ public class AppointmentController implements Initializable {
     @FXML
     private Button exitButton;
 
+    /**
+     * Main appointment controller that uses initialize
+     *
+     * @throws SQLException
+     */
+
     public AppointmentController() throws SQLException {
     }
+
+    /**
+     * Opens main menu screen
+     *
+     * @param event
+     * @throws IOException
+     */
 
     @FXML
     void sceneMainMenu(ActionEvent event) throws IOException {
@@ -185,6 +198,11 @@ public class AppointmentController implements Initializable {
         }
     }
 
+    /**
+     * Exits the app from the appointment table
+     *
+     * @param event
+     */
     @FXML
     void exitApp(ActionEvent event) {
         Button sourceButton = (Button) event.getSource();
@@ -193,7 +211,12 @@ public class AppointmentController implements Initializable {
         System.exit(0);
     }
 
-
+    /**
+     * Opens the add appointment screen and loads new changes
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void sceneAddAppointment(ActionEvent event) throws IOException {
 
@@ -206,6 +229,13 @@ public class AppointmentController implements Initializable {
         stage.setScene(new Scene(scene));
         stage.show();
     }
+
+    /**
+     * Issues alert for an appointment being deleted or an alert if no appointment is selected
+     *
+     * @param event
+     * @throws NullPointerException
+     */
 
     @FXML
     void sceneDeleteAppointment(ActionEvent event) throws NullPointerException {
@@ -240,6 +270,12 @@ public class AppointmentController implements Initializable {
         }
     }
 
+    /**
+     * Opens the edit appointment screen. Throws exception if no appointment selected
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void sceneEditAppointment(ActionEvent event) throws IOException {
         try {
@@ -270,7 +306,7 @@ public class AppointmentController implements Initializable {
 
     /**
      * For each lambda to get appointments added under Initialize
-     * helps reduce code
+     * Lambda expression is used to reduce code and time it takes to load appointments
      */
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
